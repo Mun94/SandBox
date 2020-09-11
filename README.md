@@ -13,9 +13,8 @@
 
 > ### Stack
 
-- Backend : SpringBoot(JPA/gradle)
 - Frontend : ReactJS
-- Database : MySQL
+
 
 <br/>
 
@@ -53,5 +52,4 @@
 
 > ### Member
 
-- 김도하
 - 문성우
