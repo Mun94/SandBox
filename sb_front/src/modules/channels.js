@@ -3,6 +3,7 @@ import { takeLatest } from "redux-saga/effects";
 import createReactSaga, {
   createReactSagaType,
 } from "../lib/createReactSaga.js";
+import * as YouTube from "../lib/api/Youtube.js";
 
 const [CHANNELS, CHANNELS_SUCCESS, CHANNELS_FAILURE] = createReactSagaType(
   "channels/CHANNELS"
@@ -13,12 +14,17 @@ export const ActionChannels = createAction(CHANNELS, ({ part, id }) => ({
   id,
 }));
 
+const ChannelsSaga = createReactSaga(CHANNELS, YouTube.Channels);
+export function* SagaChannels() {
+  yield takeLatest(CHANNELS, ChannelsSaga);
+}
+
 const initialState = {
   channels: null,
   channelsError: null,
 };
 
-const channels = handleActions(
+const Channels = handleActions(
   {
     [CHANNELS_SUCCESS]: (state, action) => ({
       ...state,
@@ -32,4 +38,4 @@ const channels = handleActions(
   initialState
 );
 
-export default channels;
+export default Channels;
