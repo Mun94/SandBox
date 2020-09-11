@@ -1,10 +1,11 @@
 import React from "react";
-import Home from "./components/Home.js";
+import { Route } from "react-router-dom";
+import Home from "./page/Home.js";
 
 function App() {
   return (
     <>
-      <Home />
+      <Route path="/" component={Home} exact />
     </>
   );
 }
