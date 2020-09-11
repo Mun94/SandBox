@@ -1,6 +1,6 @@
-# Comment-Management
+# Comment-Management(임시)
 
-### 댓글 관리 서비스
+### 댓글 관리 서비스(임시)
 
 ---
 
