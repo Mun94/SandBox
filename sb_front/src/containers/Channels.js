@@ -1,42 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { ActionChannels } from "../modules/channels.js";
+import { ActionChannels, UploadChannels } from "../modules/channels.js";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../components/Home.js";
 
 const Channels = () => {
-  const [url, setUrl] = useState(null);
-  const [subscriberCount, setSubscriberCount] = useState(null);
+  const [creatorId] = useState({
+    part: "snippet,statistics",
+    id:
+      "UChbE5OZQ6dRHECsX0tEPEZQ,UCw-JzmPsjRcbzJLncr4pIIA,UCcdlIcleb4oIK6of1ugSJ7w,UCKkxVSUMRvmvAXMNzjI03Ag,UCGX5sP4ehBkihHwt5bs5wvg",
+  });
+  const [useSubs, setSubs] = useState([]);
+  const [useUrls, setUrls] = useState([]);
 
   const dispatch = useDispatch();
-  const { channels, loading } = useSelector(({ Channels, Loading }) => ({
-    channels: Channels.channels,
-    loading: Loading["channels/CHANNELS"],
-  }));
+  const { channels, loading, subs, urls } = useSelector(
+    ({ Channels, Loading }) => ({
+      channels: Channels.channels,
+      loading: Loading["channels/CHANNELS"],
+      subs: Channels.upload.subs,
+      urls: Channels.upload.profileUrls,
+    })
+  );
 
   useEffect(() => {
-    dispatch(
-      ActionChannels({
-        part: "snippet,statistics",
-        id: "UChbE5OZQ6dRHECsX0tEPEZQ",
-      })
-    ); // 장삐쭈
-  }, [dispatch]);
+    dispatch(ActionChannels(creatorId)); // 장삐쭈
+  }, [dispatch, creatorId]);
 
   useEffect(() => {
-    if (channels !== null) {
-      const {
-        statistics: { subscriberCount },
-        snippet: {
-          thumbnails: {
-            default: { url },
-          },
-        },
-      } = channels.items[0];
-
-      setSubscriberCount(subscriberCount);
-      setUrl(url);
+    async function asyncFunc() {
+      if (channels !== null) {
+        for (let i = 0; i <= channels.items.length - 1; i++) {
+          const {
+            statistics: { subscriberCount },
+            snippet: {
+              thumbnails: {
+                default: { url },
+              },
+            },
+          } = await channels.items[i];
+          useSubs.push(subscriberCount);
+          useUrls.push(url);
+        }
+        setUrls(useUrls);
+        setSubs(useSubs);
+      }
     }
-  }, [channels]);
+    asyncFunc();
+  }, [channels, useUrls, useSubs]);
+
+  useEffect(() => {
+    dispatch(UploadChannels({ subs: useSubs, profileUrls: useUrls }));
+  }, [dispatch, useSubs, useUrls]);
 
   return (
     <>
@@ -45,7 +59,7 @@ const Channels = () => {
           <div>로딩중..</div>
         </>
       ) : (
-        <Home thumbnails={url} subscriberCount={subscriberCount} />
+        subs && urls && <Home subs={[...subs, subs]} urls={urls} />
       )}
     </>
   );

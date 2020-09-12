@@ -1,13 +1,13 @@
 import React from "react";
 
-const Home = ({ subscriberCount, thumbnails }) => {
+const Home = ({ subs, urls }) => {
+  console.log(subs[0].length);
+
   return (
     <>
-      <div>
-        장삐쭈 구독자 수 : {subscriberCount} <br />
-        이미지 :{" "}
-        <img src={thumbnails} alt="장삐쭈 이미지" title="장삐쭈 이미지" />
-      </div>
+      {subs.map((sub, index) => (
+        <div key={index}>{sub}</div>
+      ))}
     </>
   );
 };
