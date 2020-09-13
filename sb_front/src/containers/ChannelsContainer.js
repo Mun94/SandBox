@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ActionChannels, UploadChannels } from "../modules/channels.js";
 import { useDispatch, useSelector } from "react-redux";
-import Home from "../components/Home.js";
+import Channels from "../components/home/Channels.js";
+import LoadingScreen from "../components/common/LoadingScreen.js";
 
-const Channels = () => {
+const ChannelsContainer = () => {
   const [creatorId] = useState({
     part: "snippet,statistics",
     id:
@@ -63,13 +64,13 @@ const Channels = () => {
     <>
       {loading === false ? (
         <>
-          <Home channelInfo={channelInfo} error={error} />
+          <Channels channelInfo={channelInfo} error={error} />
         </>
       ) : (
-        <div>로딩중</div>
+        <LoadingScreen />
       )}
     </>
   );
 };
 
-export default Channels;
+export default ChannelsContainer;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Home = ({ channelInfo, error }) => {
+const Channels = ({ channelInfo, error }) => {
   return (
     <>
       {error ? (
@@ -18,4 +18,4 @@ const Home = ({ channelInfo, error }) => {
   );
 };
 
-export default React.memo(Home);
+export default React.memo(Channels);

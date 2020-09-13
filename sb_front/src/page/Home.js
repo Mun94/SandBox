@@ -1,10 +1,10 @@
 import React from "react";
-import Channels from "../containers/Channels.js";
+import ChannelsContainer from "../containers/ChannelsContainer.js";
 
 const Home = () => {
   return (
     <>
-      <Channels />
+      <ChannelsContainer />
     </>
   );
 };
