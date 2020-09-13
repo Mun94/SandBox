@@ -7,59 +7,66 @@ const Channels = () => {
   const [creatorId] = useState({
     part: "snippet,statistics",
     id:
-      "UChbE5OZQ6dRHECsX0tEPEZQ,UCw-JzmPsjRcbzJLncr4pIIA,UCcdlIcleb4oIK6of1ugSJ7w,UCKkxVSUMRvmvAXMNzjI03Ag,UCGX5sP4ehBkihHwt5bs5wvg",
+      "UChbE5OZQ6dRHECsX0tEPEZQ,UCw-JzmPsjRcbzJLncr4pIIA,UCcdlIcleb4oIK6of1ugSJ7w,UCKkxVSUMRvmvAXMNzjI03Ag,UCGX5sP4ehBkihHwt5bs5wvg,UCuq9WVWcsaRqOr3K8E9VkQQ",
   });
-  const [useSubs, setSubs] = useState([]);
-  const [useUrls, setUrls] = useState([]);
+
+  const [useChannelInfo, setChannelInfo] = useState([]);
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const { channels, loading, subs, urls } = useSelector(
+  const { channels, loading, channelInfo, channelsError } = useSelector(
     ({ Channels, Loading }) => ({
       channels: Channels.channels,
+      channelsError: Channels.channelsError,
       loading: Loading["channels/CHANNELS"],
-      subs: Channels.upload.subs,
-      urls: Channels.upload.profileUrls,
+      channelInfo: Channels.channelInfo,
     })
   );
 
   useEffect(() => {
-    dispatch(ActionChannels(creatorId)); // 장삐쭈
+    dispatch(ActionChannels(creatorId));
   }, [dispatch, creatorId]);
 
   useEffect(() => {
-    async function asyncFunc() {
-      if (channels !== null) {
-        for (let i = 0; i <= channels.items.length - 1; i++) {
-          const {
-            statistics: { subscriberCount },
-            snippet: {
-              thumbnails: {
-                default: { url },
-              },
+    if (channels !== null) {
+      for (let i = 0; i <= channels.items.length - 1; i++) {
+        const {
+          statistics: { subscriberCount },
+          snippet: {
+            title,
+            thumbnails: {
+              default: { url },
             },
-          } = await channels.items[i];
-          useSubs.push(subscriberCount);
-          useUrls.push(url);
-        }
-        setUrls(useUrls);
-        setSubs(useSubs);
+          },
+        } = channels.items[i];
+
+        useChannelInfo.push({
+          id: i,
+          subs: subscriberCount,
+          profileUrl: url,
+          name: title,
+        });
       }
+
+      setChannelInfo(useChannelInfo);
+      dispatch(UploadChannels({ channelInfo: useChannelInfo }));
     }
-    asyncFunc();
-  }, [channels, useUrls, useSubs]);
+  }, [channels, useChannelInfo, dispatch]);
 
   useEffect(() => {
-    dispatch(UploadChannels({ subs: useSubs, profileUrls: useUrls }));
-  }, [dispatch, useSubs, useUrls]);
+    if (channelsError) {
+      setError(true);
+    }
+  }, [channelsError]);
 
   return (
     <>
-      {loading ? (
+      {loading === false ? (
         <>
-          <div>로딩중..</div>
+          <Home channelInfo={channelInfo} error={error} />
         </>
       ) : (
-        subs && urls && <Home subs={[...subs, subs]} urls={urls} />
+        <div>로딩중</div>
       )}
     </>
   );

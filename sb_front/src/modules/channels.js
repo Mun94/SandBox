@@ -16,7 +16,7 @@ export const ActionChannels = createAction(CHANNELS, ({ part, id }) => ({
 }));
 export const UploadChannels = createAction(
   UPLOAD_CHANNELS_INFO,
-  ({ subs, profileUrls }) => ({ subs, profileUrls })
+  ({ channelInfo }) => ({ channelInfo })
 );
 
 const ChannelsSaga = createReactSaga(CHANNELS, YouTube.Channels);
@@ -25,7 +25,7 @@ export function* SagaChannels() {
 }
 
 const initialState = {
-  upload: { subs: [], profileUrls: [] },
+  channelInfo: [],
   channels: null,
   channelsError: null,
 };
@@ -40,9 +40,9 @@ const Channels = handleActions(
       ...state,
       channelsError: action.payload,
     }),
-    [UPLOAD_CHANNELS_INFO]: (state, { payload: { subs, profileUrls } }) => ({
+    [UPLOAD_CHANNELS_INFO]: (state, { payload: { channelInfo } }) => ({
       ...state,
-      upload: { subs, profileUrls },
+      channelInfo,
     }),
   },
   initialState

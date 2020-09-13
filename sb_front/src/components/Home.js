@@ -1,15 +1,21 @@
 import React from "react";
 
-const Home = ({ subs, urls }) => {
-  console.log(subs[0].length);
-
+const Home = ({ channelInfo, error }) => {
   return (
     <>
-      {subs.map((sub, index) => (
-        <div key={index}>{sub}</div>
-      ))}
+      {error ? (
+        <div>에러 발생</div>
+      ) : (
+        channelInfo.map((info) => (
+          <div key={info.id}>
+            <img src={info.profileUrl} alt="" />
+            {info.name}
+            구독자 수 : {info.subs}
+          </div>
+        ))
+      )}
     </>
   );
 };
 
-export default Home;
+export default React.memo(Home);
