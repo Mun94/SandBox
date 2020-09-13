@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ActionChannels, UploadChannels } from "../modules/channels.js";
-import { useDispatch, useSelector } from "react-redux";
-import Channels from "../components/home/Channels.js";
-import LoadingScreen from "../components/common/LoadingScreen.js";
-import Header from "../components/common/Header.js";
-import Responsive from "../components/common/Responsive.js";
+import React, { useEffect, useState, useRef } from 'react';
+import { ActionChannels, UploadChannels } from '../modules/channels.js';
+import { useDispatch, useSelector } from 'react-redux';
+import Channels from '../components/home/Channels.js';
+import LoadingScreen from '../components/common/LoadingScreen.js';
+import Header from '../components/common/Header.js';
+import Responsive from '../components/common/Responsive.js';
 
 const ChannelsContainer = () => {
   const [creatorId] = useState({
-    part: "snippet,statistics",
+    part: 'snippet,statistics',
     id:
-      "UChbE5OZQ6dRHECsX0tEPEZQ,UCw-JzmPsjRcbzJLncr4pIIA,UCcdlIcleb4oIK6of1ugSJ7w,UCKkxVSUMRvmvAXMNzjI03Ag,UCGX5sP4ehBkihHwt5bs5wvg,UCuq9WVWcsaRqOr3K8E9VkQQ",
+      'UChbE5OZQ6dRHECsX0tEPEZQ,UCw-JzmPsjRcbzJLncr4pIIA,UCcdlIcleb4oIK6of1ugSJ7w,UCKkxVSUMRvmvAXMNzjI03Ag,UCGX5sP4ehBkihHwt5bs5wvg,UCuq9WVWcsaRqOr3K8E9VkQQ',
   });
 
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -21,14 +21,16 @@ const ChannelsContainer = () => {
     ({ Channels, Loading }) => ({
       channels: Channels.channels,
       channelsError: Channels.channelsError,
-      loading: Loading["channels/CHANNELS"],
+      loading: Loading['channels/CHANNELS'],
       channelInfo: Channels.channelInfo,
-    })
+    }),
   );
 
   useEffect(() => {
     dispatch(ActionChannels(creatorId));
   }, [dispatch, creatorId]);
+
+  const nextId = useRef(0);
 
   useEffect(() => {
     if (channels !== null) {
@@ -44,11 +46,12 @@ const ChannelsContainer = () => {
         } = channels.items[i];
 
         useChannelInfo.push({
-          id: i,
+          id: nextId.current,
           subs: subscriberCount,
           profileUrl: url,
           name: title,
         });
+        nextId.current += 1;
       }
 
       setChannelInfo(useChannelInfo);

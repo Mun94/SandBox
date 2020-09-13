@@ -9,6 +9,8 @@ const HeaderBlock = styled.div`
   align-items: center;
   justify-content: center;
   height: 3rem;
+  background: white;
+  z-index: 1;
   box-shadow: 0px 2px #f7e707;
   a {
     text-decoration: none;
