@@ -3,6 +3,7 @@ import { ActionChannels, UploadChannels } from "../modules/channels.js";
 import { useDispatch, useSelector } from "react-redux";
 import Channels from "../components/home/Channels.js";
 import LoadingScreen from "../components/common/LoadingScreen.js";
+import Header from "../components/common/Header.js";
 
 const ChannelsContainer = () => {
   const [creatorId] = useState({
@@ -64,6 +65,7 @@ const ChannelsContainer = () => {
     <>
       {loading === false ? (
         <>
+          <Header />
           <Channels channelInfo={channelInfo} error={error} />
         </>
       ) : (
