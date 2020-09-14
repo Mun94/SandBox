@@ -1,49 +1,83 @@
-import React from "react";
-import styled from "styled-components";
-
-const Img = styled.img`
-  border-radius: 60%;
-  width: 5rem;
-  height: 5rem;
-`;
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
+import { List } from 'react-virtualized';
 
 const InfoBlock = styled.div`
   display: flex;
-  border: 1px solid gray;
-  padding: 0.5rem;
   align-items: center;
+  justify-content: space-between;
+  &:nth-child(even) {
+    background: rgba(0, 0, 0, 0.05);
+  }
 `;
+
+const Img = styled.img`
+  border-radius: 60%;
+  width: 4rem;
+  height: 4rem;
+  margin-left: 0.5rem;
+`;
+
 const NameSubs = styled.div`
   margin-left: 1rem;
   span + span:before {
-    content: "\\B7";
+    content: '\\B7';
     margin-left: 0.3rem;
     margin-right: 0.3rem;
   }
-  span::nth-child(1) {
-    font-size: 1.3rem;
+  span:nth-child(1) {
+    font-size: 1.12rem;
   }
   span:nth-child(2) {
     opacity: 50%;
   }
 `;
 
+const Block = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  margin-right: 0.5rem;
+`;
+
 const Channels = ({ channelInfo, error }) => {
+  const rowRenderer = useCallback(
+    ({ index, key, style }) => {
+      const info = channelInfo[index];
+      return (
+        <InfoBlock key={key} style={style}>
+          <Block>
+            <Img src={info.profileUrl} alt="" />
+            <NameSubs>
+              <span>{info.name}</span>
+              <span>{info.subs}</span>
+            </NameSubs>
+          </Block>
+          <Icon>아이콘 자리</Icon>
+        </InfoBlock>
+      );
+    },
+    [channelInfo],
+  );
+
   return (
     <>
       {error ? (
         <div>에러 발생</div>
       ) : (
-        channelInfo.map((info) => (
-          <InfoBlock key={info.id}>
-            <Img src={info.profileUrl} alt="" />
-
-            <NameSubs>
-              <span>{info.name}</span>
-              <span>{info.subs}</span>
-            </NameSubs>
-          </InfoBlock>
-        ))
+        <List
+          width={800}
+          height={550}
+          rowCount={channelInfo.length}
+          rowHeight={110}
+          rowRenderer={rowRenderer}
+          style={{
+            border: '2px solid rgba(0, 0, 0, 0.05)',
+            margin: '0 auto',
+          }}
+        />
       )}
     </>
   );

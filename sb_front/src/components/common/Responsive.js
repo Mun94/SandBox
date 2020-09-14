@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
   margin-left: 5rem;
   margin-right: 5rem;
-  border: 1px solid gray;
+  margin: 0 auto;
 `;
 
 const LoadingSpace = styled.div`
