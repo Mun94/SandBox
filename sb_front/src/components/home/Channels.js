@@ -6,8 +6,11 @@ const InfoBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-radius: 1rem;
+  background: white;
+
   &:nth-child(even) {
-    background: rgba(0, 0, 0, 0.05);
+    background: #f7f2f2;
   }
 `;
 
@@ -68,7 +71,7 @@ const Channels = ({ channelInfo, error }) => {
         <div>에러 발생</div>
       ) : (
         <List
-          width={800}
+          width={790}
           height={550}
           rowCount={channelInfo.length}
           rowHeight={110}
