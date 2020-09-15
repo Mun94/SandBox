@@ -1,24 +1,17 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
-  margin-left: 5rem;
-  margin-right: 5rem;
   width: 100%;
   margin: 0 auto;
-
-  ${(props) =>
-    props.headerProps &&
-    css`
-      padding-left: 7rem;
-      padding-right: 7rem;
-    `}
+  padding-left: 8rem;
+  padding-right: 8rem;
 `;
 
 const LoadingSpace = styled.div`
   position: fixed;
-  width: 1rem;
-  height: 1rem;
+  width: 3rem;
+  height: 3rem;
   background: red;
   right: 2rem;
   bottom: 2rem;

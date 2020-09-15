@@ -14,6 +14,15 @@ const InfoBlock = styled.div`
   }
 `;
 
+const ListBlock = styled.div`
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: '100%';
+  max-height: '100%';
+`;
+
 const Img = styled.img`
   border-radius: 60%;
   width: 4rem;
@@ -70,17 +79,18 @@ const Channels = ({ channelInfo, error }) => {
       {error ? (
         <div>에러 발생</div>
       ) : (
-        <List
-          width={790}
-          height={550}
-          rowCount={channelInfo.length}
-          rowHeight={110}
-          rowRenderer={rowRenderer}
-          style={{
-            border: '2px solid rgba(0, 0, 0, 0.05)',
-            margin: '0 auto',
-          }}
-        />
+        <ListBlock>
+          <List
+            width={760}
+            height={550}
+            rowCount={channelInfo.length}
+            rowHeight={110}
+            rowRenderer={rowRenderer}
+            style={{
+              border: '2px solid rgba(0, 0, 0, 0.05)',
+            }}
+          />
+        </ListBlock>
       )}
     </>
   );

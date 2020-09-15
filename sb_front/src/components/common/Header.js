@@ -7,7 +7,7 @@ const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
   display: flex;
-  justify-content: center;
+  z-index: 1;
 `;
 
 const Wrapper = styled(Responsive)`
@@ -15,22 +15,24 @@ const Wrapper = styled(Responsive)`
   display: flex;
   align-items: center;
   a {
+    padding-left: 1rem;
     text-decoration: none;
     color: white;
     font-weight: bold;
     letter-spacing: 1px;
+    font-size: 1.2rem;
   }
 `;
 
 const Spacer = styled.div`
-  height: 4.5rem;
+  height: 5rem;
 `;
 
 const Header = () => {
   return (
     <>
       <HeaderBlock>
-        <Wrapper headerProps>
+        <Wrapper>
           <Link to="/">SANDBOX</Link>
         </Wrapper>
       </HeaderBlock>
