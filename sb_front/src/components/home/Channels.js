@@ -51,7 +51,7 @@ const Icon = styled.div`
   margin-right: 0.5rem;
 `;
 
-const Channels = ({ channelInfo, error, sortBy, onChange }) => {
+const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
   if (sortBy === 'subs') {
     channelInfo.sort((a, b) => {
       if (parseInt(a.subs) > parseInt(b.subs)) return -1;
@@ -69,6 +69,11 @@ const Channels = ({ channelInfo, error, sortBy, onChange }) => {
     channelInfo.sort(() => {
       return Math.random() - Math.random(); // 랜덤 정렬
     });
+  }
+  if (keyword) {
+    channelInfo = channelInfo.filter(
+      (channel) => channel.name.indexOf(keyword) >= 0,
+    );
   }
 
   const rowRenderer = useCallback(

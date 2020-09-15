@@ -26,4 +26,4 @@ const Responsive = ({ children, ...rest }) => {
   );
 };
 
-export default Responsive;
+export default React.memo(Responsive);

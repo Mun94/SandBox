@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
 import Header from '../../components/common/Header.js';
+import SearchBar from './SearchBar.js';
 
 const ChannelsContainer = () => {
   const [creatorId] = useState({
@@ -17,14 +18,19 @@ const ChannelsContainer = () => {
   const [sortBy, setSortBy] = useState('');
 
   const dispatch = useDispatch();
-  const { channels, loading, channelInfo, channelsError } = useSelector(
-    ({ Channels, Loading }) => ({
-      channels: Channels.channels,
-      channelsError: Channels.channelsError,
-      loading: Loading['channels/CHANNELS'],
-      channelInfo: Channels.channelInfo,
-    }),
-  );
+  const {
+    channels,
+    loading,
+    channelInfo,
+    channelsError,
+    keyword,
+  } = useSelector(({ Channels, Loading }) => ({
+    channels: Channels.channels,
+    channelsError: Channels.channelsError,
+    loading: Loading['channels/CHANNELS'],
+    channelInfo: Channels.channelInfo,
+    keyword: Channels.keyword,
+  }));
 
   useEffect(() => {
     dispatch(ActionChannels(creatorId));
@@ -74,11 +80,13 @@ const ChannelsContainer = () => {
       {loading === false ? (
         <>
           <Header />
+          <SearchBar />
           <Channels
             channelInfo={channelInfo}
             error={error}
             sortBy={sortBy}
             onChange={onChange}
+            keyword={keyword}
           />
         </>
       ) : (
@@ -88,4 +96,4 @@ const ChannelsContainer = () => {
   );
 };
 
-export default React.memo(ChannelsContainer);
+export default ChannelsContainer;
