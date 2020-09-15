@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { ActionChannels, UploadChannels } from '../modules/channels.js';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { ActionChannels, UploadChannels } from '../../modules/channels.js';
 import { useDispatch, useSelector } from 'react-redux';
-import Channels from '../components/home/Channels.js';
-import LoadingScreen from '../components/common/LoadingScreen.js';
-import Header from '../components/common/Header.js';
+import Channels from '../../components/home/Channels.js';
+import LoadingScreen from '../../components/common/LoadingScreen.js';
+import Header from '../../components/common/Header.js';
 
 const ChannelsContainer = () => {
   const [creatorId] = useState({
@@ -14,6 +14,7 @@ const ChannelsContainer = () => {
 
   const [useChannelInfo, setChannelInfo] = useState([]);
   const [error, setError] = useState(false);
+  const [sortBy, setSortBy] = useState('');
 
   const dispatch = useDispatch();
   const { channels, loading, channelInfo, channelsError } = useSelector(
@@ -64,12 +65,21 @@ const ChannelsContainer = () => {
     }
   }, [channelsError]);
 
+  const onChange = useCallback((e) => {
+    setSortBy(e.target.value);
+  }, []);
+
   return (
     <>
       {loading === false ? (
         <>
           <Header />
-          <Channels channelInfo={channelInfo} error={error} />
+          <Channels
+            channelInfo={channelInfo}
+            error={error}
+            sortBy={sortBy}
+            onChange={onChange}
+          />
         </>
       ) : (
         <LoadingScreen />
@@ -78,4 +88,4 @@ const ChannelsContainer = () => {
   );
 };
 
-export default ChannelsContainer;
+export default React.memo(ChannelsContainer);

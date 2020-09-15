@@ -51,7 +51,26 @@ const Icon = styled.div`
   margin-right: 0.5rem;
 `;
 
-const Channels = ({ channelInfo, error }) => {
+const Channels = ({ channelInfo, error, sortBy, onChange }) => {
+  if (sortBy === 'subs') {
+    channelInfo.sort((a, b) => {
+      if (parseInt(a.subs) > parseInt(b.subs)) return -1;
+      // subs에 sortBy를 직접 넣게되면 sortBy가 인식이 안 됨.
+      else if (parseInt(b.subs) > parseInt(a.subs)) return 1;
+      else return 0;
+    });
+  } else if (sortBy === 'name') {
+    channelInfo.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      else if (b.name > a.name) return -1;
+      else return 0;
+    });
+  } else {
+    channelInfo.sort(() => {
+      return Math.random() - Math.random(); // 랜덤 정렬
+    });
+  }
+
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
@@ -77,6 +96,11 @@ const Channels = ({ channelInfo, error }) => {
         <div>에러 발생</div>
       ) : (
         <>
+          <select onChange={onChange}>
+            <option value="">정렬</option>
+            <option value="name">이름 순</option>
+            <option value="subs">구독자 순</option>
+          </select>
           <ListBlock>
             <List
               width={760}

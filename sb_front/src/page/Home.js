@@ -1,5 +1,5 @@
-import React from "react";
-import ChannelsContainer from "../containers/ChannelsContainer.js";
+import React from 'react';
+import ChannelsContainer from '../containers/home/ChannelsContainer.js';
 
 const Home = () => {
   return (
