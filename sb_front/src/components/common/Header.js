@@ -6,7 +6,6 @@ import Responsive from './Responsive.js';
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
-  display: flex;
   z-index: 1;
 `;
 
