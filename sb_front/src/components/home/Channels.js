@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { List } from 'react-virtualized';
+import Header from '../common/Header.js';
+import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 
 const InfoBlock = styled.div`
   display: flex;
@@ -10,6 +12,17 @@ const InfoBlock = styled.div`
   background: white;
 
   &:nth-child(even) {
+    background: #f7f2f2;
+  }
+`;
+
+const SearchSelectBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  select {
+    margin-right: 20px;
     background: #f7f2f2;
   }
 `;
@@ -101,11 +114,15 @@ const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
         <div>에러 발생</div>
       ) : (
         <>
-          <select onChange={onChange}>
-            <option value="">정렬</option>
-            <option value="name">이름 순</option>
-            <option value="subs">구독자 순</option>
-          </select>
+          <Header />
+          <SearchSelectBlock>
+            <select onChange={onChange}>
+              <option value="">정렬</option>
+              <option value="name">이름 순</option>
+              <option value="subs">구독자 순</option>
+            </select>
+            <SearchChannelsContainer />
+          </SearchSelectBlock>
           <ListBlock>
             <List
               width={760}

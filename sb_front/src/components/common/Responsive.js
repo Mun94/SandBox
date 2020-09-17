@@ -6,6 +6,11 @@ const ResponsiveBlock = styled.div`
   margin: 0 auto;
   padding-left: 8rem;
   padding-right: 8rem;
+
+  @media (max-width: 950px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 `;
 
 const LoadingSpace = styled.div`

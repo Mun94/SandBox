@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchChannels } from '../../modules/channels.js';
+import SearchBar from '../../components/common/SearchBar.js';
 
-const SearchBar = () => {
+const SearchChannelsContainer = () => {
   const { keyword } = useSelector(({ Channels }) => Channels.keyword);
   const dispatch = useDispatch();
   const onChange = useCallback(
@@ -12,16 +13,7 @@ const SearchBar = () => {
     [dispatch],
   );
 
-  return (
-    <form>
-      <input
-        type="text"
-        placeholder="search.."
-        value={keyword}
-        onChange={onChange}
-      />
-    </form>
-  );
+  return <SearchBar type="text" value={keyword} onChange={onChange} />;
 };
 
-export default SearchBar;
+export default SearchChannelsContainer;
