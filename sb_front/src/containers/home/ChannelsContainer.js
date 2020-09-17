@@ -47,6 +47,7 @@ const ChannelsContainer = () => {
               default: { url },
             },
           },
+          id,
         } = channels.items[i];
 
         useChannelInfo.push({
@@ -54,6 +55,7 @@ const ChannelsContainer = () => {
           subs: subscriberCount,
           profileUrl: url,
           name: title,
+          channelId: id,
         });
         nextId.current += 1;
       }

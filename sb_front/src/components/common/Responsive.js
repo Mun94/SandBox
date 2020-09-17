@@ -8,8 +8,8 @@ const ResponsiveBlock = styled.div`
   padding-right: 8rem;
 
   @media (max-width: 950px) {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 `;
 

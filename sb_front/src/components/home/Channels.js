@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import Header from '../common/Header.js';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
+import Button from '../common/Button.js';
+
+import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
+import { BsQuestion } from 'react-icons/bs';
+import { AiFillGift } from 'react-icons/ai';
 
 const InfoBlock = styled.div`
   display: flex;
@@ -24,6 +29,11 @@ const SearchSelectBlock = styled.div`
   select {
     margin-right: 20px;
     background: #f7f2f2;
+    border-radius: 3px;
+
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
@@ -37,7 +47,7 @@ const Img = styled.img`
   border-radius: 60%;
   width: 4rem;
   height: 4rem;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
 `;
 
 const NameSubs = styled.div`
@@ -61,14 +71,31 @@ const Block = styled.div`
 `;
 
 const Icon = styled.div`
-  margin-right: 0.5rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 65%;
+
+  Button + a,
+  a + a,
+  a + Button {
+    margin-left: 0.2rem;
+  }
+  svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  svg:hover {
+    border-bottom: 1.5px solid gray;
+  }
 `;
 
 const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
   if (sortBy === 'subs') {
     channelInfo.sort((a, b) => {
       if (parseInt(a.subs) > parseInt(b.subs)) return -1;
-      // subs에 sortBy를 직접 넣게되면 sortBy가 인식이 안 됨.
       else if (parseInt(b.subs) > parseInt(a.subs)) return 1;
       else return 0;
     });
@@ -98,10 +125,31 @@ const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
             <Img src={info.profileUrl} alt="" />
             <NameSubs>
               <span>{info.name}</span>
-              <span>{info.subs}</span>
+              <span>{info.subs / 10000}만명</span>
             </NameSubs>
           </Block>
-          <Icon>아이콘 자리</Icon>
+          <Icon>
+            <Button to="">
+              <RiPlayMiniFill size="20" />
+            </Button>
+            <Button
+              href={`https://www.youtube.com/channel/${info.channelId}/store`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiFillGift size="20" />
+            </Button>
+            <Button
+              href={`https://www.youtube.com/channel/${info.channelId}/community`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <RiChatSmile3Fill size="20" />
+            </Button>
+            <Button to="">
+              <BsQuestion size="20" />
+            </Button>
+          </Icon>
         </InfoBlock>
       );
     },
