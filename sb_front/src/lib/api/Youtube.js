@@ -1,7 +1,7 @@
-import client from "./client.js";
-import qs from "qs";
+import client from './client.js';
+import qs from 'qs';
 
-export const Channels = ({ part, id }) => {
+export const channels = ({ part, id }) => {
   const queryString = qs.stringify({
     part,
     id,
