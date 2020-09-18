@@ -18,10 +18,10 @@ export const activities = ({ part, channelId, maxResults }) => {
   return client.get(`/activities?${queryString}`);
 };
 
-export const channelsSections = ({ part, channelId }) => {
+export const videos = ({ part, id }) => {
   const queryString = qs.stringify({
     part,
-    channelId,
+    id,
   });
-  return client.get(`/channelSections?${queryString}`);
+  return client.get(`/videos?${queryString}`);
 };
