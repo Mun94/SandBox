@@ -1,7 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const UPLOAD_CHANNELS_INFO = 'channels/UPLOAD_CHANNELS_INFO';
-const SEARCH_KEYWORD = 'channels/SEARCH_KEYWORD';
+const UPLOAD_CHANNELS_INFO = 'homeChannels/UPLOAD_CHANNELS_INFO';
+const SEARCH_KEYWORD = 'homeChannels/SEARCH_KEYWORD';
+const INITIALSTATE = 'homeChannels/INITIALSTATE';
 
 export const uploadChannels = createAction(
   UPLOAD_CHANNELS_INFO,
@@ -10,6 +11,7 @@ export const uploadChannels = createAction(
 export const searchChannels = createAction(SEARCH_KEYWORD, ({ keyword }) => ({
   keyword,
 }));
+export const initialstate = createAction(INITIALSTATE);
 
 const initialState = {
   channelInfo: [],
@@ -25,6 +27,10 @@ const homeChannels = handleActions(
     [SEARCH_KEYWORD]: (state, { payload: { keyword } }) => ({
       ...state,
       keyword,
+    }),
+    [INITIALSTATE]: (state) => ({
+      ...state,
+      keyword: '',
     }),
   },
   initialState,

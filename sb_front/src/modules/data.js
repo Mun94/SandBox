@@ -5,6 +5,8 @@ import createReactSaga, {
 } from '../lib/createReactSaga.js';
 import * as YouTube from '../lib/api/Youtube.js';
 
+const INITIALSTATE = 'homeChannels/INITIALSTATE';
+
 const [CHANNELS, CHANNELS_SUCCESS, CHANNELS_FAILURE] = createReactSagaType(
   'data/CHANNELS',
 );
@@ -35,6 +37,7 @@ export const videosDatas = createAction(VIDEOS, (id) => ({
   part: 'snippet,contentDetails, statistics, player',
   id,
 }));
+export const initialstate = createAction(INITIALSTATE);
 
 const channelsSaga = createReactSaga(CHANNELS, YouTube.channels);
 const activitiesSaga = createReactSaga(ACTIVITIES, YouTube.activities);
@@ -82,6 +85,7 @@ const data = handleActions(
       ...state,
       apiError: action.payload,
     }),
+    [INITIALSTATE]: () => initialState,
   },
   initialState,
 );

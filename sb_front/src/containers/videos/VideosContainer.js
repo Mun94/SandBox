@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import {
   uploadVideoId,
   uploadVideoDetail,
+  initialstate,
 } from '../../modules/videoDetails.js';
+import Videos from '../../components/videos/Videos.js';
 
 const VideosContainer = ({ match }) => {
   const { channelId } = match.params;
@@ -14,11 +16,12 @@ const VideosContainer = ({ match }) => {
   const [useVideoDetail, setVideoDetail] = useState([]);
 
   const dispatch = useDispatch();
-  const { activities, videoId, videos } = useSelector(
+  const { activities, videoId, videos, videoDetail } = useSelector(
     ({ data, videoDetails }) => ({
       activities: data.activities,
       videos: data.videos,
       videoId: videoDetails.videoId,
+      videoDetail: videoDetails.videoDetail,
     }),
   );
 
@@ -35,7 +38,6 @@ const VideosContainer = ({ match }) => {
         }
       }
       setVideoId(useVideoId);
-      dispatch(uploadVideoId({ videoId: useVideoId }));
     }
     if (videoId !== null) {
       dispatch(videosDatas(videoId.join()));
@@ -85,11 +87,27 @@ const VideosContainer = ({ match }) => {
         nextId.current += 1;
       }
       setVideoDetail(useVideoDetail);
-      dispatch(uploadVideoDetail({ videoDetails: useVideoDetail }));
     }
   }, [dispatch, useVideoDetail, videos]);
 
-  return <>adsf</>;
+  useEffect(() => {
+    dispatch(uploadVideoId({ videoId: useVideoId }));
+    dispatch(uploadVideoDetail(useVideoDetail));
+
+    return () => {
+      dispatch(initialstate());
+    };
+  }, [dispatch, useVideoId, useVideoDetail]);
+
+  return (
+    <>
+      {videoDetail.length < 1 ? (
+        <>로딩</>
+      ) : (
+        <Videos videoDetail={videoDetail} />
+      )}
+    </>
+  );
 };
 
 export default withRouter(VideosContainer);

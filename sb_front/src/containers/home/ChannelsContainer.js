@@ -3,7 +3,7 @@ import { uploadChannels } from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
-import { channelsDatas } from '../../modules/data.js';
+import { channelsDatas, initialstate } from '../../modules/data.js';
 
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -23,6 +23,9 @@ const ChannelsContainer = () => {
 
   useEffect(() => {
     dispatch(channelsDatas());
+    return () => {
+      dispatch(initialstate());
+    };
   }, [dispatch]);
 
   const nextId = useRef(0);
@@ -52,9 +55,12 @@ const ChannelsContainer = () => {
       }
 
       setChannelInfo(useChannelInfo);
-      dispatch(uploadChannels({ channelInfo: useChannelInfo }));
     }
   }, [channels, useChannelInfo, dispatch]);
+
+  useEffect(() => {
+    dispatch(uploadChannels({ channelInfo: useChannelInfo }));
+  }, [dispatch, useChannelInfo]);
 
   useEffect(() => {
     if (apiError) {

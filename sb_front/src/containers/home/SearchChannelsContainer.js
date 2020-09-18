@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchChannels } from '../../modules/homeChannels.js';
+import { searchChannels, initialstate } from '../../modules/homeChannels.js';
 import SearchBar from '../../components/common/SearchBar.js';
 
 const SearchChannelsContainer = () => {
@@ -12,6 +12,10 @@ const SearchChannelsContainer = () => {
     },
     [dispatch],
   );
+
+  useEffect(() => {
+    dispatch(initialstate());
+  }, [dispatch]);
 
   return <SearchBar type="text" value={keyword} onChange={onChange} />;
 };

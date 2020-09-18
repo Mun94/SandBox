@@ -2,11 +2,13 @@ import { createAction, handleActions } from 'redux-actions';
 
 const VIDEOID = 'videoDetails/VIDEOID';
 const VIDEODETAIL = 'videosDetails/VIDEODETAIL';
+const INITIALSTATE = 'videoDetails/INITIALSTATE';
 
 export const uploadVideoId = createAction(VIDEOID, (videoId) => videoId);
 export const uploadVideoDetail = createAction(VIDEODETAIL, (videoDetail) => ({
   videoDetail,
 }));
+export const initialstate = createAction(INITIALSTATE);
 
 const initialState = {
   videoId: [],
@@ -23,6 +25,7 @@ const videoDetails = handleActions(
       ...state,
       videoDetail,
     }),
+    [INITIALSTATE]: () => initialState,
   },
   initialState,
 );
