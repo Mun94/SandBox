@@ -3,7 +3,7 @@ import { uploadChannels } from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
-import { channelsDatas } from '../../modules/channelsData.js';
+import { channelsDatas } from '../../modules/data.js';
 
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -11,19 +11,15 @@ const ChannelsContainer = () => {
   const [sortBy, setSortBy] = useState('');
 
   const dispatch = useDispatch();
-  const {
-    channels,
-    loading,
-    channelInfo,
-    channelsError,
-    keyword,
-  } = useSelector(({ channelsData, homeChannels, Loading }) => ({
-    channels: channelsData.channels,
-    channelsError: channelsData.channelsError,
-    loading: Loading['channels/CHANNELS'],
-    channelInfo: homeChannels.channelInfo,
-    keyword: homeChannels.keyword,
-  }));
+  const { channels, loading, channelInfo, apiError, keyword } = useSelector(
+    ({ data, homeChannels, Loading }) => ({
+      channels: data.channels,
+      apiError: data.apiError,
+      loading: Loading['data/CHANNELS'],
+      channelInfo: homeChannels.channelInfo,
+      keyword: homeChannels.keyword,
+    }),
+  );
 
   useEffect(() => {
     dispatch(channelsDatas());
@@ -61,10 +57,10 @@ const ChannelsContainer = () => {
   }, [channels, useChannelInfo, dispatch]);
 
   useEffect(() => {
-    if (channelsError) {
+    if (apiError) {
       setError(true);
     }
-  }, [channelsError]);
+  }, [apiError]);
 
   const onChange = useCallback((e) => {
     setSortBy(e.target.value);

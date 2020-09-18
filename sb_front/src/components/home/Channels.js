@@ -129,7 +129,7 @@ const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
             </NameSubs>
           </Block>
           <Icon>
-            <Button to="">
+            <Button to={`/v/${info.channelId}`}>
               <RiPlayMiniFill size="20" />
             </Button>
             <Button

@@ -9,5 +9,19 @@ export const channels = ({ part, id }) => {
   return client.get(`/channels?${queryString}`);
 };
 
-// export const Channels = ({ part, id }) =>
-//   client.get(`/channels?part=${part}&id=${id}`);
+export const activities = ({ part, channelId, maxResults }) => {
+  const queryString = qs.stringify({
+    part,
+    channelId,
+    maxResults,
+  });
+  return client.get(`/activities?${queryString}`);
+};
+
+export const channelsSections = ({ part, channelId }) => {
+  const queryString = qs.stringify({
+    part,
+    channelId,
+  });
+  return client.get(`/channelSections?${queryString}`);
+};

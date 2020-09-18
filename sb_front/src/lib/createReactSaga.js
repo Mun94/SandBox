@@ -1,5 +1,5 @@
-import { call, put } from "redux-saga/effects";
-import { StartLoading, FinishLoading } from "../modules/loading.js";
+import { call, put } from 'redux-saga/effects';
+import { StartLoading, FinishLoading } from '../modules/loading.js';
 
 export const createReactSagaType = (type) => {
   const SUCCESS = `${type}_SUCCESS`;
