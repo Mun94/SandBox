@@ -13,7 +13,7 @@ const VideosContainer = ({ match }) => {
   const { channelId } = match.params;
 
   const [useVideoId, setVideoId] = useState([]);
-  const [useVideoDetail, setVideoDetail] = useState([]);
+  const [useVideoDetail] = useState([]);
 
   const dispatch = useDispatch();
   const { activities, videoId, videos, videoDetail } = useSelector(
@@ -31,7 +31,7 @@ const VideosContainer = ({ match }) => {
 
   useEffect(() => {
     if (activities !== null) {
-      for (let i = 0; i < activities.items.length - 1; i++) {
+      for (let i = 0; i < activities.items.length; i++) {
         const { contentDetails } = activities.items[i];
         if (contentDetails.upload !== undefined) {
           useVideoId.push(contentDetails.upload.videoId);
@@ -86,18 +86,16 @@ const VideosContainer = ({ match }) => {
 
         nextId.current += 1;
       }
-      setVideoDetail(useVideoDetail);
     }
   }, [dispatch, useVideoDetail, videos]);
 
   useEffect(() => {
     dispatch(uploadVideoId({ videoId: useVideoId }));
     dispatch(uploadVideoDetail(useVideoDetail));
-
     return () => {
       dispatch(initialstate());
     };
-  }, [dispatch, useVideoId, useVideoDetail]);
+  }, [dispatch, useVideoId, useVideoDetail, videoDetail]);
 
   return (
     <>
