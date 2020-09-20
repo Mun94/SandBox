@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { uploadChannels } from '../../modules/homeChannels.js';
+import { uploadChannels, uploadVideoId } from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
@@ -7,6 +7,7 @@ import {
   channelsDatas,
   initialstate,
   homeActivitiesDatas,
+  homeVideosDatas,
 } from '../../modules/data.js';
 
 const ChannelsContainer = () => {
@@ -23,6 +24,7 @@ const ChannelsContainer = () => {
     apiError,
     keyword,
     homeActivities,
+    videoId,
   } = useSelector(({ data, homeChannels, Loading }) => ({
     channels: data.channels,
     apiError: data.apiError,
@@ -30,6 +32,7 @@ const ChannelsContainer = () => {
     channelInfo: homeChannels.channelInfo,
     keyword: homeChannels.keyword,
     homeActivities: data.homeActivities,
+    videoId: homeChannels.videoId,
   }));
 
   useEffect(() => {
@@ -42,14 +45,21 @@ const ChannelsContainer = () => {
     };
   }, [dispatch]);
 
-  const nextId = useRef(0);
   useEffect(() => {
     if (homeActivities !== null) {
       for (let i = 0; i < homeActivities.items.length; i++) {
-        useHomeActivities.push(homeActivities.items[i]);
+        const { contentDetails } = homeActivities.items[i];
+        if (contentDetails.upload !== undefined) {
+          useHomeActivities.push(contentDetails.upload.videoId);
+        }
       }
     }
-  }, [homeActivities, useHomeActivities]);
+    if (videoId !== null) {
+      dispatch(homeVideosDatas(videoId.join()));
+    }
+  }, [homeActivities, useHomeActivities, dispatch, videoId]);
+
+  const nextId = useRef(0);
 
   useEffect(() => {
     if (channels !== null) {
@@ -71,17 +81,20 @@ const ChannelsContainer = () => {
           profileUrl: url,
           name: title,
           channelId: id,
-          videoId: useHomeActivities.splice(0, 3),
         });
 
         nextId.current += 1;
       }
     }
-  }, [channels, useChannelInfo, dispatch, useHomeActivities]);
+  }, [channels, useChannelInfo, dispatch]);
 
   useEffect(() => {
     dispatch(uploadChannels({ channelInfo: useChannelInfo }));
-  }, [dispatch, useChannelInfo]);
+    dispatch(uploadVideoId({ videoId: useHomeActivities }));
+    return () => {
+      dispatch(initialstate());
+    };
+  }, [dispatch, useChannelInfo, useHomeActivities]);
 
   useEffect(() => {
     if (apiError) {
@@ -95,7 +108,7 @@ const ChannelsContainer = () => {
 
   return (
     <>
-      {loading === false ? (
+      {loading === false && channelInfo.length === 20 ? (
         <Channels
           channelInfo={channelInfo}
           error={error}
