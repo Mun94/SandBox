@@ -3,57 +3,36 @@ import { uploadChannels } from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
-import {
-  channelsDatas,
-  initialstate,
-  homeActivitiesDatas,
-} from '../../modules/data.js';
+import { channelsDatas, initialstate } from '../../modules/data.js';
 
 const ChannelsContainer = () => {
-  const [useChannelInfo] = useState([]);
+  const [useChannelInfo, setChannelInfo] = useState([]);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState('');
-  const [useHomeActivities] = useState([]);
 
   const dispatch = useDispatch();
-  const {
-    channels,
-    loading,
-    channelInfo,
-    apiError,
-    keyword,
-    homeActivities,
-  } = useSelector(({ data, homeChannels, Loading }) => ({
-    channels: data.channels,
-    apiError: data.apiError,
-    loading: Loading['data/CHANNELS'],
-    channelInfo: homeChannels.channelInfo,
-    keyword: homeChannels.keyword,
-    homeActivities: data.homeActivities,
-  }));
+  const { channels, loading, channelInfo, apiError, keyword } = useSelector(
+    ({ data, homeChannels, Loading }) => ({
+      channels: data.channels,
+      apiError: data.apiError,
+      loading: Loading['data/CHANNELS'],
+      channelInfo: homeChannels.channelInfo,
+      keyword: homeChannels.keyword,
+    }),
+  );
 
   useEffect(() => {
     dispatch(channelsDatas());
-    for (let i = 0; i < 20; i++) {
-      dispatch(homeActivitiesDatas(i));
-    }
     return () => {
       dispatch(initialstate());
     };
   }, [dispatch]);
 
   const nextId = useRef(0);
-  useEffect(() => {
-    if (homeActivities !== null) {
-      for (let i = 0; i < homeActivities.items.length; i++) {
-        useHomeActivities.push(homeActivities.items[i]);
-      }
-    }
-  }, [homeActivities, useHomeActivities]);
 
   useEffect(() => {
     if (channels !== null) {
-      for (let i = 0; i < channels.items.length; i++) {
+      for (let i = 0; i <= channels.items.length - 1; i++) {
         const {
           statistics: { subscriberCount },
           snippet: {
@@ -71,13 +50,13 @@ const ChannelsContainer = () => {
           profileUrl: url,
           name: title,
           channelId: id,
-          videoId: useHomeActivities.splice(0, 3),
         });
-
         nextId.current += 1;
       }
+
+      setChannelInfo(useChannelInfo);
     }
-  }, [channels, useChannelInfo, dispatch, useHomeActivities]);
+  }, [channels, useChannelInfo, dispatch]);
 
   useEffect(() => {
     dispatch(uploadChannels({ channelInfo: useChannelInfo }));

@@ -15,7 +15,6 @@ export const activities = ({ part, channelId, maxResults }) => {
     channelId,
     maxResults,
   });
-
   return client.get(`/activities?${queryString}`);
 };
 
