@@ -30,12 +30,6 @@ const [
   HOME_ACTIVITIES_FAILURE,
 ] = createReactSagaType('data/HOME_ACTIVITIES');
 
-const [
-  HOME_VIDEOS,
-  HOME_VIDEOS_SUCCESS,
-  HOME_VIDEOS_FAILURE,
-] = createReactSagaType('data/HOME_VIDEOS');
-
 export const channelsDatas = createAction(CHANNELS, () => ({
   part: 'snippet,statistics',
   id,
@@ -44,20 +38,15 @@ export const channelsDatas = createAction(CHANNELS, () => ({
 const isArray = id.split(',');
 
 export const homeActivitiesDatas = createAction(HOME_ACTIVITIES, (i) => ({
-  part: 'snippet,contentDetails',
+  part: 'contentDetails',
   channelId: isArray[i],
-  maxResults: '2',
+  maxResults: '3',
 }));
 
 export const activitiesDatas = createAction(ACTIVITIES, (channelId) => ({
   part: 'snippet,contentDetails',
   channelId,
   maxResults: '12',
-}));
-
-export const homeVideosDatas = createAction(HOME_VIDEOS, (id) => ({
-  part: 'snippet',
-  id,
 }));
 
 export const videosDatas = createAction(VIDEOS, (id) => ({
@@ -69,14 +58,12 @@ export const initialstate = createAction(INITIALSTATE);
 const channelsSaga = createReactSaga(CHANNELS, YouTube.channels);
 const homeActivitiesSaga = createReactSaga(HOME_ACTIVITIES, YouTube.activities);
 const activitiesSaga = createReactSaga(ACTIVITIES, YouTube.activities);
-const homeVideosSaga = createReactSaga(HOME_VIDEOS, YouTube.videos);
 const videosSaga = createReactSaga(VIDEOS, YouTube.videos);
 
 export function* sagaChannels() {
   yield takeLatest(CHANNELS, channelsSaga);
   yield takeEvery(HOME_ACTIVITIES, homeActivitiesSaga);
   yield takeLatest(ACTIVITIES, activitiesSaga);
-  yield takeLatest(HOME_VIDEOS, homeVideosSaga);
   yield takeLatest(VIDEOS, videosSaga);
 }
 
@@ -84,7 +71,6 @@ const initialState = {
   channels: null,
   homeActivities: null,
   activities: null,
-  homeVideos: null,
   videos: null,
   apiError: null,
 };
@@ -115,15 +101,6 @@ const data = handleActions(
       apiError: null,
     }),
     [ACTIVITIES_FAILURE]: (state, action) => ({
-      ...state,
-      apiError: action.payload,
-    }),
-    [HOME_VIDEOS_SUCCESS]: (state, action) => ({
-      ...state,
-      homeVideos: action.payload,
-      apiError: null,
-    }),
-    [HOME_VIDEOS_FAILURE]: (state, action) => ({
       ...state,
       apiError: action.payload,
     }),
