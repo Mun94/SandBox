@@ -12,15 +12,21 @@ const ChannelsContainer = () => {
   const [sortBy, setSortBy] = useState('');
 
   const dispatch = useDispatch();
-  const { channels, loading, channelInfo, apiError, keyword } = useSelector(
-    ({ youtube, homeChannels, Loading }) => ({
-      channels: youtube.channels,
-      apiError: youtube.apiError,
-      loading: Loading['youtube/CHANNELS'],
-      channelInfo: homeChannels.channelInfo,
-      keyword: homeChannels.keyword,
-    }),
-  );
+  const {
+    channels,
+    loading,
+    channelInfo,
+    apiError,
+    keyword,
+    dbChannel,
+  } = useSelector(({ youtube, homeChannels, dbs, Loading }) => ({
+    channels: youtube.channels,
+    apiError: youtube.apiError,
+    loading: Loading['youtube/CHANNELS'],
+    channelInfo: homeChannels.channelInfo,
+    keyword: homeChannels.keyword,
+    dbChannel: dbs.dbChannel,
+  }));
 
   useEffect(() => {
     dispatch(channelsDatas());
@@ -56,14 +62,10 @@ const ChannelsContainer = () => {
         });
         nextId.current += 1;
       }
-
+      dispatch(uploadChannels({ channelInfo: useChannelInfo }));
       setChannelInfo(useChannelInfo);
     }
   }, [channels, useChannelInfo, dispatch]);
-
-  useEffect(() => {
-    dispatch(uploadChannels({ channelInfo: useChannelInfo }));
-  }, [dispatch, useChannelInfo]);
 
   useEffect(() => {
     if (apiError) {
@@ -79,6 +81,7 @@ const ChannelsContainer = () => {
     <>
       {loading === false ? (
         <Channels
+          dbChannel={dbChannel}
           channelInfo={channelInfo}
           error={error}
           sortBy={sortBy}

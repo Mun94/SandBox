@@ -92,7 +92,14 @@ const Icon = styled.div`
   }
 `;
 
-const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
+const Channels = ({
+  channelInfo,
+  error,
+  sortBy,
+  onChange,
+  keyword,
+  dbChannel,
+}) => {
   if (sortBy === 'subs') {
     channelInfo.sort((a, b) => {
       if (parseInt(a.subs) > parseInt(b.subs)) return -1;
@@ -125,12 +132,36 @@ const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
             <Img src={info.profileUrl} alt="" />
             <NameSubs>
               <span>{info.name}</span>
-              <span>{info.subs / 10000}만명</span>
+              {dbChannel.map(
+                (db) =>
+                  db.channelId === info.channelId && (
+                    <span key={key}>
+                      {info.subs / 10000}만명{db.categoryId}
+                    </span>
+                  ),
+              )}
             </NameSubs>
           </Block>
           <Icon>
             <Button to={`/v/${info.channelId}`}>
-              <RiPlayMiniFill size="20" />
+              {dbChannel.map(
+                (db) =>
+                  db.channelId === info.channelId && (
+                    <span key={key}>
+                      {db.videoCount === info.videoCount ? (
+                        <RiPlayMiniFill size="20" />
+                      ) : (
+                        <div>
+                          <RiPlayMiniFill
+                            size="20"
+                            style={{ background: 'red' }}
+                          />
+                          new
+                        </div>
+                      )}
+                    </span>
+                  ),
+              )}
             </Button>
             <Button
               href={`https://www.youtube.com/channel/${info.channelId}/store`}
@@ -153,7 +184,7 @@ const Channels = ({ channelInfo, error, sortBy, onChange, keyword }) => {
         </InfoBlock>
       );
     },
-    [channelInfo],
+    [channelInfo, dbChannel],
   );
 
   return (
