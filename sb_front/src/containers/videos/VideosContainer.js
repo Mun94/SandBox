@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { activitiesDatas, videosDatas } from '../../modules/data.js';
+import { activitiesDatas, videosDatas } from '../../modules/youtube.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -17,9 +17,9 @@ const VideosContainer = ({ match }) => {
 
   const dispatch = useDispatch();
   const { activities, videoId, videos, videoDetail } = useSelector(
-    ({ data, videoDetails }) => ({
-      activities: data.activities,
-      videos: data.videos,
+    ({ youtube, videoDetails }) => ({
+      activities: youtube.activities,
+      videos: youtube.videos,
       videoId: videoDetails.videoId,
       videoDetail: videoDetails.videoDetail,
     }),

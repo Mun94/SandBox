@@ -8,17 +8,17 @@ import * as YouTube from '../lib/api/Youtube.js';
 const INITIALSTATE = 'homeChannels/INITIALSTATE';
 
 const [CHANNELS, CHANNELS_SUCCESS, CHANNELS_FAILURE] = createReactSagaType(
-  'data/CHANNELS',
+  'youtube/CHANNELS',
 );
 
 const [
   ACTIVITIES,
   ACTIVITIES_SUCCESS,
   ACTIVITIES_FAILURE,
-] = createReactSagaType('data/ACTIVITIES');
+] = createReactSagaType('youtube/ACTIVITIES');
 
 const [VIDEOS, VIDEOS_SUCCESS, VIDEOS_FAILURE] = createReactSagaType(
-  'data/VIDEOS',
+  'youtube/VIDEOS',
 );
 
 export const channelsDatas = createAction(CHANNELS, () => ({
@@ -56,7 +56,7 @@ const initialState = {
   apiError: null,
 };
 
-const data = handleActions(
+const youtube = handleActions(
   {
     [CHANNELS_SUCCESS]: (state, action) => ({
       ...state,
@@ -90,4 +90,4 @@ const data = handleActions(
   initialState,
 );
 
-export default data;
+export default youtube;

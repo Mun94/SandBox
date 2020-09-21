@@ -3,7 +3,7 @@ import { uploadChannels } from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
-import { channelsDatas, initialstate } from '../../modules/data.js';
+import { channelsDatas, initialstate } from '../../modules/youtube.js';
 
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -12,10 +12,10 @@ const ChannelsContainer = () => {
 
   const dispatch = useDispatch();
   const { channels, loading, channelInfo, apiError, keyword } = useSelector(
-    ({ data, homeChannels, Loading }) => ({
-      channels: data.channels,
-      apiError: data.apiError,
-      loading: Loading['data/CHANNELS'],
+    ({ youtube, homeChannels, Loading }) => ({
+      channels: youtube.channels,
+      apiError: youtube.apiError,
+      loading: Loading['youtube/CHANNELS'],
       channelInfo: homeChannels.channelInfo,
       keyword: homeChannels.keyword,
     }),
