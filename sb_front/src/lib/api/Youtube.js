@@ -1,4 +1,4 @@
-import client from './client.js';
+import { client } from './client.js';
 import qs from 'qs';
 
 export const channels = ({ part, id }) => {
