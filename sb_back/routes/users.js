@@ -1,9 +1,35 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const User = require("../schemas/user.js");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const router = express.Router();
+
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
 });
+
+router.patch("/:id", async (req, res, next) => {
+  try {
+    const result = await User.update(
+      {
+        channelId: req.params.id,
+      },
+      {
+        videoCount: req.body.videoCount,
+      }
+    );
+    res.json(result);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
+module.exports = router;
 
 module.exports = router;

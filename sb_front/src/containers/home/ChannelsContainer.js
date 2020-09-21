@@ -34,7 +34,7 @@ const ChannelsContainer = () => {
     if (channels !== null) {
       for (let i = 0; i <= channels.items.length - 1; i++) {
         const {
-          statistics: { subscriberCount },
+          statistics: { subscriberCount, videoCount },
           snippet: {
             title,
             thumbnails: {
@@ -46,10 +46,11 @@ const ChannelsContainer = () => {
 
         useChannelInfo.push({
           id: nextId.current,
-          subs: subscriberCount,
-          profileUrl: url,
           name: title,
           channelId: id,
+          subs: subscriberCount,
+          profileUrl: url,
+          videoCount,
         });
         nextId.current += 1;
       }
