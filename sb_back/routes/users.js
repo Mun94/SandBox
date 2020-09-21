@@ -3,7 +3,7 @@ const User = require("../schemas/user.js");
 
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/users", async (req, res, next) => {
   try {
     const users = await User.find({});
     res.json(users);
@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/users/:id", async (req, res, next) => {
   try {
     const result = await User.update(
       {
@@ -29,7 +29,5 @@ router.patch("/:id", async (req, res, next) => {
     next(e);
   }
 });
-
-module.exports = router;
 
 module.exports = router;

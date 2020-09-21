@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
 import { channelsDatas, initialstate } from '../../modules/youtube.js';
+import { dbGet } from '../../modules/dbs.js';
 
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -23,6 +24,7 @@ const ChannelsContainer = () => {
 
   useEffect(() => {
     dispatch(channelsDatas());
+    dispatch(dbGet());
     return () => {
       dispatch(initialstate());
     };

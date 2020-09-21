@@ -5,8 +5,8 @@ import createReactSaga, {
 import * as db from '../lib/api/db.js';
 import { takeLatest } from 'redux-saga/effects';
 
-const [DBGET, DBGET_SUCCESS, DBGET_FAIULRE] = createReactSagaType('db/DBGET');
-const DBPATCH = 'db/DBPATCH';
+const [DBGET, DBGET_SUCCESS, DBGET_FAILURE] = createReactSagaType('dbs/DBGET');
+const DBPATCH = 'dbs/DBPATCH';
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
@@ -34,7 +34,7 @@ const dbs = handleActions(
       dbChannel: action.payload,
       dbError: null,
     }),
-    [DBGET_FAIULRE]: (state, action) => ({
+    [DBGET_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
     }),
