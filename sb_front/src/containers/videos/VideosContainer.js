@@ -8,6 +8,7 @@ import {
   initialstate,
 } from '../../modules/videoDetails.js';
 import Videos from '../../components/videos/Videos.js';
+import { dbPatch } from '../../modules/dbs.js';
 
 const VideosContainer = ({ match }) => {
   const { channelId } = match.params;
@@ -16,22 +17,28 @@ const VideosContainer = ({ match }) => {
   const [useVideoDetail, setVideoDetail] = useState([]);
 
   const dispatch = useDispatch();
-  const { activities, videoId, videos, videoDetail } = useSelector(
-    ({ youtube, videoDetails }) => ({
+  const { activities, videoId, videos, videoDetail, channelInfo } = useSelector(
+    ({ youtube, videoDetails, homeChannels }) => ({
       activities: youtube.activities,
       videos: youtube.videos,
       videoId: videoDetails.videoId,
       videoDetail: videoDetails.videoDetail,
+      channelInfo: homeChannels.channelInfo,
     }),
   );
 
   useEffect(() => {
     dispatch(activitiesDatas(channelId));
-  }, [dispatch, channelId]);
+    for (let i = 0; i < channelInfo.length; i++) {
+      if (channelId === channelInfo[i].channelId) {
+        dispatch(dbPatch({ channelId, videoCount: channelInfo[i].videoCount }));
+      }
+    }
+  }, [dispatch, channelId, channelInfo]);
 
   useEffect(() => {
     if (activities !== null) {
-      for (let i = 0; i < activities.items.length - 1; i++) {
+      for (let i = 0; i < activities.items.length; i++) {
         const { contentDetails } = activities.items[i];
         if (contentDetails.upload !== undefined) {
           useVideoId.push(contentDetails.upload.videoId);
