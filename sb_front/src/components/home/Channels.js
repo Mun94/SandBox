@@ -93,7 +93,17 @@ const Icon = styled.div`
   }
 `;
 
-const ImgIcon = styled.div``;
+const ImgIcon = styled.div`
+  position: relative;
+  span {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 77px;
+    border: 0.5px solid #ffc200;
+    border-radius: 5px;
+  }
+`;
 
 const Channels = ({
   channelInfo,
