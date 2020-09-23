@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import Header from '../common/Header.js';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
+import CategoryContainer from '../../containers/home/CategoryContainer.js';
 import Button from '../common/Button.js';
-
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
+import Category from './Category.js';
 
 const InfoBlock = styled.div`
   display: flex;
@@ -99,6 +100,7 @@ const Channels = ({
   onChange,
   keyword,
   dbChannel,
+  category,
 }) => {
   if (sortBy === 'subs') {
     channelInfo.sort((a, b) => {
@@ -123,65 +125,49 @@ const Channels = ({
     );
   }
 
+  if (category) {
+    dbChannel = dbChannel.filter((db) => db.categoryId.indexOf(category) >= 0);
+  }
+
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
-      return (
-        <InfoBlock key={key} style={style}>
-          <Block>
-            <Img src={info.profileUrl} alt="" />
-            <NameSubs>
-              <span>{info.name}</span>
-              {dbChannel.map(
-                (db) =>
-                  db.channelId === info.channelId && (
-                    <span key={key}>
-                      {info.subs / 10000}만명{db.categoryId}
-                    </span>
-                  ),
-              )}
-            </NameSubs>
-          </Block>
-          <Icon>
-            <Button to={`/v/${info.channelId}`}>
-              {dbChannel.map(
-                (db) =>
-                  db.channelId === info.channelId && (
-                    <span key={key}>
-                      {db.videoCount === info.videoCount ? (
-                        <RiPlayMiniFill size="20" />
-                      ) : (
-                        <div>
-                          <RiPlayMiniFill
-                            size="20"
-                            style={{ background: 'red' }}
-                          />
-                          new
-                        </div>
-                      )}
-                    </span>
-                  ),
-              )}
-            </Button>
-            <Button
-              href={`https://www.youtube.com/channel/${info.channelId}/store`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiFillGift size="20" />
-            </Button>
-            <Button
-              href={`https://www.youtube.com/channel/${info.channelId}/community`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <RiChatSmile3Fill size="20" />
-            </Button>
-            <Button to="">
-              <BsQuestion size="20" />
-            </Button>
-          </Icon>
-        </InfoBlock>
+
+      return dbChannel.map(
+        (db) =>
+          db.channelId === info.channelId && (
+            <InfoBlock key={key} style={style}>
+              <Block>
+                <Img src={info.profileUrl} alt="" />
+                <NameSubs>
+                  <span>{info.name}</span>
+                  <span key={key}>{info.subs / 10000}만명</span>
+                </NameSubs>
+              </Block>
+              <Icon>
+                <Button to={`/v/${info.channelId}`}>
+                  <RiPlayMiniFill size="20" />
+                </Button>
+                <Button
+                  href={`https://www.youtube.com/channel/${info.channelId}/store`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <AiFillGift size="20" />
+                </Button>
+                <Button
+                  href={`https://www.youtube.com/channel/${info.channelId}/community`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <RiChatSmile3Fill size="20" />
+                </Button>
+                <Button to="">
+                  <BsQuestion size="20" />
+                </Button>
+              </Icon>
+            </InfoBlock>
+          ),
       );
     },
     [channelInfo, dbChannel],
@@ -202,6 +188,7 @@ const Channels = ({
             </select>
             <SearchChannelsContainer />
           </SearchSelectBlock>
+          <CategoryContainer />
           <ListBlock>
             <List
               width={760}

@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 const UPLOAD_CHANNELS_INFO = 'homeChannels/UPLOAD_CHANNELS_INFO';
 const SEARCH_KEYWORD = 'homeChannels/SEARCH_KEYWORD';
+const CATEGORY_KEY = 'homeChannels/CATEGORY_KEY';
 const INITIALSTATE = 'homeChannels/INITIALSTATE';
 
 export const uploadChannels = createAction(
@@ -11,11 +12,18 @@ export const uploadChannels = createAction(
 export const searchChannels = createAction(SEARCH_KEYWORD, ({ keyword }) => ({
   keyword,
 }));
-export const initialstate = createAction(INITIALSTATE);
+export const categoryKeyChannels = createAction(
+  CATEGORY_KEY,
+  ({ category }) => ({
+    category,
+  }),
+);
+export const initialstateChannels = createAction(INITIALSTATE);
 
 const initialState = {
   channelInfo: [],
   keyword: '',
+  category: '',
 };
 
 const homeChannels = handleActions(
@@ -28,9 +36,14 @@ const homeChannels = handleActions(
       ...state,
       keyword,
     }),
+    [CATEGORY_KEY]: (state, { payload: { category } }) => ({
+      ...state,
+      category,
+    }),
     [INITIALSTATE]: (state) => ({
       ...state,
       keyword: '',
+      category: '',
     }),
   },
   initialState,

@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { uploadChannels } from '../../modules/homeChannels.js';
+import {
+  uploadChannels,
+  initialstateChannels,
+} from '../../modules/homeChannels.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
@@ -19,6 +22,7 @@ const ChannelsContainer = () => {
     apiError,
     keyword,
     dbChannel,
+    category,
   } = useSelector(({ youtube, homeChannels, dbs, Loading }) => ({
     channels: youtube.channels,
     apiError: youtube.apiError,
@@ -26,6 +30,7 @@ const ChannelsContainer = () => {
     channelInfo: homeChannels.channelInfo,
     keyword: homeChannels.keyword,
     dbChannel: dbs.dbChannel,
+    category: homeChannels.category,
   }));
 
   useEffect(() => {
@@ -64,6 +69,7 @@ const ChannelsContainer = () => {
       }
       dispatch(uploadChannels({ channelInfo: useChannelInfo }));
       setChannelInfo(useChannelInfo);
+      dispatch(initialstateChannels());
     }
   }, [channels, useChannelInfo, dispatch]);
 
@@ -87,6 +93,7 @@ const ChannelsContainer = () => {
           sortBy={sortBy}
           onChange={onChange}
           keyword={keyword}
+          category={category}
         />
       ) : (
         <LoadingScreen />
