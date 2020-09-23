@@ -5,6 +5,9 @@ import Button from '../common/Button.js';
 const Category = ({ onClick }) => {
   return (
     <>
+      <Button value="" onClick={onClick}>
+        All
+      </Button>
       <Button value="23" onClick={onClick}>
         Comedy
       </Button>

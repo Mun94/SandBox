@@ -126,48 +126,64 @@ const Channels = ({
   }
 
   if (category) {
-    dbChannel = dbChannel.filter((db) => db.categoryId.indexOf(category) >= 0);
+    channelInfo = channelInfo.filter(
+      (channel) => channel.category.indexOf(category) >= 0,
+    );
   }
 
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
 
-      return dbChannel.map(
-        (db) =>
-          db.channelId === info.channelId && (
-            <InfoBlock key={key} style={style}>
-              <Block>
-                <Img src={info.profileUrl} alt="" />
-                <NameSubs>
-                  <span>{info.name}</span>
-                  <span key={key}>{info.subs / 10000}만명</span>
-                </NameSubs>
-              </Block>
-              <Icon>
-                <Button to={`/v/${info.channelId}`}>
-                  <RiPlayMiniFill size="20" />
-                </Button>
-                <Button
-                  href={`https://www.youtube.com/channel/${info.channelId}/store`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <AiFillGift size="20" />
-                </Button>
-                <Button
-                  href={`https://www.youtube.com/channel/${info.channelId}/community`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <RiChatSmile3Fill size="20" />
-                </Button>
-                <Button to="">
-                  <BsQuestion size="20" />
-                </Button>
-              </Icon>
-            </InfoBlock>
-          ),
+      return (
+        <InfoBlock key={key} style={style}>
+          <Block>
+            <Img src={info.profileUrl} alt="" />
+            <NameSubs>
+              <span>{info.name}</span>
+              <span key={key}>{info.subs / 10000}만명</span>
+            </NameSubs>
+          </Block>
+          <Icon>
+            <Button to={`/v/${info.channelId}`}>
+              {dbChannel.map(
+                (db) =>
+                  db.channelId === info.channelId && (
+                    <span key={key}>
+                      {db.videoCount === info.videoCount ? (
+                        <RiPlayMiniFill size="20" />
+                      ) : (
+                        <div>
+                          <RiPlayMiniFill
+                            size="20"
+                            style={{ background: 'red' }}
+                          />
+                          new
+                        </div>
+                      )}
+                    </span>
+                  ),
+              )}
+            </Button>
+            <Button
+              href={`https://www.youtube.com/channel/${info.channelId}/store`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiFillGift size="20" />
+            </Button>
+            <Button
+              href={`https://www.youtube.com/channel/${info.channelId}/community`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <RiChatSmile3Fill size="20" />
+            </Button>
+            <Button to="">
+              <BsQuestion size="20" />
+            </Button>
+          </Icon>
+        </InfoBlock>
       );
     },
     [channelInfo, dbChannel],

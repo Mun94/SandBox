@@ -71,7 +71,16 @@ const ChannelsContainer = () => {
       setChannelInfo(useChannelInfo);
       dispatch(initialstateChannels());
     }
-  }, [channels, useChannelInfo, dispatch]);
+    if (dbChannel !== null && channelInfo.length > 1) {
+      for (let i = 0; i < dbChannel.length; i++) {
+        for (let j = 0; j < channelInfo.length; j++) {
+          if (dbChannel[i].channelId === channelInfo[j].channelId) {
+            channelInfo[j].category = dbChannel[i].categoryId;
+          }
+        }
+      }
+    }
+  }, [channels, useChannelInfo, dispatch, dbChannel, channelInfo]);
 
   useEffect(() => {
     if (apiError) {
