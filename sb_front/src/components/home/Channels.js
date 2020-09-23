@@ -5,6 +5,7 @@ import Header from '../common/Header.js';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 import CategoryContainer from '../../containers/home/CategoryContainer.js';
 import Button from '../common/Button.js';
+
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
@@ -92,6 +93,8 @@ const Icon = styled.div`
   }
 `;
 
+const ImgIcon = styled.div``;
+
 const Channels = ({
   channelInfo,
   error,
@@ -133,14 +136,16 @@ const Channels = ({
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
-
       return (
         <InfoBlock key={key} style={style}>
           <Block>
-            <Img src={info.profileUrl} alt="" />
+            <ImgIcon>
+              <Img src={info.profileUrl} alt="" />
+              <span>{info.Icon}</span>
+            </ImgIcon>
             <NameSubs>
               <span>{info.name}</span>
-              <span key={key}>{info.subs / 10000}만명</span>
+              <span>{info.subs / 10000}만명</span>
             </NameSubs>
           </Block>
           <Icon>

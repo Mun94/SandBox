@@ -9,6 +9,11 @@ import LoadingScreen from '../../components/common/LoadingScreen.js';
 import { channelsDatas, initialstate } from '../../modules/youtube.js';
 import { dbGet } from '../../modules/dbs.js';
 
+import { RiGamepadFill } from 'react-icons/ri';
+import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
+import { MdMovieCreation } from 'react-icons/md';
+import { IoIosBook } from 'react-icons/io';
+
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
   const [error, setError] = useState(false);
@@ -71,16 +76,37 @@ const ChannelsContainer = () => {
       setChannelInfo(useChannelInfo);
       dispatch(initialstateChannels());
     }
-    if (dbChannel !== null && channelInfo.length > 1) {
-      for (let i = 0; i < dbChannel.length; i++) {
-        for (let j = 0; j < channelInfo.length; j++) {
-          if (dbChannel[i].channelId === channelInfo[j].channelId) {
-            channelInfo[j].category = dbChannel[i].categoryId;
-          }
+  }, [channels, useChannelInfo, dispatch]);
+
+  if (dbChannel !== null && channelInfo.length > 1) {
+    for (let i = 0; i < dbChannel.length; i++) {
+      for (let j = 0; j < channelInfo.length; j++) {
+        if (dbChannel[i].channelId === channelInfo[j].channelId) {
+          channelInfo[j].category = dbChannel[i].categoryId;
+          const categoryIcon = {
+            코미디: <FaSmile />,
+            게임: <RiGamepadFill />,
+            영화: <MdMovieCreation />,
+            교육: <IoIosBook />,
+            일상: <FaTelegramPlane />,
+            '일상,게임': (
+              <>
+                <FaTelegramPlane />
+                <RiGamepadFill />
+              </>
+            ),
+            '교육,게임': (
+              <>
+                <IoIosBook />
+                <RiGamepadFill />
+              </>
+            ),
+          };
+          channelInfo[j].Icon = categoryIcon[channelInfo[j].category];
         }
       }
     }
-  }, [channels, useChannelInfo, dispatch, dbChannel, channelInfo]);
+  }
 
   useEffect(() => {
     if (apiError) {
