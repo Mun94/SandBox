@@ -8,7 +8,6 @@ import Button from '../common/Button.js';
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
-import Category from './Category.js';
 
 const InfoBlock = styled.div`
   display: flex;

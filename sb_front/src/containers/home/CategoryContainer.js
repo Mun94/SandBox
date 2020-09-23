@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import Category from '../../components/home/Category.js';
 import { categoryKeyChannels } from '../../modules/homeChannels.js';
 
