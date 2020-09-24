@@ -8,12 +8,12 @@ const ScreenLoader = styled.div`
   transform: translate(-50%, -50%) rotate(45deg);
   width: 100px;
   height: 100px;
-  animation: animate 1.2s linear infinite;
+  animation: LoadingScreen-animate 0.7s linear infinite;
   span {
     position: absolute;
     width: 50px;
     height: 50px;
-    animation: rotate 1.2s linear infinite;
+    animation: LoadingScreen-rotate 0.7s linear infinite;
   }
   span:nth-child(1) {
     bottom: 0;
@@ -31,7 +31,7 @@ const ScreenLoader = styled.div`
     background: #e31010; /*빨강*/
   }
 
-  @keyframes animate {
+  @keyframes LoadingScreen-animate {
     0% {
       width: 100px;
       height: 100px;
@@ -54,7 +54,7 @@ const ScreenLoader = styled.div`
     }
   }
 
-  @keyframes rotate {
+  @keyframes LoadingScreen-rotate {
     0% {
       transform: rotate(0deg);
     }

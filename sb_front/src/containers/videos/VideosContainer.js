@@ -8,6 +8,7 @@ import {
   initialstate,
 } from '../../modules/videoDetails.js';
 import Videos from '../../components/videos/Videos.js';
+import LoadingSub from '../../components/common/LoadingSub.js';
 import { dbPatch } from '../../modules/dbs.js';
 
 const VideosContainer = ({ match }) => {
@@ -109,7 +110,7 @@ const VideosContainer = ({ match }) => {
   return (
     <>
       {videoDetail.length < 1 ? (
-        <>로딩</>
+        <LoadingSub />
       ) : (
         <Videos videoDetail={videoDetail} />
       )}
