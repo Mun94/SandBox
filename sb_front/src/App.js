@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from './page/Home.js';
 import Videos from './page/Videos.js';
+import Watch from './page/Watch.js';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/v/:channelId" component={Videos} />
+        <Route path="/watch" component={Watch} />
         <Route
           render={({ location }) => (
             <>

@@ -74,6 +74,8 @@ const VideosContainer = ({ match }) => {
             favoriteCount,
             commentCount,
           },
+          player: { embedHtml },
+          id,
         } = videos.items[i];
 
         useVideoDetail.push({
@@ -82,7 +84,9 @@ const VideosContainer = ({ match }) => {
           title,
           description,
           medium,
+          embedHtml,
           tags,
+          videoId: id,
           categoryId,
           duration,
           viewCount,

@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { List } from 'react-virtualized';
-import Header from '../common/Header.js';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 import CategoryContainer from '../../containers/home/CategoryContainer.js';
 import Button from '../common/Button.js';
-
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
@@ -89,7 +87,7 @@ const Icon = styled.div`
     justify-content: center;
   }
   svg:hover {
-    border-bottom: 1.5px solid gray;
+    border-bottom: 2px solid gray;
   }
 `;
 
@@ -225,7 +223,6 @@ const Channels = ({
         <div>에러 발생</div>
       ) : (
         <>
-          <Header />
           <SearchSelectBlock>
             <select onChange={onChange}>
               <option value="">정렬</option>

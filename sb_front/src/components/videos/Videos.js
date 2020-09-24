@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive.js';
+import { Link, withRouter } from 'react-router-dom';
 
 const VideoBlock = styled(Responsive)`
   display: flex;
@@ -18,10 +19,11 @@ const VideoBlock = styled(Responsive)`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
   width: 320px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.span`
@@ -39,7 +41,6 @@ const Duration = styled.span`
 `;
 const Sub = styled.span`
   margin-top: 0.3rem;
-  margin-bottom: 1rem;
   padding: 0 0.5rem;
   div {
     display: flex;
@@ -69,7 +70,8 @@ const PublishedAt = styled.span`
     `}
 `;
 
-const Videos = ({ videoDetail }) => {
+const Videos = ({ videoDetail, match }) => {
+  const { channelId } = match.params;
   const YMD = new Date();
   const setMonth = YMD.getMonth() + 1;
   const setDate = YMD.getDate();
@@ -96,7 +98,7 @@ const Videos = ({ videoDetail }) => {
   return (
     <VideoBlock>
       {videoDetail.map((Info) => (
-        <Wrapper key={Info.id}>
+        <Wrapper to={`/watch?video=${Info.videoId}`} key={Info.id}>
           <Img src={Info.medium.url} alt="" />
           <Duration>{Info.duration.slice(2, 20)}</Duration>
           <Sub>
@@ -119,4 +121,4 @@ const Videos = ({ videoDetail }) => {
   );
 };
 
-export default React.memo(Videos);
+export default withRouter(React.memo(Videos));
