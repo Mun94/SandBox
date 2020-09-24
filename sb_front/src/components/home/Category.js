@@ -5,7 +5,7 @@ import Button from '../common/Button.js';
 const CategoryBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 `;
 
 const CategoryButton = styled(Button)`

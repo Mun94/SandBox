@@ -25,7 +25,7 @@ const InfoBlock = styled.div`
 const SearchSelectBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 
   select {
     margin-right: 20px;
@@ -105,6 +105,22 @@ const ImgIcon = styled.div`
   }
 `;
 
+const New = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: blink 0.8s ease-in-out infinite alternate;
+
+  @keyframes blink {
+    0% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1.3;
+    }
+  }
+`;
+
 const Channels = ({
   channelInfo,
   error,
@@ -167,13 +183,13 @@ const Channels = ({
                       {db.videoCount === info.videoCount ? (
                         <RiPlayMiniFill size="20" />
                       ) : (
-                        <div>
+                        <New>
                           <RiPlayMiniFill
                             size="20"
                             style={{ background: 'red' }}
                           />
                           new
-                        </div>
+                        </New>
                       )}
                     </span>
                   ),
