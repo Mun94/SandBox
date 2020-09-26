@@ -8,7 +8,7 @@ import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
 import { channelsDatas, initialstate } from '../../modules/youtube.js';
 import { dbGet } from '../../modules/dbs.js';
-
+import {initialstateVideoDetails} from '../../modules/videoDetails.js';
 import { RiGamepadFill } from 'react-icons/ri';
 import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
 import { MdMovieCreation } from 'react-icons/md';
@@ -42,6 +42,7 @@ const ChannelsContainer = () => {
     dispatch(channelsDatas());
     dispatch(dbGet());
     return () => {
+      dispatch(initialstateVideoDetails());
       dispatch(initialstate());
     };
   }, [dispatch]);

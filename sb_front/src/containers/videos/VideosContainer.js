@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { activitiesDatas, videosDatas } from '../../modules/youtube.js';
+import { activitiesDatas, videosDatas,initialstate } from '../../modules/youtube.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   uploadVideoId,
-  uploadVideoDetail,
-  initialstate,
+  uploadVideoDetail
 } from '../../modules/videoDetails.js';
 import Videos from '../../components/videos/Videos.js';
 import LoadingSub from '../../components/common/LoadingSub.js';
@@ -105,10 +104,9 @@ const VideosContainer = ({ match }) => {
   useEffect(() => {
     dispatch(uploadVideoId({ videoId: useVideoId }));
     dispatch(uploadVideoDetail(useVideoDetail));
-
-    return () => {
+    return(() => {
       dispatch(initialstate());
-    };
+    })
   }, [dispatch, useVideoId, useVideoDetail]);
 
   return (

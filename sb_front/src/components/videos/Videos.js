@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive.js';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const VideoBlock = styled(Responsive)`
   display: flex;
@@ -70,8 +70,7 @@ const PublishedAt = styled.span`
     `}
 `;
 
-const Videos = ({ videoDetail, match }) => {
-  const { channelId } = match.params;
+const Videos = ({ videoDetail}) => {
   const YMD = new Date();
   const setMonth = YMD.getMonth() + 1;
   const setDate = YMD.getDate();
@@ -98,7 +97,7 @@ const Videos = ({ videoDetail, match }) => {
   return (
     <VideoBlock>
       {videoDetail.map((Info) => (
-        <Wrapper to={`/watch?video=${Info.videoId}`} key={Info.id}>
+        <Wrapper to={`/watch?video=${Info.videoId}&num=${Info.id}`} key={Info.id}>
           <Img src={Info.medium.url} alt="" />
           <Duration>{Info.duration.slice(2, 20)}</Duration>
           <Sub>
@@ -121,4 +120,4 @@ const Videos = ({ videoDetail, match }) => {
   );
 };
 
-export default withRouter(React.memo(Videos));
+export default React.memo(Videos);

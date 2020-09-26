@@ -21,6 +21,12 @@ const [VIDEOS, VIDEOS_SUCCESS, VIDEOS_FAILURE] = createReactSagaType(
   'youtube/VIDEOS',
 );
 
+const [
+  COMMENTTHREADS,
+  COMMENTTHREADS_SUCCESS,
+  COMMENTTHREADS_FAILURE,
+] = createReactSagaType('youtube/COMMENTTHREADS');
+
 export const channelsDatas = createAction(CHANNELS, () => ({
   part: 'snippet,statistics',
   id:
@@ -37,22 +43,32 @@ export const videosDatas = createAction(VIDEOS, (id) => ({
   part: 'snippet,contentDetails, statistics, player',
   id,
 }));
+export const commentThreads = createAction(COMMENTTHREADS, (videoId) => ({
+  part: 'snippet',
+  videoId,
+}));
 export const initialstate = createAction(INITIALSTATE);
 
 const channelsSaga = createReactSaga(CHANNELS, YouTube.channels);
 const activitiesSaga = createReactSaga(ACTIVITIES, YouTube.activities);
 const videosSaga = createReactSaga(VIDEOS, YouTube.videos);
+const commentThreadsSaga = createReactSaga(
+  COMMENTTHREADS,
+  YouTube.commentThreads,
+);
 
 export function* sagaChannels() {
   yield takeLatest(CHANNELS, channelsSaga);
   yield takeLatest(ACTIVITIES, activitiesSaga);
   yield takeLatest(VIDEOS, videosSaga);
+  yield takeLatest(COMMENTTHREADS, commentThreadsSaga);
 }
 
 const initialState = {
   channels: null,
   activities: null,
   videos: null,
+  comment: null,
   apiError: null,
 };
 
@@ -82,6 +98,15 @@ const youtube = handleActions(
       apiError: null,
     }),
     [VIDEOS_FAILURE]: (state, action) => ({
+      ...state,
+      apiError: action.payload,
+    }),
+    [COMMENTTHREADS_SUCCESS]: (state, action) => ({
+      ...state,
+      comment: action.payload,
+      apiError: null,
+    }),
+    [COMMENTTHREADS_FAILURE]: (state, action) => ({
       ...state,
       apiError: action.payload,
     }),

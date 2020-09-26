@@ -25,3 +25,11 @@ export const videos = ({ part, id }) => {
   });
   return client.get(`/videos?${queryString}`);
 };
+
+export const commentThreads = ({ part, videoId }) => {
+  const queryString = qs.stringify({
+    part,
+    videoId,
+  });
+  return client.get(`/commentThreads?${queryString}`);
+};

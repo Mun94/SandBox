@@ -8,7 +8,7 @@ export const uploadVideoId = createAction(VIDEOID, (videoId) => videoId);
 export const uploadVideoDetail = createAction(VIDEODETAIL, (videoDetail) => ({
   videoDetail,
 }));
-export const initialstate = createAction(INITIALSTATE);
+export const initialstateVideoDetails = createAction(INITIALSTATE);
 
 const initialState = {
   videoId: [],
