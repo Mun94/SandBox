@@ -26,9 +26,10 @@ export const videos = ({ part, id }) => {
   return client.get(`/videos?${queryString}`);
 };
 
-export const commentThreads = ({ part, videoId }) => {
+export const commentThreads = ({ part, videoId, maxResults }) => {
   const queryString = qs.stringify({
     part,
+    maxResults,
     videoId,
   });
   return client.get(`/commentThreads?${queryString}`);

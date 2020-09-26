@@ -4,7 +4,10 @@ import Watch from '../../components/watch/Watch';
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
 import { commentThreads } from '../../modules/youtube.js';
-import { uploadComment } from '../../modules/watchDetails.js';
+import {
+  uploadComment,
+  initialstateComment,
+} from '../../modules/watchDetails.js';
 import { initialstate } from '../../modules/youtube.js';
 import LoadingSub from '../../components/common/LoadingSub.js';
 
@@ -26,6 +29,9 @@ const WatchContainer = ({ location }) => {
 
   useEffect(() => {
     dispatch(commentThreads(query.video));
+    return () => {
+      dispatch(initialstateComment());
+    };
   }, [dispatch, query.video]);
 
   const nextId = useRef(0);

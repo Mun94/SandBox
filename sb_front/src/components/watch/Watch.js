@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { List } from 'react-virtualized';
 
+import { AiTwotoneLike } from 'react-icons/ai';
+
 const VideoCommentBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +13,7 @@ const VideoCommentBlock = styled.div`
 const Video = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 1.5rem;
 `;
 
 const ComBlock = styled.div`
@@ -21,6 +24,7 @@ const Img = styled.img`
   border-radius: 60%;
   width: 2.5rem;
   height: 2.5rem;
+  margin-right: 1rem;
 `;
 
 const Content = styled.div`
@@ -30,11 +34,29 @@ const Content = styled.div`
 
 const NamePublishedAt = styled.div`
   display: flex;
+  margin-bottom: 0.2rem;
+  span + span:before {
+    content: '\\B7';
+    margin: 0 0.1rem;
+  }
+  span:nth-child(2) {
+    opacity: 60%;
+  }
 `;
 
-const Text = styled.div``;
+const Text = styled.div`
+  color: #f7f2f2;
+  margin-bottom: 0.2rem;
+`;
 
-const LikeCount = styled.div``;
+const LikeCount = styled.div`
+  display: flex;
+  align-items: center;
+  span:nth-child(1) {
+    margin-right: 0.5rem;
+    opacity: 60%;
+  }
+`;
 
 const Watch = ({ query, videoDetail, commentDetail }) => {
   const rowComment = useCallback(
@@ -43,11 +65,23 @@ const Watch = ({ query, videoDetail, commentDetail }) => {
 
       return (
         <ComBlock key={key} style={style}>
-          <Img />
+          <Img src={comment.authorProfileImageUrl} alt="" />
           <Content>
-            <NamePublishedAt></NamePublishedAt>
-            <Text></Text>
-            <LikeCount></LikeCount>
+            <NamePublishedAt>
+              <span>{comment.authorDisplayName}</span>
+              <span>{comment.publishedAt.split('T')[0]}</span>
+            </NamePublishedAt>
+            <Text>
+              {comment.textOriginal.length > 50
+                ? comment.textOriginal.slice(0, 50) + '...'
+                : comment.textOriginal}
+            </Text>
+            <LikeCount>
+              <span>
+                <AiTwotoneLike />
+              </span>
+              {comment.likeCount}
+            </LikeCount>
           </Content>
         </ComBlock>
       );
@@ -69,9 +103,9 @@ const Watch = ({ query, videoDetail, commentDetail }) => {
       </Video>
       <List
         width={600}
-        height={500}
+        height={600}
         rowCount={commentDetail.length}
-        rowHeight={50}
+        rowHeight={100}
         rowRenderer={rowComment}
         style={{
           border: '2px solid rgba(0, 0, 0, 0.05)',

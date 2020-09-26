@@ -45,6 +45,7 @@ export const videosDatas = createAction(VIDEOS, (id) => ({
 }));
 export const commentThreads = createAction(COMMENTTHREADS, (videoId) => ({
   part: 'snippet',
+  maxResults: '100',
   videoId,
 }));
 export const initialstate = createAction(INITIALSTATE);
