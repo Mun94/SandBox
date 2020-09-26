@@ -70,7 +70,7 @@ const PublishedAt = styled.span`
     `}
 `;
 
-const Videos = ({ videoDetail}) => {
+const Videos = ({ videoDetail }) => {
   const YMD = new Date();
   const setMonth = YMD.getMonth() + 1;
   const setDate = YMD.getDate();
@@ -97,12 +97,15 @@ const Videos = ({ videoDetail}) => {
   return (
     <VideoBlock>
       {videoDetail.map((Info) => (
-        <Wrapper to={`/watch?video=${Info.videoId}&num=${Info.id}`} key={Info.id}>
+        <Wrapper
+          to={`/watch?video=${Info.videoId}&num=${Info.id}`}
+          key={Info.id}
+        >
           <Img src={Info.medium.url} alt="" />
           <Duration>{Info.duration.slice(2, 20)}</Duration>
           <Sub>
             <div>
-              {[today, yesterday].indexOf(Info.publishedAt.split('T')[0]) >
+              {[today, yesterday].indexOf(Info.publishedAt.split('T')[0]) >=
               0 ? (
                 <PublishedAt toYes>
                   {Info.publishedAt.split('T')[0]}

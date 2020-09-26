@@ -5,9 +5,10 @@ const VIDEODETAIL = 'videosDetails/VIDEODETAIL';
 const INITIALSTATE = 'videoDetails/INITIALSTATE';
 
 export const uploadVideoId = createAction(VIDEOID, (videoId) => videoId);
-export const uploadVideoDetail = createAction(VIDEODETAIL, (videoDetail) => ({
-  videoDetail,
-}));
+export const uploadVideoDetail = createAction(
+  VIDEODETAIL,
+  (videoDetail) => videoDetail,
+);
 export const initialstateVideoDetails = createAction(INITIALSTATE);
 
 const initialState = {

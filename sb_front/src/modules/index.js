@@ -3,6 +3,7 @@ import homeChannels from './homeChannels.js';
 import youtube, { sagaChannels } from './youtube.js';
 import dbs, { sagaDb } from './dbs.js';
 import videoDetails from './videoDetails.js';
+import watchDetails from './watchDetails.js';
 import { all } from 'redux-saga/effects';
 import Loading from './loading.js';
 
@@ -12,6 +13,7 @@ const RootReducer = combineReducers({
   youtube,
   dbs,
   videoDetails,
+  watchDetails,
 });
 
 export function* RootSaga() {

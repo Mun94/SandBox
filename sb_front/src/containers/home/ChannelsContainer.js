@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
 import { channelsDatas, initialstate } from '../../modules/youtube.js';
-import { dbGet } from '../../modules/dbs.js';
-import {initialstateVideoDetails} from '../../modules/videoDetails.js';
+import { dbGet, initialstateDbs } from '../../modules/dbs.js';
+import { initialstateVideoDetails } from '../../modules/videoDetails.js';
 import { RiGamepadFill } from 'react-icons/ri';
 import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
 import { MdMovieCreation } from 'react-icons/md';
@@ -44,6 +44,7 @@ const ChannelsContainer = () => {
     return () => {
       dispatch(initialstateVideoDetails());
       dispatch(initialstate());
+      dispatch(initialstateDbs());
     };
   }, [dispatch]);
 
@@ -51,7 +52,7 @@ const ChannelsContainer = () => {
 
   useEffect(() => {
     if (channels !== null) {
-      for (let i = 0; i <= channels.items.length - 1; i++) {
+      for (let i = 0; i < channels.items.length; i++) {
         const {
           statistics: { subscriberCount, videoCount },
           snippet: {

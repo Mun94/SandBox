@@ -7,12 +7,14 @@ import { takeLatest } from 'redux-saga/effects';
 
 const [DBGET, DBGET_SUCCESS, DBGET_FAILURE] = createReactSagaType('dbs/DBGET');
 const DBPATCH = 'dbs/DBPATCH';
+const INITIALSTATEDBS = 'dbs/INITIALSTATEDBS';
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
   channelId,
   videoCount,
 }));
+export const initialstateDbs = createAction(INITIALSTATEDBS);
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
@@ -38,6 +40,7 @@ const dbs = handleActions(
       ...state,
       dbError: action.payload,
     }),
+    [INITIALSTATEDBS]: () => initialState,
   },
   initialState,
 );
