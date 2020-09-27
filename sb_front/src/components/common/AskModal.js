@@ -41,22 +41,41 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const AskModal = ({ visible, title, onConfirm, onCancel, result }) => {
+const AskModal = ({
+  visible,
+  title,
+  onConfirm,
+  onCancel,
+  result,
+  onChange,
+  random,
+  commentDetail,
+}) => {
   if (!visible) return null;
 
   return (
     <Fullscreen>
       <AskModalBlock>
         <h2>{title}</h2>
-        <input type="text" placeholder="인원 수 입력" />
+        <input
+          type="text"
+          placeholder="인원 수 입력"
+          onChange={onChange}
+          value={random}
+        />
         <div className="buttons">
           <StyledButton onClick={onCancel}>취소</StyledButton>
           <StyledButton onClick={onConfirm}>확인</StyledButton>
-          {result ? 'sssss' : null}
+          {result
+            ? commentDetail
+                .sort(() => Math.random() - Math.random())
+                .slice(0, random)
+                .map((com) => com.authorDisplayName)
+            : null}
         </div>
       </AskModalBlock>
     </Fullscreen>
   );
 };
 
-export default AskModal;
+export default React.memo(AskModal);
