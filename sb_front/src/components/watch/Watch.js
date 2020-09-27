@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchCommentContainer from '../../containers/watch/SearchCommentContainer.js';
+import AskModalContainer from '../../containers/watch/AskModalContainer.js';
 import { AiTwotoneLike } from 'react-icons/ai';
 import Button from '../common/Button.js';
 
@@ -180,6 +181,7 @@ const Watch = ({
         <ButtonSort onClick={onClick} value="publishedAt">
           최신 순
         </ButtonSort>
+        <AskModalContainer />
         <List
           width={600}
           height={600}
