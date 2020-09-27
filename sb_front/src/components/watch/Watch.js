@@ -70,7 +70,9 @@ const LikeCount = styled.div`
     opacity: 60%;
   }
 `;
-const SearchList = styled.div``;
+const SearchList = styled.div`
+  margin-left: 1.5rem;
+`;
 
 const SearchBlock = styled.div`
   display: flex;
@@ -156,7 +158,22 @@ const Watch = ({
                   </Button>
                 </>
               ) : (
-                comment.textOriginal
+                <>
+                  {comment.textOriginal.slice(
+                    0,
+                    comment.textOriginal.indexOf(keyword),
+                  )}
+                  <span style={{ color: '#ffc200' }}>
+                    {comment.textOriginal.slice(
+                      comment.textOriginal.indexOf(keyword),
+                      comment.textOriginal.indexOf(keyword) + keyword.length,
+                    )}
+                  </span>
+                  {comment.textOriginal.slice(
+                    comment.textOriginal.indexOf(keyword) + keyword.length,
+                    comment.textOriginal.length,
+                  )}
+                </>
               )}
             </Text>
             <LikeCount>
@@ -169,7 +186,7 @@ const Watch = ({
         </ComBlock>
       );
     },
-    [commentDetail, onMore],
+    [commentDetail, onMore, keyword],
   );
 
   return (
