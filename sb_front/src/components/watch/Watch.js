@@ -13,6 +13,9 @@ const VideoCommentBlock = styled.div`
   button + button {
     margin-left: 0.3rem;
   }
+  button:focus {
+    background: #ffc200;
+  }
 `;
 
 const Video = styled.div`
@@ -82,10 +85,10 @@ const SearchBlock = styled.div`
   }
 `;
 
-const ButtonSort = styled(Button)`
-  &:focus {
-    background: #ffc200;
-  }
+const ButtonBlock = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
 `;
 
 const Watch = ({
@@ -172,16 +175,22 @@ const Watch = ({
           </select>
           <SearchCommentContainer />
         </SearchBlock>
-        <ButtonSort onClick={onClick} value="authorDisplayName">
-          이름 순
-        </ButtonSort>
-        <ButtonSort onClick={onClick} value="likeCount">
-          좋아요 순
-        </ButtonSort>
-        <ButtonSort onClick={onClick} value="publishedAt">
-          최신 순
-        </ButtonSort>
-        <AskModalContainer />
+        <ButtonBlock>
+          <div>
+            <Button onClick={onClick} value="authorDisplayName">
+              이름 순
+            </Button>
+            <Button onClick={onClick} value="likeCount">
+              좋아요 순
+            </Button>
+            <Button onClick={onClick} value="publishedAt">
+              최신 순
+            </Button>
+          </div>
+          <div>
+            <AskModalContainer />
+          </div>
+        </ButtonBlock>
         <List
           width={600}
           height={600}
