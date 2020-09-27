@@ -97,6 +97,11 @@ const ButtonBlock = styled.div`
 
 const ListBlock = styled.div`
   position: relative;
+  .length {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+  }
 `;
 
 const Watch = ({
@@ -226,6 +231,7 @@ const Watch = ({
           </div>
         </ButtonBlock>
         <ListBlock>
+          <span className="length">{commentDetail.length + '/100'}</span>
           <List
             width={600}
             height={600}
