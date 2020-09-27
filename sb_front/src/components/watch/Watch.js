@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchCommentContainer from '../../containers/watch/SearchCommentContainer.js';
 import { AiTwotoneLike } from 'react-icons/ai';
+import Button from '../common/Button.js';
 
 const VideoCommentBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  button + button {
+    margin-left: 0.3rem;
+  }
 `;
 
 const Video = styled.div`
@@ -77,14 +81,41 @@ const SearchBlock = styled.div`
   }
 `;
 
+const ButtonSort = styled(Button)`
+  &:focus {
+    background: #ffc200;
+  }
+`;
+
 const Watch = ({
   query,
   videoDetail,
   commentDetail,
   keyword,
-  onClick,
+  onChange,
   useSearch,
+  onClick,
+  useSortBy,
 }) => {
+  if (useSortBy === 'likeCount') {
+    commentDetail.sort((a, b) => {
+      if (parseInt(a.likeCount) > parseInt(b.likeCount)) return -1;
+      else if (parseInt(b.likeCount) > parseInt(a.likeCount)) return 1;
+      else return 0;
+    });
+  } else if (useSortBy === 'authorDisplayName') {
+    commentDetail.sort((a, b) => {
+      if (a.authorDisplayName > b.authorDisplayName) return 1;
+      else if (b.authorDisplayName > a.authorDisplayName) return -1;
+      else return 0;
+    });
+  } else {
+    commentDetail.sort((a, b) => {
+      if (a.publishedAt > b.publishedAt) return -1;
+      else if (b.publishedAt > a.publishedAt) return 1;
+      else return 0;
+    });
+  }
   if (keyword) {
     commentDetail = commentDetail.filter(
       (com) => com[useSearch].indexOf(keyword) >= 0,
@@ -117,7 +148,7 @@ const Watch = ({
         </ComBlock>
       );
     },
-    [commentDetail, keyword],
+    [commentDetail],
   );
 
   return (
@@ -134,12 +165,21 @@ const Watch = ({
       </Video>
       <SearchList>
         <SearchBlock>
-          <select onClick={onClick}>
+          <select onChange={onChange}>
             <option value="textOriginal">내용</option>
             <option value="authorDisplayName">작성자</option>
           </select>
           <SearchCommentContainer />
         </SearchBlock>
+        <ButtonSort onClick={onClick} value="authorDisplayName">
+          이름 순
+        </ButtonSort>
+        <ButtonSort onClick={onClick} value="likeCount">
+          좋아요 순
+        </ButtonSort>
+        <ButtonSort onClick={onClick} value="publishedAt">
+          최신 순
+        </ButtonSort>
         <List
           width={600}
           height={600}

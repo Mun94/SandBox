@@ -18,6 +18,7 @@ const WatchContainer = ({ location }) => {
 
   const [useComment, setComment] = useState([]);
   const [useSearch, setSearch] = useState('textOriginal');
+  const [useSortBy, setSortBy] = useState('');
 
   const dispatch = useDispatch();
   const { videoDetail, comment, commentDetail, keyword } = useSelector(
@@ -72,8 +73,11 @@ const WatchContainer = ({ location }) => {
     }
   }, [comment, useComment, dispatch]);
 
-  const onClick = useCallback((e) => {
+  const onChange = useCallback((e) => {
     setSearch(e.target.value);
+  }, []);
+  const onClick = useCallback((e) => {
+    setSortBy(e.target.value);
   }, []);
 
   return (
@@ -86,8 +90,10 @@ const WatchContainer = ({ location }) => {
           commentDetail={commentDetail}
           query={query}
           keyword={keyword}
-          onClick={onClick}
+          onChange={onChange}
           useSearch={useSearch}
+          onClick={onClick}
+          useSortBy={useSortBy}
         />
       )}
     </>
