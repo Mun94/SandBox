@@ -10,6 +10,7 @@ import {
 } from '../../modules/watchDetails.js';
 import { initialstate } from '../../modules/youtube.js';
 import LoadingSub from '../../components/common/LoadingSub.js';
+import MoreComment from '../../components/watch/MoreComment.js';
 
 const WatchContainer = ({ location }) => {
   const query = qs.parse(location.search, {
@@ -19,6 +20,7 @@ const WatchContainer = ({ location }) => {
   const [useComment, setComment] = useState([]);
   const [useSearch, setSearch] = useState('textOriginal');
   const [useSortBy, setSortBy] = useState('');
+  const [useMore, setMore] = useState(null);
 
   const dispatch = useDispatch();
   const { videoDetail, comment, commentDetail, keyword } = useSelector(
@@ -79,22 +81,37 @@ const WatchContainer = ({ location }) => {
   const onClick = useCallback((e) => {
     setSortBy(e.target.value);
   }, []);
-
+  const onMore = useCallback((e) => {
+    setMore(e.target.value);
+  }, []);
+  const onMoreCancle = () => {
+    setMore(null);
+  };
   return (
     <>
       {commentDetail.length < 1 ? (
         <LoadingSub />
       ) : (
-        <Watch
-          videoDetail={videoDetail}
-          commentDetail={commentDetail}
-          query={query}
-          keyword={keyword}
-          onChange={onChange}
-          useSearch={useSearch}
-          onClick={onClick}
-          useSortBy={useSortBy}
-        />
+        <>
+          <Watch
+            videoDetail={videoDetail}
+            commentDetail={commentDetail}
+            query={query}
+            keyword={keyword}
+            onChange={onChange}
+            useSearch={useSearch}
+            onClick={onClick}
+            useSortBy={useSortBy}
+            onMore={onMore}
+          />
+          {useMore && (
+            <MoreComment
+              useMore={useMore}
+              commentDetail={commentDetail}
+              onMoreCancle={onMoreCancle}
+            />
+          )}
+        </>
       )}
     </>
   );

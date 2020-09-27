@@ -22,8 +22,8 @@ const Video = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1.5rem;
-  @media (max-width: 870px) {
-    margin-bottom: 2rem;
+  @media (max-width: 1104px) {
+    margin-bottom: 1rem;
   }
 `;
 
@@ -99,6 +99,7 @@ const Watch = ({
   onChange,
   useSearch,
   onClick,
+  onMore,
   useSortBy,
 }) => {
   if (useSortBy === 'likeCount') {
@@ -125,6 +126,7 @@ const Watch = ({
       (com) => com[useSearch].indexOf(keyword) >= 0,
     );
   }
+
   const rowComment = useCallback(
     ({ index, key, style }) => {
       const comment = commentDetail[index];
@@ -138,9 +140,16 @@ const Watch = ({
               <span>{comment.publishedAt.split('T')[0]}</span>
             </NamePublishedAt>
             <Text>
-              {comment.textOriginal.length > 50
-                ? comment.textOriginal.slice(0, 50) + '...'
-                : comment.textOriginal}
+              {comment.textOriginal.length > 50 ? (
+                <>
+                  {comment.textOriginal.slice(0, 50)}...
+                  <Button onClick={onMore} value={comment.id}>
+                    더 보기
+                  </Button>
+                </>
+              ) : (
+                comment.textOriginal
+              )}
             </Text>
             <LikeCount>
               <span>
@@ -152,7 +161,7 @@ const Watch = ({
         </ComBlock>
       );
     },
-    [commentDetail],
+    [commentDetail, onMore],
   );
 
   return (
