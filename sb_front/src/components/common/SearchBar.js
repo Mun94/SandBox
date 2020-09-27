@@ -60,4 +60,4 @@ const SearchBar = (props) => (
   </Wrapper>
 );
 
-export default SearchBar;
+export default React.memo(SearchBar);

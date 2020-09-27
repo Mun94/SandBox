@@ -7,16 +7,15 @@ const INITIALSTATE = 'homeChannels/INITIALSTATE';
 
 export const uploadChannels = createAction(
   UPLOAD_CHANNELS_INFO,
-  ({ channelInfo }) => ({ channelInfo }),
+  (channelInfo) => channelInfo,
 );
-export const searchChannels = createAction(SEARCH_KEYWORD, ({ keyword }) => ({
-  keyword,
-}));
+export const searchChannels = createAction(
+  SEARCH_KEYWORD,
+  (keyword) => keyword,
+);
 export const categoryKeyChannels = createAction(
   CATEGORY_KEY,
-  ({ category }) => ({
-    category,
-  }),
+  (category) => category,
 );
 export const initialstateChannels = createAction(INITIALSTATE);
 

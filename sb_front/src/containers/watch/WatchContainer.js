@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Watch from '../../components/watch/Watch';
 import qs from 'qs';
@@ -17,13 +17,15 @@ const WatchContainer = ({ location }) => {
   });
 
   const [useComment, setComment] = useState([]);
+  const [useSearch, setSearch] = useState('textOriginal');
 
   const dispatch = useDispatch();
-  const { videoDetail, comment, commentDetail } = useSelector(
+  const { videoDetail, comment, commentDetail, keyword } = useSelector(
     ({ videoDetails, youtube, watchDetails }) => ({
       videoDetail: videoDetails.videoDetail[parseInt(query.num)],
       comment: youtube.comment,
       commentDetail: watchDetails.commentDetail,
+      keyword: watchDetails.keyword,
     }),
   );
 
@@ -70,6 +72,10 @@ const WatchContainer = ({ location }) => {
     }
   }, [comment, useComment, dispatch]);
 
+  const onClick = useCallback((e) => {
+    setSearch(e.target.value);
+  }, []);
+
   return (
     <>
       {commentDetail.length < 1 ? (
@@ -79,6 +85,9 @@ const WatchContainer = ({ location }) => {
           videoDetail={videoDetail}
           commentDetail={commentDetail}
           query={query}
+          keyword={keyword}
+          onClick={onClick}
+          useSearch={useSearch}
         />
       )}
     </>

@@ -1,16 +1,19 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const COMMENT = 'watchDetail/COMMENT';
-const INITIALSTATE = 'watchDetail/INITIALSTATE';
+const COMMENT = 'watchDetails/COMMENT';
+const SEARCHCOMMENT = 'watchDetails/SEARCHCOMMENT';
+const INITIALSTATE = 'watchDetails/INITIALSTATE';
 
 export const uploadComment = createAction(
   COMMENT,
   (commentDetail) => commentDetail,
 );
+export const searchComment = createAction(SEARCHCOMMENT, (keyword) => keyword);
 export const initialstateComment = createAction(INITIALSTATE);
 
 const initialState = {
   commentDetail: [],
+  keyword: '',
 };
 
 const watchDetails = handleActions(
@@ -18,6 +21,10 @@ const watchDetails = handleActions(
     [COMMENT]: (state, { payload: { commentDetail } }) => ({
       ...state,
       commentDetail,
+    }),
+    [SEARCHCOMMENT]: (state, { payload: { keyword } }) => ({
+      ...state,
+      keyword,
     }),
     [INITIALSTATE]: () => initialState,
   },
