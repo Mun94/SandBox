@@ -46,7 +46,7 @@ const StyledButton = styled(Button)`
     margin-left: 0.75rem;
   }
   &:hover,
-  :focus {
+  &:focus {
     background: #ffc200;
   }
 `;

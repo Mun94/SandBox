@@ -10,7 +10,6 @@ import {
 } from '../../modules/watchDetails.js';
 import { initialstate } from '../../modules/youtube.js';
 import LoadingSub from '../../components/common/LoadingSub.js';
-import MoreComment from '../../components/watch/MoreComment.js';
 
 const WatchContainer = ({ location }) => {
   const query = qs.parse(location.search, {
@@ -89,29 +88,22 @@ const WatchContainer = ({ location }) => {
   };
   return (
     <>
-      {commentDetail.length < 1 ? (
+      {commentDetail.length < 1 && useMore ? (
         <LoadingSub />
       ) : (
-        <>
-          <Watch
-            videoDetail={videoDetail}
-            commentDetail={commentDetail}
-            query={query}
-            keyword={keyword}
-            onChange={onChange}
-            useSearch={useSearch}
-            onClick={onClick}
-            useSortBy={useSortBy}
-            onMore={onMore}
-          />
-          {useMore && (
-            <MoreComment
-              useMore={useMore}
-              commentDetail={commentDetail}
-              onMoreCancle={onMoreCancle}
-            />
-          )}
-        </>
+        <Watch
+          videoDetail={videoDetail}
+          commentDetail={commentDetail}
+          query={query}
+          keyword={keyword}
+          onChange={onChange}
+          useSearch={useSearch}
+          onClick={onClick}
+          useSortBy={useSortBy}
+          onMore={onMore}
+          useMore={useMore}
+          onMoreCancle={onMoreCancle}
+        />
       )}
     </>
   );

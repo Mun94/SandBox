@@ -5,6 +5,7 @@ import SearchCommentContainer from '../../containers/watch/SearchCommentContaine
 import AskModalContainer from '../../containers/watch/AskModalContainer.js';
 import { AiTwotoneLike } from 'react-icons/ai';
 import Button from '../common/Button.js';
+import MoreComment from '../watch/MoreComment.js';
 
 const VideoCommentBlock = styled.div`
   display: flex;
@@ -13,7 +14,8 @@ const VideoCommentBlock = styled.div`
   button + button {
     margin-left: 0.3rem;
   }
-  button:focus {
+  button:focus,
+  button:hover {
     background: #ffc200;
   }
 `;
@@ -91,6 +93,10 @@ const ButtonBlock = styled.div`
   margin-bottom: 1rem;
 `;
 
+const ListBlock = styled.div`
+  position: relative;
+`;
+
 const Watch = ({
   query,
   videoDetail,
@@ -101,6 +107,8 @@ const Watch = ({
   onClick,
   onMore,
   useSortBy,
+  useMore,
+  onMoreCancle,
 }) => {
   if (useSortBy === 'likeCount') {
     commentDetail.sort((a, b) => {
@@ -196,20 +204,29 @@ const Watch = ({
               최신 순
             </Button>
           </div>
-          <div>
+          <div onClick={onMoreCancle}>
             <AskModalContainer />
           </div>
         </ButtonBlock>
-        <List
-          width={600}
-          height={600}
-          rowCount={commentDetail.length}
-          rowHeight={100}
-          rowRenderer={rowComment}
-          style={{
-            border: '2px solid rgba(0, 0, 0, 0.05)',
-          }}
-        />
+        <ListBlock>
+          <List
+            width={600}
+            height={600}
+            rowCount={commentDetail.length}
+            rowHeight={100}
+            rowRenderer={rowComment}
+            style={{
+              border: '2px solid rgba(0, 0, 0, 0.05)',
+            }}
+          />
+          {useMore && (
+            <MoreComment
+              useMore={useMore}
+              commentDetail={commentDetail}
+              onMoreCancle={onMoreCancle}
+            />
+          )}
+        </ListBlock>
       </SearchList>
     </VideoCommentBlock>
   );

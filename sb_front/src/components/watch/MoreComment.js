@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from '../common/Button.js';
 
 const MoreBlock = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 30;
   top: 0;
   left: 0;
