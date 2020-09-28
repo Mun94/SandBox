@@ -16,11 +16,12 @@ const WatchContainer = ({ location }) => {
     ignoreQueryPrefix: true,
   });
 
-  const [useComment, setComment] = useState([]);
+  const [useComment] = useState([]);
   const [useSearch, setSearch] = useState('textOriginal');
   const [useSortBy, setSortBy] = useState('');
   const [useMore, setMore] = useState(null);
   const [useVideoDescription, setVideoDescription] = useState(false);
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
   const {
@@ -29,12 +30,14 @@ const WatchContainer = ({ location }) => {
     commentDetail,
     keyword,
     channelInfo,
+    apiError,
   } = useSelector(({ videoDetails, youtube, watchDetails, homeChannels }) => ({
     videoDetail: videoDetails.videoDetail[parseInt(query.num)],
     comment: youtube.comment,
     commentDetail: watchDetails.commentDetail,
     keyword: watchDetails.keyword,
     channelInfo: homeChannels.channelInfo,
+    apiError: youtube.apiError,
   }));
 
   useEffect(() => {
@@ -47,6 +50,9 @@ const WatchContainer = ({ location }) => {
   const nextId = useRef(0);
 
   useEffect(() => {
+    if (apiError) {
+      setError(true);
+    }
     if (comment !== null) {
       for (let i = 0; i < comment.items.length; i++) {
         const {
@@ -74,11 +80,10 @@ const WatchContainer = ({ location }) => {
 
         nextId.current += 1;
       }
-      setComment(useComment);
       dispatch(uploadComment({ commentDetail: useComment }));
       dispatch(initialstate());
     }
-  }, [comment, useComment, dispatch]);
+  }, [comment, useComment, dispatch, apiError]);
 
   const onChange = useCallback((e) => {
     setSearch(e.target.value);
@@ -120,6 +125,7 @@ const WatchContainer = ({ location }) => {
           onMoreVideoDescription={onMoreVideoDescription}
           useVideoDescription={useVideoDescription}
           onMoreCancleVideoDescription={onMoreCancleVideoDescription}
+          error={error}
         />
       )}
     </>

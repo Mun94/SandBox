@@ -70,7 +70,7 @@ const PublishedAt = styled.span`
     `}
 `;
 
-const Videos = ({ videoDetail }) => {
+const Videos = ({ videoDetail, error }) => {
   const YMD = new Date();
   const setMonth = YMD.getMonth() + 1;
   const setDate = YMD.getDate();
@@ -95,31 +95,39 @@ const Videos = ({ videoDetail }) => {
   const yesterday = year1 + '-' + month1 + '-' + date1;
 
   return (
-    <VideoBlock>
-      {videoDetail.map((Info) => (
-        <Wrapper
-          to={`/watch?video=${Info.videoId}&num=${Info.id}`}
-          key={Info.id}
-        >
-          <Img src={Info.medium.url} alt="" />
-          <Duration>{Info.duration.slice(2, 20)}</Duration>
-          <Sub>
-            <div>
-              {[today, yesterday].indexOf(Info.publishedAt.split('T')[0]) >=
-              0 ? (
-                <PublishedAt toYes>
-                  {Info.publishedAt.split('T')[0]}
-                </PublishedAt>
-              ) : (
-                <PublishedAt>{Info.publishedAt.split('T')[0]}</PublishedAt>
-              )}
-              <View>{Info.viewCount} view</View>
-            </div>
-            <Title>{Info.title}</Title>
-          </Sub>
-        </Wrapper>
-      ))}
-    </VideoBlock>
+    <>
+      {error ? (
+        <div style={{ color: '#f7f2f2', 'text-align': 'center' }}>
+          에러 발생
+        </div>
+      ) : (
+        <VideoBlock>
+          {videoDetail.map((Info) => (
+            <Wrapper
+              to={`/watch?video=${Info.videoId}&num=${Info.id}`}
+              key={Info.id}
+            >
+              <Img src={Info.medium.url} alt="" />
+              <Duration>{Info.duration.slice(2, 20)}</Duration>
+              <Sub>
+                <div>
+                  {[today, yesterday].indexOf(Info.publishedAt.split('T')[0]) >=
+                  0 ? (
+                    <PublishedAt toYes>
+                      {Info.publishedAt.split('T')[0]}
+                    </PublishedAt>
+                  ) : (
+                    <PublishedAt>{Info.publishedAt.split('T')[0]}</PublishedAt>
+                  )}
+                  <View>{Info.viewCount} view</View>
+                </div>
+                <Title>{Info.title}</Title>
+              </Sub>
+            </Wrapper>
+          ))}
+        </VideoBlock>
+      )}
+    </>
   );
 };
 

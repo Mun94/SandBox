@@ -187,6 +187,7 @@ const Watch = ({
   useVideoDescription,
   onMoreVideoDescription,
   onMoreCancleVideoDescription,
+  error,
 }) => {
   if (useSortBy === 'likeCount') {
     commentDetail.sort((a, b) => {
@@ -266,118 +267,126 @@ const Watch = ({
   );
 
   return (
-    <VideoCommentBlock>
-      <VideoBlock>
-        <Video>
-          <iframe
-            title="youtube"
-            width="480"
-            height="270"
-            src={`//www.youtube.com/embed/${query.video}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </Video>
-        <Title>
-          <div>{videoDetail.title}</div>
-          <div>
-            {videoDetail.tags.map((tag, index) => (
-              <span key={index}>
-                {tag}
-                {', '}
-              </span>
-            ))}
-          </div>
-        </Title>
-        <ViewLikeCount>
-          <div>
-            <span>조회수 {videoDetail.viewCount}회</span>
-            <span>{videoDetail.publishedAt.split('T')[0]}</span>
-          </div>
-          <div>
-            <span>
-              <AiTwotoneLike /> {videoDetail.likeCount}
-            </span>
-            <span>
-              <AiTwotoneDislike /> {videoDetail.dislikeCount}
-            </span>
-          </div>
-        </ViewLikeCount>
-        <Div />
-        {channelInfo.map(
-          (ch) =>
-            ch.channelId === videoDetail.channelId && (
-              <ProfileBlock key={ch.id}>
-                <ProfileImg src={ch.profileUrl} alt="" />
-                <Link to={`/v/${ch.channelId}`}>
-                  <div>{ch.name}</div>
-                </Link>
-                <div>{ch.subs / 10000}만명</div>
-              </ProfileBlock>
-            ),
-        )}
-        <DescriptionTags>
-          {useVideoDescription ? (
-            <>
-              {videoDetail.description}
-              <Button onClick={onMoreCancleVideoDescription}>최소화</Button>
-            </>
-          ) : (
-            <>
-              {videoDetail.description.slice(0, 50)}...
-              <Button onClick={onMoreVideoDescription}>더 보기</Button>
-            </>
-          )}
-        </DescriptionTags>
-      </VideoBlock>
+    <>
+      {error ? (
+        <div style={{ color: '#f7f2f2', 'text-align': 'center' }}>
+          에러 발생
+        </div>
+      ) : (
+        <VideoCommentBlock>
+          <VideoBlock>
+            <Video>
+              <iframe
+                title="youtube"
+                width="480"
+                height="270"
+                src={`//www.youtube.com/embed/${query.video}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </Video>
+            <Title>
+              <div>{videoDetail.title}</div>
+              <div>
+                {videoDetail.tags.map((tag, index) => (
+                  <span key={index}>
+                    {tag}
+                    {', '}
+                  </span>
+                ))}
+              </div>
+            </Title>
+            <ViewLikeCount>
+              <div>
+                <span>조회수 {videoDetail.viewCount}회</span>
+                <span>{videoDetail.publishedAt.split('T')[0]}</span>
+              </div>
+              <div>
+                <span>
+                  <AiTwotoneLike /> {videoDetail.likeCount}
+                </span>
+                <span>
+                  <AiTwotoneDislike /> {videoDetail.dislikeCount}
+                </span>
+              </div>
+            </ViewLikeCount>
+            <Div />
+            {channelInfo.map(
+              (ch) =>
+                ch.channelId === videoDetail.channelId && (
+                  <ProfileBlock key={ch.id}>
+                    <ProfileImg src={ch.profileUrl} alt="" />
+                    <Link to={`/v/${ch.channelId}`}>
+                      <div>{ch.name}</div>
+                    </Link>
+                    <div>{ch.subs / 10000}만명</div>
+                  </ProfileBlock>
+                ),
+            )}
+            <DescriptionTags>
+              {useVideoDescription ? (
+                <>
+                  {videoDetail.description}
+                  <Button onClick={onMoreCancleVideoDescription}>최소화</Button>
+                </>
+              ) : (
+                <>
+                  {videoDetail.description.slice(0, 50)}...
+                  <Button onClick={onMoreVideoDescription}>더 보기</Button>
+                </>
+              )}
+            </DescriptionTags>
+          </VideoBlock>
 
-      <SearchList>
-        <SearchBlock>
-          <select onChange={onChange}>
-            <option value="textOriginal">내용</option>
-            <option value="authorDisplayName">작성자</option>
-          </select>
-          <SearchCommentContainer />
-        </SearchBlock>
-        <ButtonBlock>
-          <div>
-            <Button onClick={onClick} value="authorDisplayName">
-              이름 순
-            </Button>
-            <Button onClick={onClick} value="likeCount">
-              좋아요 순
-            </Button>
-            <Button onClick={onClick} value="publishedAt">
-              최신 순
-            </Button>
-          </div>
-          <div onClick={onMoreCancle}>
-            <AskModalContainer />
-          </div>
-        </ButtonBlock>
-        <ListBlock>
-          <span className="length">{commentDetail.length + '/100'}</span>
-          <List
-            width={600}
-            height={600}
-            rowCount={commentDetail.length}
-            rowHeight={100}
-            rowRenderer={rowComment}
-            style={{
-              border: '2px solid rgba(0, 0, 0, 0.05)',
-            }}
-          />
-          {useMore && (
-            <MoreComment
-              useMore={useMore}
-              commentDetail={commentDetail}
-              onMoreCancle={onMoreCancle}
-            />
-          )}
-        </ListBlock>
-      </SearchList>
-    </VideoCommentBlock>
+          <SearchList>
+            <SearchBlock>
+              <select onChange={onChange}>
+                <option value="textOriginal">내용</option>
+                <option value="authorDisplayName">작성자</option>
+              </select>
+              <SearchCommentContainer />
+            </SearchBlock>
+            <ButtonBlock>
+              <div>
+                <Button onClick={onClick} value="authorDisplayName">
+                  이름 순
+                </Button>
+                <Button onClick={onClick} value="likeCount">
+                  좋아요 순
+                </Button>
+                <Button onClick={onClick} value="publishedAt">
+                  최신 순
+                </Button>
+              </div>
+              <div onClick={onMoreCancle}>
+                <AskModalContainer />
+              </div>
+            </ButtonBlock>
+            <ListBlock>
+              <span className="length">{commentDetail.length + '/100'}</span>
+              <List
+                width={600}
+                height={600}
+                rowCount={commentDetail.length}
+                rowHeight={100}
+                rowRenderer={rowComment}
+                style={{
+                  border: '2px solid rgba(0, 0, 0, 0.05)',
+                }}
+              />
+              {useMore && (
+                <MoreComment
+                  useMore={useMore}
+                  commentDetail={commentDetail}
+                  onMoreCancle={onMoreCancle}
+                />
+              )}
+            </ListBlock>
+          </SearchList>
+        </VideoCommentBlock>
+      )}
+    </>
   );
 };
 

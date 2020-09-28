@@ -250,7 +250,9 @@ const Channels = ({
   return (
     <>
       {error ? (
-        <div>에러 발생</div>
+        <div style={{ color: '#f7f2f2', 'text-align': 'center' }}>
+          에러 발생
+        </div>
       ) : (
         <>
           <SearchSelectBlock>
