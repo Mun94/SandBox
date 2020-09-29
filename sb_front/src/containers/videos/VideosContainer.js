@@ -18,18 +18,25 @@ const VideosContainer = ({ match }) => {
   const { channelId } = match.params;
 
   const [useVideoId, setVideoId] = useState([]);
-  const [useVideoDetail, setVideoDetail] = useState([]);
+  const [useVideoDetail] = useState([]);
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const { activities, videoId, videos, videoDetail, channelInfo } = useSelector(
-    ({ youtube, videoDetails, homeChannels }) => ({
-      activities: youtube.activities,
-      videos: youtube.videos,
-      videoId: videoDetails.videoId,
-      videoDetail: videoDetails.videoDetail,
-      channelInfo: homeChannels.channelInfo,
-    }),
-  );
+  const {
+    activities,
+    videoId,
+    videos,
+    videoDetail,
+    channelInfo,
+    apiError,
+  } = useSelector(({ youtube, videoDetails, homeChannels }) => ({
+    activities: youtube.activities,
+    videos: youtube.videos,
+    apiError: youtube.apiError,
+    videoId: videoDetails.videoId,
+    videoDetail: videoDetails.videoDetail,
+    channelInfo: homeChannels.channelInfo,
+  }));
 
   useEffect(() => {
     dispatch(activitiesDatas(channelId));
@@ -58,6 +65,9 @@ const VideosContainer = ({ match }) => {
   const nextId = useRef(0);
 
   useEffect(() => {
+    if (apiError) {
+      setError(true);
+    }
     if (videos !== null) {
       for (let i = 0; i < videos.items.length; i++) {
         const {
@@ -103,24 +113,20 @@ const VideosContainer = ({ match }) => {
 
         nextId.current += 1;
       }
-      setVideoDetail(useVideoDetail);
     }
-  }, [dispatch, useVideoDetail, videos]);
-
-  useEffect(() => {
     dispatch(uploadVideoId({ videoId: useVideoId }));
     dispatch(uploadVideoDetail({ videoDetail: useVideoDetail }));
     return () => {
       dispatch(initialstate());
     };
-  }, [dispatch, useVideoId, useVideoDetail]);
+  }, [dispatch, useVideoDetail, videos, useVideoId, apiError]);
 
   return (
     <>
       {videoDetail.length < 1 ? (
         <LoadingSub />
       ) : (
-        <Videos videoDetail={videoDetail} />
+        <Videos videoDetail={videoDetail} error={error} />
       )}
     </>
   );

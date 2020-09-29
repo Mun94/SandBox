@@ -11,7 +11,7 @@ import { dbGet } from '../../modules/dbs.js';
 import { initialstateVideoDetails } from '../../modules/videoDetails.js';
 
 const ChannelsContainer = () => {
-  const [useChannelInfo, setChannelInfo] = useState([]);
+  const [useChannelInfo] = useState([]);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState('');
 
@@ -46,6 +46,9 @@ const ChannelsContainer = () => {
   const nextId = useRef(0);
 
   useEffect(() => {
+    if (apiError) {
+      setError(true);
+    }
     if (channels !== null) {
       for (let i = 0; i < channels.items.length; i++) {
         const {
@@ -74,9 +77,8 @@ const ChannelsContainer = () => {
         nextId.current += 1;
       }
       dispatch(uploadChannels({ channelInfo: useChannelInfo }));
-      setChannelInfo(useChannelInfo);
     }
-  }, [channels, useChannelInfo, dispatch]);
+  }, [channels, useChannelInfo, dispatch, apiError]);
 
   useEffect(() => {
     if (dbChannel !== null && channelInfo.length > 1) {
@@ -89,12 +91,6 @@ const ChannelsContainer = () => {
       }
     }
   }, [dbChannel, channelInfo]);
-
-  useEffect(() => {
-    if (apiError) {
-      setError(true);
-    }
-  }, [apiError]);
 
   const onChange = useCallback((e) => {
     setSortBy(e.target.value);
