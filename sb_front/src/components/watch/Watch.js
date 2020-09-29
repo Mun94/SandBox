@@ -5,6 +5,7 @@ import SearchCommentContainer from '../../containers/watch/SearchCommentContaine
 import AskModalContainer from '../../containers/watch/AskModalContainer.js';
 import Button from '../common/Button.js';
 import MoreComment from '../watch/MoreComment.js';
+import { Link } from 'react-router-dom';
 
 import { AiTwotoneLike, AiTwotoneDislike } from 'react-icons/ai';
 
@@ -152,8 +153,12 @@ const ProfileBlock = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  div + div {
-    margin-left: 0.5rem;
+  div:nth-child(1):hover {
+    background: #ffc200;
+    border-radius: 4px;
+  }
+  a {
+    margin-right: 0.5rem;
   }
 `;
 
@@ -304,7 +309,9 @@ const Watch = ({
             ch.channelId === videoDetail.channelId && (
               <ProfileBlock key={ch.id}>
                 <ProfileImg src={ch.profileUrl} alt="" />
-                <div>{ch.name}</div>
+                <Link to={`/v/${ch.channelId}`}>
+                  <div>{ch.name}</div>
+                </Link>
                 <div>{ch.subs / 10000}만명</div>
               </ProfileBlock>
             ),
