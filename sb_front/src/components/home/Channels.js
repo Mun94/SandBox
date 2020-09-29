@@ -42,6 +42,7 @@ const SearchSelectBlock = styled.div`
 
 const ListBlock = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -264,7 +265,17 @@ const Channels = ({
             <SearchChannelsContainer />
           </SearchSelectBlock>
           <CategoryContainer />
+
           <ListBlock>
+            <span
+              style={{
+                color: '#f7f2f2',
+                'font-size': '0.8rem',
+                'font-weight': 'bold',
+              }}
+            >
+              크리에이터 수 : {channelInfo.length}
+            </span>
             <List
               width={760}
               height={550}
