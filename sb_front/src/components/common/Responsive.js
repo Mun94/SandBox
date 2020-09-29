@@ -22,20 +22,10 @@ const ResponsiveBlock = styled.div`
   }
 `;
 
-const LoadingSpace = styled.div`
-  position: fixed;
-  width: 3rem;
-  height: 3rem;
-  background: red;
-  right: 2rem;
-  bottom: 2rem;
-`;
-
 const Responsive = ({ children, ...rest }) => {
   return (
     <>
       <ResponsiveBlock {...rest}>{children}</ResponsiveBlock>
-      <LoadingSpace />
     </>
   );
 };
