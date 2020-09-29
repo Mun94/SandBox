@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchCommentContainer from '../../containers/watch/SearchCommentContainer.js';
 import AskModalContainer from '../../containers/watch/AskModalContainer.js';
-import { AiTwotoneLike } from 'react-icons/ai';
 import Button from '../common/Button.js';
 import MoreComment from '../watch/MoreComment.js';
+
+import { AiTwotoneLike, AiTwotoneDislike } from 'react-icons/ai';
 
 const VideoCommentBlock = styled.div`
   display: flex;
@@ -23,10 +24,6 @@ const VideoCommentBlock = styled.div`
 const Video = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 1.5rem;
-  @media (max-width: 1104px) {
-    margin-bottom: 1rem;
-  }
 `;
 
 const ComBlock = styled.div`
@@ -71,7 +68,7 @@ const LikeCount = styled.div`
   }
 `;
 const SearchList = styled.div`
-  margin-left: 1.5rem;
+  margin-left: 2rem;
 `;
 
 const SearchBlock = styled.div`
@@ -104,9 +101,75 @@ const ListBlock = styled.div`
   }
 `;
 
+const VideoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  margin-right: 2rem;
+  @media (max-width: 1104px) {
+    margin: 2rem;
+    margin-right: 0;
+  }
+`;
+
+const Title = styled.div`
+  margin: 1rem 0;
+  div:nth-child(1) {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+  div:nth-child(2) {
+    font-size: 0.8rem;
+    opacity: 70%;
+    margin: 0 0.3rem;
+  }
+`;
+
+const ViewLikeCount = styled.div`
+  display: flex;
+  justify-content: space-between;
+  opacity: 70%;
+  div:nth-child(1) {
+    span + span:before {
+      content: '\\B7';
+      margin: 0 0.1rem;
+    }
+  }
+  div:nth-child(2) {
+    span + span {
+      margin-left: 1rem;
+    }
+  }
+`;
+
+const Div = styled.div`
+  border-bottom: 1px solid gray;
+  margin: 1rem 0;
+`;
+
+const ProfileBlock = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  div + div {
+    margin-left: 0.5rem;
+  }
+`;
+
+const ProfileImg = styled.img`
+  border-radius: 60%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 1rem;
+`;
+
+const DescriptionTags = styled.div``;
+
 const Watch = ({
   query,
   videoDetail,
+  channelInfo,
   commentDetail,
   keyword,
   onChange,
@@ -116,6 +179,9 @@ const Watch = ({
   useSortBy,
   useMore,
   onMoreCancle,
+  useVideoDescription,
+  onMoreVideoDescription,
+  onMoreCancleVideoDescription,
 }) => {
   if (useSortBy === 'likeCount') {
     commentDetail.sort((a, b) => {
@@ -196,16 +262,68 @@ const Watch = ({
 
   return (
     <VideoCommentBlock>
-      <Video>
-        <iframe
-          width="480"
-          height="270"
-          src={`//www.youtube.com/embed/${query.video}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </Video>
+      <VideoBlock>
+        <Video>
+          <iframe
+            width="480"
+            height="270"
+            src={`//www.youtube.com/embed/${query.video}`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </Video>
+        <Title>
+          <div>{videoDetail.title}</div>
+          <div>
+            {videoDetail.tags.map((tag, index) => (
+              <span key={index}>
+                {tag}
+                {', '}
+              </span>
+            ))}
+          </div>
+        </Title>
+        <ViewLikeCount>
+          <div>
+            <span>조회수 {videoDetail.viewCount}회</span>
+            <span>{videoDetail.publishedAt.split('T')[0]}</span>
+          </div>
+          <div>
+            <span>
+              <AiTwotoneLike /> {videoDetail.likeCount}
+            </span>
+            <span>
+              <AiTwotoneDislike /> {videoDetail.dislikeCount}
+            </span>
+          </div>
+        </ViewLikeCount>
+        <Div />
+        {channelInfo.map(
+          (ch) =>
+            ch.channelId === videoDetail.channelId && (
+              <ProfileBlock key={ch.id}>
+                <ProfileImg src={ch.profileUrl} alt="" />
+                <div>{ch.name}</div>
+                <div>{ch.subs / 10000}만명</div>
+              </ProfileBlock>
+            ),
+        )}
+        <DescriptionTags>
+          {useVideoDescription ? (
+            <>
+              {videoDetail.description}
+              <Button onClick={onMoreCancleVideoDescription}>최소화</Button>
+            </>
+          ) : (
+            <>
+              {videoDetail.description.slice(0, 50)}...
+              <Button onClick={onMoreVideoDescription}>더 보기</Button>
+            </>
+          )}
+        </DescriptionTags>
+      </VideoBlock>
+
       <SearchList>
         <SearchBlock>
           <select onChange={onChange}>

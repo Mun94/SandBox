@@ -68,6 +68,7 @@ const VideosContainer = ({ match }) => {
             thumbnails: { medium },
             tags,
             categoryId,
+            channelId,
           },
           contentDetails: { duration },
           statistics: {
@@ -83,6 +84,7 @@ const VideosContainer = ({ match }) => {
 
         useVideoDetail.push({
           id: nextId.current,
+          channelId,
           publishedAt,
           title,
           description,

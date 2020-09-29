@@ -20,16 +20,22 @@ const WatchContainer = ({ location }) => {
   const [useSearch, setSearch] = useState('textOriginal');
   const [useSortBy, setSortBy] = useState('');
   const [useMore, setMore] = useState(null);
+  const [useVideoDescription, setVideoDescription] = useState(false);
 
   const dispatch = useDispatch();
-  const { videoDetail, comment, commentDetail, keyword } = useSelector(
-    ({ videoDetails, youtube, watchDetails }) => ({
-      videoDetail: videoDetails.videoDetail[parseInt(query.num)],
-      comment: youtube.comment,
-      commentDetail: watchDetails.commentDetail,
-      keyword: watchDetails.keyword,
-    }),
-  );
+  const {
+    videoDetail,
+    comment,
+    commentDetail,
+    keyword,
+    channelInfo,
+  } = useSelector(({ videoDetails, youtube, watchDetails, homeChannels }) => ({
+    videoDetail: videoDetails.videoDetail[parseInt(query.num)],
+    comment: youtube.comment,
+    commentDetail: watchDetails.commentDetail,
+    keyword: watchDetails.keyword,
+    channelInfo: homeChannels.channelInfo,
+  }));
 
   useEffect(() => {
     dispatch(commentThreads(query.video));
@@ -86,6 +92,13 @@ const WatchContainer = ({ location }) => {
   const onMoreCancle = () => {
     setMore(null);
   };
+  const onMoreVideoDescription = () => {
+    setVideoDescription(true);
+  };
+  const onMoreCancleVideoDescription = () => {
+    setVideoDescription(false);
+  };
+
   return (
     <>
       {commentDetail.length < 1 ? (
@@ -103,6 +116,10 @@ const WatchContainer = ({ location }) => {
           onMore={onMore}
           useMore={useMore}
           onMoreCancle={onMoreCancle}
+          channelInfo={channelInfo}
+          onMoreVideoDescription={onMoreVideoDescription}
+          useVideoDescription={useVideoDescription}
+          onMoreCancleVideoDescription={onMoreCancleVideoDescription}
         />
       )}
     </>

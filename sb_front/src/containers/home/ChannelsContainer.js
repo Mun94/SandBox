@@ -80,35 +80,37 @@ const ChannelsContainer = () => {
     }
   }, [channels, useChannelInfo, dispatch]);
 
-  if (dbChannel !== null && channelInfo.length > 1) {
-    for (let i = 0; i < dbChannel.length; i++) {
-      for (let j = 0; j < channelInfo.length; j++) {
-        if (dbChannel[i].channelId === channelInfo[j].channelId) {
-          channelInfo[j].category = dbChannel[i].categoryId;
-          const categoryIcon = {
-            코미디: <FaSmile />,
-            게임: <RiGamepadFill />,
-            영화: <MdMovieCreation />,
-            교육: <IoIosBook />,
-            일상: <FaTelegramPlane />,
-            '일상,게임': (
-              <>
-                <FaTelegramPlane />
-                <RiGamepadFill />
-              </>
-            ),
-            '교육,게임': (
-              <>
-                <IoIosBook />
-                <RiGamepadFill />
-              </>
-            ),
-          };
-          channelInfo[j].Icon = categoryIcon[channelInfo[j].category];
+  useEffect(() => {
+    if (dbChannel !== null && channelInfo.length > 1) {
+      for (let i = 0; i < dbChannel.length; i++) {
+        for (let j = 0; j < channelInfo.length; j++) {
+          if (dbChannel[i].channelId === channelInfo[j].channelId) {
+            channelInfo[j].category = dbChannel[i].categoryId;
+            const categoryIcon = {
+              코미디: <FaSmile />,
+              게임: <RiGamepadFill />,
+              영화: <MdMovieCreation />,
+              교육: <IoIosBook />,
+              일상: <FaTelegramPlane />,
+              '일상,게임': (
+                <>
+                  <FaTelegramPlane />
+                  <RiGamepadFill />
+                </>
+              ),
+              '교육,게임': (
+                <>
+                  <IoIosBook />
+                  <RiGamepadFill />
+                </>
+              ),
+            };
+            channelInfo[j].Icon = categoryIcon[channelInfo[j].category];
+          }
         }
       }
     }
-  }
+  }, [dbChannel, channelInfo]);
 
   useEffect(() => {
     if (apiError) {
