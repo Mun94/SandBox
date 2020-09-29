@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './page/Home.js';
 import Videos from './page/Videos.js';
 import Watch from './page/Watch.js';
+import ChannelInfo from './page/ChannelInfo.js';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" component={Home} exact />
         <Route path="/v/:channelId" component={Videos} />
         <Route path="/watch" component={Watch} />
+        <Route path="/info/:channelId" component={ChannelInfo} />
         <Route
           render={({ location }) => (
             <>

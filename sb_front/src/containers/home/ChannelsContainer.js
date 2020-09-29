@@ -57,6 +57,8 @@ const ChannelsContainer = () => {
           statistics: { subscriberCount, videoCount },
           snippet: {
             title,
+            description,
+            publishedAt,
             thumbnails: {
               default: { url },
             },
@@ -71,6 +73,8 @@ const ChannelsContainer = () => {
           subs: subscriberCount,
           profileUrl: url,
           videoCount,
+          description,
+          publishedAt,
         });
         nextId.current += 1;
       }

@@ -207,7 +207,7 @@ const Channels = ({
             >
               <RiChatSmile3Fill size="20" />
             </Button>
-            <Button to="">
+            <Button to={`/info/${info.channelId}`}>
               <BsQuestion size="20" />
             </Button>
           </Icon>
