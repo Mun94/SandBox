@@ -270,6 +270,7 @@ const Watch = ({
       <VideoBlock>
         <Video>
           <iframe
+            title="youtube"
             width="480"
             height="270"
             src={`//www.youtube.com/embed/${query.video}`}

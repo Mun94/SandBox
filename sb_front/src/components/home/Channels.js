@@ -7,6 +7,10 @@ import Button from '../common/Button.js';
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
+import { RiGamepadFill } from 'react-icons/ri';
+import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
+import { MdMovieCreation } from 'react-icons/md';
+import { IoIosBook } from 'react-icons/io';
 
 const InfoBlock = styled.div`
   display: flex;
@@ -157,6 +161,26 @@ const Channels = ({
     );
   }
 
+  const categoryIcon = {
+    코미디: <FaSmile />,
+    게임: <RiGamepadFill />,
+    영화: <MdMovieCreation />,
+    교육: <IoIosBook />,
+    일상: <FaTelegramPlane />,
+    '일상,게임': (
+      <>
+        <FaTelegramPlane />
+        <RiGamepadFill />
+      </>
+    ),
+    '교육,게임': (
+      <>
+        <IoIosBook />
+        <RiGamepadFill />
+      </>
+    ),
+  };
+
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
@@ -165,7 +189,13 @@ const Channels = ({
           <Block>
             <ImgIcon>
               <Img src={info.profileUrl} alt="" />
-              <span>{info.Icon}</span>
+              <span>
+                {dbChannel.map(
+                  (db) =>
+                    db.channelId === info.channelId &&
+                    categoryIcon[db.categoryId],
+                )}
+              </span>
             </ImgIcon>
             <NameSubs>
               <span>{info.name}</span>
@@ -214,7 +244,7 @@ const Channels = ({
         </InfoBlock>
       );
     },
-    [channelInfo, dbChannel],
+    [channelInfo, dbChannel, categoryIcon],
   );
 
   return (

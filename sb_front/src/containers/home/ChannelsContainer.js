@@ -6,13 +6,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from '../../components/home/Channels.js';
 import LoadingScreen from '../../components/common/LoadingScreen.js';
-import { channelsDatas, initialstate } from '../../modules/youtube.js';
-import { dbGet, initialstateDbs } from '../../modules/dbs.js';
+import { channelsDatas } from '../../modules/youtube.js';
+import { dbGet } from '../../modules/dbs.js';
 import { initialstateVideoDetails } from '../../modules/videoDetails.js';
-import { RiGamepadFill } from 'react-icons/ri';
-import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
-import { MdMovieCreation } from 'react-icons/md';
-import { IoIosBook } from 'react-icons/io';
 
 const ChannelsContainer = () => {
   const [useChannelInfo, setChannelInfo] = useState([]);
@@ -43,8 +39,7 @@ const ChannelsContainer = () => {
     dispatch(dbGet());
     return () => {
       dispatch(initialstateVideoDetails());
-      dispatch(initialstate());
-      dispatch(initialstateDbs());
+      dispatch(initialstateChannels());
     };
   }, [dispatch]);
 
@@ -80,7 +75,6 @@ const ChannelsContainer = () => {
       }
       dispatch(uploadChannels({ channelInfo: useChannelInfo }));
       setChannelInfo(useChannelInfo);
-      dispatch(initialstateChannels());
     }
   }, [channels, useChannelInfo, dispatch]);
 
@@ -90,26 +84,6 @@ const ChannelsContainer = () => {
         for (let j = 0; j < channelInfo.length; j++) {
           if (dbChannel[i].channelId === channelInfo[j].channelId) {
             channelInfo[j].category = dbChannel[i].categoryId;
-            const categoryIcon = {
-              코미디: <FaSmile />,
-              게임: <RiGamepadFill />,
-              영화: <MdMovieCreation />,
-              교육: <IoIosBook />,
-              일상: <FaTelegramPlane />,
-              '일상,게임': (
-                <>
-                  <FaTelegramPlane />
-                  <RiGamepadFill />
-                </>
-              ),
-              '교육,게임': (
-                <>
-                  <IoIosBook />
-                  <RiGamepadFill />
-                </>
-              ),
-            };
-            channelInfo[j].Icon = categoryIcon[channelInfo[j].category];
           }
         }
       }
@@ -128,7 +102,7 @@ const ChannelsContainer = () => {
 
   return (
     <>
-      {loading === false ? (
+      {loading === false && dbChannel.length > 1 ? (
         <Channels
           dbChannel={dbChannel}
           channelInfo={channelInfo}
