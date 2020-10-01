@@ -24,10 +24,12 @@ const ChannelsContainer = () => {
     keyword,
     dbChannel,
     category,
+    dbsLoading,
   } = useSelector(({ youtube, homeChannels, dbs, Loading }) => ({
     channels: youtube.channels,
     apiError: youtube.apiError,
     loading: Loading['youtube/CHANNELS'],
+    dbsLoading: Loading['dbs/DBGET'],
     channelInfo: homeChannels.channelInfo,
     keyword: homeChannels.keyword,
     dbChannel: dbs.dbChannel,
@@ -98,7 +100,7 @@ const ChannelsContainer = () => {
 
   return (
     <>
-      {loading === false && dbChannel.length > 1 ? (
+      {loading === false && dbsLoading === false ? (
         <Channels
           dbChannel={dbChannel}
           channelInfo={channelInfo}

@@ -2,6 +2,7 @@ import createError from "http-errors";
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
+import helmet from "helmet";
 import bodyParser from "body-parser";
 import usersRouter from "./routes/users";
 import connect from "./schemas/index.js";
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
+app.use(helmet());
 
 app.use("/api", usersRouter);
 
