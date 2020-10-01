@@ -1,15 +1,20 @@
-var createError = require("http-errors");
-var express = require("express");
-var logger = require("morgan");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-var usersRouter = require("./routes/users");
-const connect = require("./schemas/index.js");
+import createError from "http-errors";
+import express from "express";
+import logger from "morgan";
+import cors from "cors";
+import bodyParser from "body-parser";
+import usersRouter from "./routes/users";
+import connect from "./schemas/index.js";
 
-var app = express();
+const app = express();
 connect();
 
-app.use(logger("dev"));
+if (process.env.NODE_ENV === "production") {
+  app.use(logger("combined"));
+} else {
+  app.use(logger("dev"));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "http://localhost:3000" }));
