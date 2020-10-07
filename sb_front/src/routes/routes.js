@@ -16,7 +16,7 @@ const routes = {
   watch: WATCH,
   channelInfo: (channelId) => {
     if (channelId) {
-      return `/v/${channelId}`;
+      return `/info/${channelId}`;
     } else {
       return CHANNELINFO;
     }
