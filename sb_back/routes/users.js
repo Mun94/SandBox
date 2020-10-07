@@ -3,30 +3,32 @@ import User from "../schemas/user.js";
 
 const router = express.Router();
 
-router.get("/users", async (req, res, next) => {
+router.get("/users", async (req, res) => {
   try {
     const users = await User.find({});
     res.json(users);
   } catch (e) {
-    console.error(e);
-    next(e);
+    res.throw(500, e);
   }
 });
 
-router.patch("/users/:id", async (req, res, next) => {
+router.patch("/users/:id", async (req, res) => {
+  const {
+    params: { id },
+    body: { videoCount },
+  } = req;
   try {
     const result = await User.update(
       {
-        channelId: req.params.id,
+        channelId: id,
       },
       {
-        videoCount: req.body.videoCount,
+        videoCount: videoCount,
       }
     );
     res.json(result);
   } catch (e) {
-    console.error(e);
-    next(e);
+    res.throw(500, e);
   }
 });
 

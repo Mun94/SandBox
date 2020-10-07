@@ -190,13 +190,14 @@ const Channels = ({
           <Block>
             <ImgIcon>
               <Img src={info.profileUrl} alt="" />
-              <span>
-                {dbChannel.map(
-                  (db) =>
-                    db.channelId === info.channelId &&
-                    categoryIcon[db.categoryId],
-                )}
-              </span>
+              {dbChannel.map(
+                (db) =>
+                  db.channelId === info.channelId && (
+                    <span key={db.channelId}>
+                      {categoryIcon[db.categoryId]}
+                    </span>
+                  ),
+              )}
             </ImgIcon>
             <NameSubs>
               <span>{info.name}</span>
@@ -270,8 +271,8 @@ const Channels = ({
             <span
               style={{
                 color: '#f7f2f2',
-                'font-size': '0.8rem',
-                'font-weight': 'bold',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
               }}
             >
               크리에이터 수 : {channelInfo.length}

@@ -75,16 +75,24 @@ const Videos = ({ videoDetail, error }) => {
   const setMonth = YMD.getMonth() + 1;
   const setDate = YMD.getDate();
   const year = YMD.getFullYear();
+
   const month = setMonth < 10 ? '0' + setMonth : setMonth;
   const date = setDate < 10 ? '0' + setDate : setDate;
 
-  const month1 = date === '01' && month === '01' ? '12' : month;
+  const month1 =
+    date === '01' && month === '01'
+      ? '12'
+      : date === '01' && month < 10
+      ? '0' + Number(month - 1)
+      : date === '01' && month > 10
+      ? month - 1
+      : month;
   const date1 =
-    setDate > 10
-      ? setDate - 1
-      : setDate > 1
-      ? '0' + setDate - 1
-      : '05,08,10,12'.indexOf(month) >= 0
+    date > 10
+      ? date - 1
+      : date > 1
+      ? '0' + Number(date - 1)
+      : '05,07,10,12'.indexOf(month) >= 0
       ? '30'
       : month === '03'
       ? '28'
