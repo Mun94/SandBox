@@ -6,6 +6,7 @@ import AskModalContainer from '../../containers/watch/AskModalContainer.js';
 import Button from '../common/Button.js';
 import MoreComment from '../watch/MoreComment.js';
 import { Link } from 'react-router-dom';
+import routes from '../../routes/routes.js';
 
 import { AiTwotoneLike, AiTwotoneDislike } from 'react-icons/ai';
 
@@ -317,7 +318,7 @@ const Watch = ({
                 ch.channelId === videoDetail.channelId && (
                   <ProfileBlock key={ch.id}>
                     <ProfileImg src={ch.profileUrl} alt="" />
-                    <Link to={`/v/${ch.channelId}`}>
+                    <Link to={routes.videos(ch.channelId)}>
                       <div>{ch.name}</div>
                     </Link>
                     <div>{ch.subs / 10000}만명</div>

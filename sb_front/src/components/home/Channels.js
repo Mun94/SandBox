@@ -4,6 +4,8 @@ import { List } from 'react-virtualized';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 import CategoryContainer from '../../containers/home/CategoryContainer.js';
 import Button from '../common/Button.js';
+import routes from '../../routes/routes.js';
+
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
@@ -205,7 +207,7 @@ const Channels = ({
             </NameSubs>
           </Block>
           <Icon>
-            <Button to={`/v/${info.channelId}`}>
+            <Button to={routes.videos(info.channelId)}>
               {dbChannel.map(
                 (db) =>
                   db.channelId === info.channelId && (
@@ -239,7 +241,7 @@ const Channels = ({
             >
               <RiChatSmile3Fill size="20" />
             </Button>
-            <Button to={`/info/${info.channelId}`}>
+            <Button to={routes.channelInfo(info.channelId)}>
               <BsQuestion size="20" />
             </Button>
           </Icon>

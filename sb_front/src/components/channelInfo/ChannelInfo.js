@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Response from '../common/Responsive.js';
 import { Link } from 'react-router-dom';
+import routes from '../../routes/routes.js';
 
 const ChannelInfoBlock = styled(Response)`
   display: flex;
@@ -54,11 +55,11 @@ const ChannelInfo = ({ channelInfo, channelId }) => {
       {channelInfo.map(
         (ch) =>
           ch.channelId === channelId && (
-            <>
-              <ChannelInfoBlock key={ch.id}>
+            <span key={ch.id}>
+              <ChannelInfoBlock>
                 <img src={ch.profileUrl} alt="" />
                 <NameSubs>
-                  <Link to={`/v/${ch.channelId}`}>
+                  <Link to={routes.videos(ch.channelId)}>
                     <div>{ch.name}</div>
                   </Link>
                   <div>{ch.subs}명</div>
@@ -69,12 +70,9 @@ const ChannelInfo = ({ channelInfo, channelId }) => {
               </ChannelInfoBlock>
               <SubInfo>
                 <span>총 비디오 수 {ch.videoCount}개</span>
-                <span>
-                  채널 개설일
-                  {ch.publishedAt.split('T')[0]}
-                </span>
+                <span>채널 개설일 {ch.publishedAt.split('T')[0]}</span>
               </SubInfo>
-            </>
+            </span>
           ),
       )}
     </>

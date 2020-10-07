@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive.js';
+import routes from '../../routes/routes.js';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -32,7 +33,7 @@ const Header = () => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/">SANDBOX</Link>
+          <Link to={routes.home}>SANDBOX</Link>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

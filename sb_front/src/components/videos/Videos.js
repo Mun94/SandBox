@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive.js';
 import { Link } from 'react-router-dom';
+import routes from '../../routes/routes.js';
 
 const VideoBlock = styled(Responsive)`
   display: flex;
@@ -112,7 +113,7 @@ const Videos = ({ videoDetail, error }) => {
         <VideoBlock>
           {videoDetail.map((Info) => (
             <Wrapper
-              to={`/watch?video=${Info.videoId}&num=${Info.id}`}
+              to={`${routes.watch}?video=${Info.videoId}&num=${Info.id}`}
               key={Info.id}
             >
               <Img src={Info.medium.url} alt="" />

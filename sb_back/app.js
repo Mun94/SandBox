@@ -5,6 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import usersRouter from "./routes/users";
 import connect from "./schemas/index.js";
+import routes from "./routes/routes.js";
 
 const app = express();
 connect();
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(logger("dev"));
 }
 
-app.use("/api", usersRouter);
+app.use(routes.api, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

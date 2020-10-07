@@ -6,18 +6,19 @@ import Watch from './page/Watch.js';
 import ChannelInfo from './page/ChannelInfo.js';
 import Button from './components/common/Button.js';
 import { withRouter } from 'react-router-dom';
+import routes from './routes/routes.js';
 
 function App() {
   return (
     <>
       <Switch>
-        <Route path="/" component={Home} exact />
-        <Route path="/v/:channelId" component={Videos} />
-        <Route path="/watch" component={Watch} />
-        <Route path="/info/:channelId" component={ChannelInfo} />
+        <Route path={routes.home} component={Home} exact />
+        <Route path={routes.videos()} component={Videos} />
+        <Route path={routes.watch} component={Watch} />
+        <Route path={routes.channelInfo()} component={ChannelInfo} />
         <Route
           render={({ location, history }) => (
-            <div style={{ 'text-align': 'center', color: '#f7f2f2' }}>
+            <div style={{ textAlign: 'center', color: '#f7f2f2' }}>
               <h2>경로 에러</h2>
               <h3>{location.pathname}</h3>
               <Button onClick={() => history.push('/')}>홈으로</Button>
