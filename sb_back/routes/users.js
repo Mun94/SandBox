@@ -10,4 +10,8 @@ const router = express.Router();
 router.get(routes.creatorUpload, creatorUpload);
 router.patch(routes.videoCountPatch, videoCountPatch);
 
+router.get("/ping", (req, res) => {
+  return res.send("pong");
+});
+
 export default router;
