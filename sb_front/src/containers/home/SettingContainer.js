@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel } from '../../modules/setting.js';
+import { dbPut } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
@@ -30,8 +31,9 @@ const SettingContainer = () => {
         setError('빈 칸을 모두 입력하세요');
         return;
       }
+      dispatch(dbPut(channelId, name, categoryId));
     },
-    [channelId, name, categoryId],
+    [channelId, name, categoryId, dispatch],
   );
 
   return (

@@ -6,8 +6,10 @@ import * as db from '../lib/api/db.js';
 import { takeLatest } from 'redux-saga/effects';
 
 const [DBGET, DBGET_SUCCESS, DBGET_FAILURE] = createReactSagaType('dbs/DBGET');
-const DBPATCH = 'dbs/DBPATCH';
-const [DBPUT] = 'dbs/DBPUT';
+const [DBPATCH, DBPATCH_SUCCESS, DBPATCH_FAILURE] = createReactSagaType(
+  'dbs/DBPATCH',
+);
+const [DBPUT, DBPUT_SUCCESS, DBPUT_FAILURE] = createReactSagaType('dbs/DBPUT');
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
@@ -33,6 +35,7 @@ export function* sagaDb() {
 
 const initialState = {
   dbChannel: null,
+  dbPutPatch: null,
   dbError: null,
 };
 
@@ -42,8 +45,27 @@ const dbs = handleActions(
       ...state,
       dbChannel: action.payload,
       dbError: null,
+      dbPutPatch: null,
     }),
     [DBGET_FAILURE]: (state, action) => ({
+      ...state,
+      dbError: action.payload,
+    }),
+    [DBPATCH_SUCCESS]: (state, action) => ({
+      ...state,
+      dbPutPatch: action.payload,
+      dbError: null,
+    }),
+    [DBPATCH_FAILURE]: (state, action) => ({
+      ...state,
+      dbError: action.payload,
+    }),
+    [DBPUT_SUCCESS]: (state, action) => ({
+      ...state,
+      dbPutPatch: action.payload,
+      dbError: null,
+    }),
+    [DBPUT_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
     }),
