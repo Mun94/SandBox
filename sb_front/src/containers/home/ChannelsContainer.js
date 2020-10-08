@@ -14,6 +14,7 @@ const ChannelsContainer = () => {
   const [useChannelInfo] = useState([]);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState('');
+  const [useChannelsId] = useState([]);
 
   const dispatch = useDispatch();
   const {
@@ -37,13 +38,23 @@ const ChannelsContainer = () => {
   }));
 
   useEffect(() => {
-    dispatch(channelsDatas());
     dispatch(dbGet());
     return () => {
       dispatch(initialstateVideoDetails());
-      dispatch(initialstateChannels());
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (dbChannel !== null) {
+      for (let i = 0; i < dbChannel.length; i++) {
+        useChannelsId.push(dbChannel[i].channelId);
+      }
+      dispatch(channelsDatas(useChannelsId.join()));
+    }
+    return () => {
+      dispatch(initialstateChannels());
+    };
+  }, [dbChannel, useChannelsId, dispatch]);
 
   const nextId = useRef(0);
 
