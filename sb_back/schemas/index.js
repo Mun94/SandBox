@@ -12,7 +12,7 @@ module.exports = () => {
       },
       (error) => {
         if (error) {
-          console.log("몽고디비 연결 에러", error);
+          console.error("몽고디비 연결 에러", error);
         } else {
           console.log("몽고디비 연결 성공");
         }

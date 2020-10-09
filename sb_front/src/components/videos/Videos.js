@@ -71,6 +71,34 @@ const PublishedAt = styled.span`
     `}
 `;
 
+const getYesMonth = ({ date, month }) => {
+  if (date === '01' && month === '01') {
+    return '12';
+  } else if (date === '01' && month < 10) {
+    return '0' + Number(month - 1);
+  } else if (date === '01' && month > 10) {
+    return month - 1;
+  } else {
+    return month;
+  }
+};
+
+const is30DayMonth = (month) => '05,07,10,12'.indexOf(month) >= 0;
+
+const getYesDate = ({ date, month }) => {
+  if (date > 10) {
+    return date - 1;
+  } else if (date > 1) {
+    return '0' + Number(date - 1);
+  } else if (is30DayMonth(month)) {
+    return '30';
+  } else if (month === '03') {
+    return '28';
+  } else {
+    return '31';
+  }
+};
+
 const Videos = ({ videoDetail, error }) => {
   const YMD = new Date();
   const setMonth = YMD.getMonth() + 1;
@@ -80,28 +108,15 @@ const Videos = ({ videoDetail, error }) => {
   const month = setMonth < 10 ? '0' + setMonth : setMonth;
   const date = setDate < 10 ? '0' + setDate : setDate;
 
-  const month1 =
-    date === '01' && month === '01'
-      ? '12'
-      : date === '01' && month < 10
-      ? '0' + Number(month - 1)
-      : date === '01' && month > 10
-      ? month - 1
-      : month;
-  const date1 =
-    date > 10
-      ? date - 1
-      : date > 1
-      ? '0' + Number(date - 1)
-      : '05,07,10,12'.indexOf(month) >= 0
-      ? '30'
-      : month === '03'
-      ? '28'
-      : '31';
-  const year1 = date === '01' && month === '01' ? year - 1 : year;
+  const yesMonth = getYesMonth({ month, date });
 
-  const today = year + '-' + month + '-' + date;
-  const yesterday = year1 + '-' + month1 + '-' + date1;
+  const yesDate = getYesDate({ month, date });
+
+  const yesYear = date === '01' && month === '01' ? year - 1 : year;
+
+  const today = `${year}-${month}-${date}`;
+
+  const yesterday = `${yesYear}-${yesMonth}-${yesDate}`;
 
   return (
     <>
@@ -111,29 +126,33 @@ const Videos = ({ videoDetail, error }) => {
         </div>
       ) : (
         <VideoBlock>
-          {videoDetail.map((Info) => (
-            <Wrapper
-              to={`${routes.watch}?video=${Info.videoId}&num=${Info.id}`}
-              key={Info.id}
-            >
-              <Img src={Info.medium.url} alt="" />
-              <Duration>{Info.duration.slice(2, 20)}</Duration>
-              <Sub>
-                <div>
-                  {[today, yesterday].indexOf(Info.publishedAt.split('T')[0]) >=
-                  0 ? (
-                    <PublishedAt toYes>
-                      {Info.publishedAt.split('T')[0]}
-                    </PublishedAt>
-                  ) : (
-                    <PublishedAt>{Info.publishedAt.split('T')[0]}</PublishedAt>
-                  )}
-                  <View>{Info.viewCount} view</View>
-                </div>
-                <Title>{Info.title}</Title>
-              </Sub>
-            </Wrapper>
-          ))}
+          {videoDetail &&
+            videoDetail.map((Info) => (
+              <Wrapper
+                to={`${routes.watch}?video=${Info.videoId}&num=${Info.id}`}
+                key={Info.id}
+              >
+                <Img src={Info.medium.url} alt="" />
+                <Duration>{Info.duration.slice(2, 20)}</Duration>
+                <Sub>
+                  <div>
+                    {[today, yesterday].indexOf(
+                      Info.publishedAt.split('T')[0],
+                    ) >= 0 ? (
+                      <PublishedAt toYes>
+                        {Info.publishedAt.split('T')[0]}
+                      </PublishedAt>
+                    ) : (
+                      <PublishedAt>
+                        {Info.publishedAt.split('T')[0]}
+                      </PublishedAt>
+                    )}
+                    <View>{Info.viewCount} view</View>
+                  </div>
+                  <Title>{Info.title}</Title>
+                </Sub>
+              </Wrapper>
+            ))}
         </VideoBlock>
       )}
     </>

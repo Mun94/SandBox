@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel } from '../../modules/setting.js';
-import { dbPost } from '../../modules/dbs.js';
+import { dbPost, dbGet } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);

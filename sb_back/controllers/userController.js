@@ -35,7 +35,7 @@ export const videoCountPatch = async (req, res) => {
     body: { videoCount },
   } = req;
   try {
-    const result = await User.updateOne(
+    await User.updateOne(
       {
         channelId: id,
       },
