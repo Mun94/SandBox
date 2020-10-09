@@ -5,6 +5,26 @@ export const creatorUpload = async (req, res) => {
     const users = await User.find({});
     res.json(users);
   } catch (e) {
+    console.error(e);
+    res.throw(500, e);
+  }
+};
+
+export const creatorRegister = async (req, res) => {
+  const {
+    body: { channelId, name, videoCount, categoryId },
+  } = req;
+  try {
+    const user = new User({
+      channelId,
+      name,
+      videoCount,
+      categoryId,
+    });
+    await user.save();
+    res.sendStatus(200);
+  } catch (e) {
+    console.error(e);
     res.throw(500, e);
   }
 };
@@ -15,7 +35,7 @@ export const videoCountPatch = async (req, res) => {
     body: { videoCount },
   } = req;
   try {
-    const result = await User.update(
+    const result = await User.updateOne(
       {
         channelId: id,
       },
@@ -23,8 +43,9 @@ export const videoCountPatch = async (req, res) => {
         videoCount: videoCount,
       }
     );
-    res.json(result);
+    res.sendStatus(200);
   } catch (e) {
+    console.error(e);
     res.throw(500, e);
   }
 };

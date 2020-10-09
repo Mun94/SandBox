@@ -9,33 +9,38 @@ const [DBGET, DBGET_SUCCESS, DBGET_FAILURE] = createReactSagaType('dbs/DBGET');
 const [DBPATCH, DBPATCH_SUCCESS, DBPATCH_FAILURE] = createReactSagaType(
   'dbs/DBPATCH',
 );
-const [DBPUT, DBPUT_SUCCESS, DBPUT_FAILURE] = createReactSagaType('dbs/DBPUT');
+const [DBPOST, DBPOST_SUCCESS, DBPOST_FAILURE] = createReactSagaType(
+  'dbs/DBPOST',
+);
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
   channelId,
   videoCount,
 }));
-export const dbPut = createAction(DBPUT, ({ channelId, name, categoryId }) => ({
-  channelId,
-  name,
-  videoCount: '0',
-  categoryId,
-}));
+export const dbPost = createAction(
+  DBPOST,
+  ({ channelId, name, categoryId }) => ({
+    channelId,
+    name,
+    videoCount: '0',
+    categoryId,
+  }),
+);
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
-const dbPutSaga = createReactSaga(DBPUT, db.dbPut);
+const dbPostSaga = createReactSaga(DBPOST, db.dbPost);
 
 export function* sagaDb() {
   yield takeLatest(DBGET, dbGetSaga);
   yield takeLatest(DBPATCH, dbPatchSaga);
-  yield takeLatest(DBPUT, dbPutSaga);
+  yield takeLatest(DBPOST, dbPostSaga);
 }
 
 const initialState = {
   dbChannel: null,
-  dbPutPatch: null,
+  dbPostPatch: null,
   dbError: null,
 };
 
@@ -60,12 +65,12 @@ const dbs = handleActions(
       ...state,
       dbError: action.payload,
     }),
-    [DBPUT_SUCCESS]: (state, action) => ({
+    [DBPOST_SUCCESS]: (state, action) => ({
       ...state,
-      dbPutPatch: action.payload,
+      dbPostPatch: action.payload,
       dbError: null,
     }),
-    [DBPUT_FAILURE]: (state, action) => ({
+    [DBPOST_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
     }),
