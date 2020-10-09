@@ -13,12 +13,24 @@ const Fullscreen = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  animation: setAnimation 0.3s linear forwards;
+
+  @keyframes setAnimation {
+    0% {
+      opacity: 25%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
 `;
+
 const RandomDrawBlock = styled.div`
   width: 320px;
-  background: white;
+  background: #f7f2f2;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 1rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
   flex-direction: column;
@@ -31,6 +43,11 @@ const RandomDrawBlock = styled.div`
   }
   input {
     margin-bottom: 0.8rem;
+    outline: none;
+    border: none;
+    height: 30px;
+    border-radius: 4px;
+    padding-left: 4px;
   }
 `;
 
@@ -41,7 +58,6 @@ const ButtonBlock = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  height: 2rem;
   & + & {
     margin-left: 0.75rem;
   }

@@ -21,6 +21,16 @@ const VideoCommentBlock = styled.div`
   button:hover {
     background: #ffc200;
   }
+  .length {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+    color: #f7f2f2;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+  }
 `;
 
 const Video = styled.div`
@@ -96,11 +106,6 @@ const ButtonBlock = styled.div`
 
 const ListBlock = styled.div`
   position: relative;
-  .length {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 1rem;
-  }
 `;
 
 const VideoBlock = styled.div`
@@ -364,8 +369,8 @@ const Watch = ({
                 <RandomDrawContainer />
               </div>
             </ButtonBlock>
+            <span className="length">{commentDetail.length + '/100'}</span>
             <ListBlock>
-              <span className="length">{commentDetail.length + '/100'}</span>
               <List
                 width={600}
                 height={600}

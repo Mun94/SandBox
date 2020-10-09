@@ -13,18 +13,33 @@ const MoreBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  animation: setAnimation 0.3s linear forwards;
+
+  @keyframes setAnimation {
+    0% {
+      opacity: 25%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
+  background: #f7f2f2;
   width: 320px;
   background: white;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 1rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
   flex-direction: column;
+
   div:nth-child(1) {
     margin-bottom: 1rem;
+    max-height: 450px;
+    overflow: scroll;
   }
   div:nth-child(2) {
     display: flex;

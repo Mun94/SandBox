@@ -14,6 +14,8 @@ const Form = styled.form`
   background: #f7f2f2;
   width: 310px;
   height: 330px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
+
   button:hover {
     background: #ffc200;
   }
