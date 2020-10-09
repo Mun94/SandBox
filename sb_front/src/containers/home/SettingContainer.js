@@ -1,11 +1,12 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel } from '../../modules/setting.js';
-import { dbPost, dbGet } from '../../modules/dbs.js';
+import { dbPost } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
+  const [useOnButton, setOnButton] = useState(false);
 
   const dispatch = useDispatch();
   const { channelId, name, categoryId } = useSelector(({ setting }) => ({
@@ -23,7 +24,12 @@ const SettingContainer = () => {
     },
     [dispatch],
   );
-
+  const onClick = () => {
+    setOnButton(true);
+  };
+  const onCancel = () => {
+    setOnButton(false);
+  };
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -32,6 +38,7 @@ const SettingContainer = () => {
         return;
       }
       dispatch(dbPost({ channelId, name, categoryId }));
+      setOnButton(false);
     },
     [channelId, name, categoryId, dispatch],
   );
@@ -41,8 +48,11 @@ const SettingContainer = () => {
       channelId={channelId}
       name={name}
       categoryId={categoryId}
+      useOnButton={useOnButton}
       onChange={onChange}
       onSubmit={onSubmit}
+      onClick={onClick}
+      onCancel={onCancel}
       error={error}
     />
   );
