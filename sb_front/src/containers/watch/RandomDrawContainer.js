@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AskModal from '../../components/common/AskModal.js';
+import RandomDraw from '../../components/watch/RandomDraw.js';
 import Button from '../../components/common/Button.js';
 import { randomCount } from '../../modules/watchDetails.js';
 
-const AskModalContainer = () => {
+const RandomDrawContainer = () => {
   const [modal, setModal] = useState(false);
   const [result, setResult] = useState(false);
   const [key, setKey] = useState('');
@@ -44,7 +44,7 @@ const AskModalContainer = () => {
     <>
       <Button onClick={onStart}>랜덤 추첨</Button>
       {modal && (
-        <AskModal
+        <RandomDraw
           visible={modal}
           result={result}
           title="랜덤 추첨"
@@ -59,4 +59,4 @@ const AskModalContainer = () => {
   );
 };
 
-export default AskModalContainer;
+export default RandomDrawContainer;

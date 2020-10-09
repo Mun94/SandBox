@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from '../common/Button';
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -14,7 +14,7 @@ const Fullscreen = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const AskModalBlock = styled.div`
+const RandomDrawBlock = styled.div`
   width: 320px;
   background: white;
   padding: 1.5rem;
@@ -62,7 +62,7 @@ const ComBlock = styled.div`
   }
 `;
 
-const AskModal = ({
+const RandomDraw = ({
   visible,
   title,
   onConfirm,
@@ -75,7 +75,7 @@ const AskModal = ({
   if (!visible) return null;
   return (
     <Fullscreen>
-      <AskModalBlock>
+      <RandomDrawBlock>
         <h2>{title}</h2>
         <input
           type="text"
@@ -99,9 +99,9 @@ const AskModal = ({
                 </ComBlock>
               ))
           : null}
-      </AskModalBlock>
+      </RandomDrawBlock>
     </Fullscreen>
   );
 };
 
-export default React.memo(AskModal);
+export default React.memo(RandomDraw);

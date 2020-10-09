@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchCommentContainer from '../../containers/watch/SearchCommentContainer.js';
-import AskModalContainer from '../../containers/watch/AskModalContainer.js';
+import RandomDrawContainer from '../../containers/watch/RandomDrawContainer.js';
 import Button from '../common/Button.js';
 import MoreComment from '../watch/MoreComment.js';
 import { Link } from 'react-router-dom';
@@ -361,7 +361,7 @@ const Watch = ({
                 </Button>
               </div>
               <div onClick={onMoreCancle}>
-                <AskModalContainer />
+                <RandomDrawContainer />
               </div>
             </ButtonBlock>
             <ListBlock>

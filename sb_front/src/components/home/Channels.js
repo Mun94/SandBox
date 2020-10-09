@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 import CategoryContainer from '../../containers/home/CategoryContainer.js';
+import SettingContainer from '../../containers/home/SettingContainer.js';
 import Button from '../common/Button.js';
 import routes from '../../routes/routes.js';
 
@@ -47,6 +48,26 @@ const ListBlock = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  .settingCreatorNum {
+    width: 760px;
+    position: relative;
+    color: #f7f2f2;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding-bottom: 0.5rem;
+    height: 20px;
+    svg {
+      font-size: 20px;
+      padding-left: 4px;
+      cursor: pointer;
+    }
+  }
 `;
 
 const Img = styled.img`
@@ -268,14 +289,9 @@ const Channels = ({
           <CategoryContainer />
 
           <ListBlock>
-            <span
-              style={{
-                color: '#f7f2f2',
-                fontSize: '0.8rem',
-                fontWeight: 'bold',
-              }}
-            >
+            <span className="settingCreatorNum">
               크리에이터 수 : {channelInfo.length}
+              <SettingContainer />
             </span>
             <List
               width={760}
