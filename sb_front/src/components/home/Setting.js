@@ -59,7 +59,7 @@ const OnBlock = styled.div`
   position: absolute;
   left: 0;
   top: 100%;
-  width: 760px;
+  width: 756px;
   border-radius: 1rem;
   height: 550px;
   background: rgba(0, 0, 0, 0.25);

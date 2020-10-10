@@ -14,7 +14,7 @@ const ChannelsContainer = () => {
   const [useChannelInfo] = useState([]);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState('');
-  const [useChannelsId, setChannelsId] = useState([]);
+  const [useChannelsId] = useState([]);
 
   const dispatch = useDispatch();
   const {
