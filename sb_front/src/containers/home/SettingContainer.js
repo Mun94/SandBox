@@ -2,11 +2,12 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel, settingInitial } from '../../modules/setting.js';
-import { dbPost } from '../../modules/dbs.js';
+import { dbPost,dbPostPatchInitial } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
   const [useAlert, setAlert] = useState(false);
+  const [useQue, setQue] = useState(false);
   const [useOnButton, setOnButton] = useState(false);
 
   const dispatch = useDispatch();
@@ -20,6 +21,12 @@ const SettingContainer = () => {
     }),
   );
 
+  const onClickQue = () => {
+    setQue(true);
+  }
+  const offClickQue = () => {
+    setQue(false);
+  }
   const onChange = useCallback(
     (e) => {
       const {
@@ -34,9 +41,11 @@ const SettingContainer = () => {
   };
   const onCancel = () => {
     setOnButton(false);
+    setQue(false);
     setError(null);
     dispatch(settingInitial());
   };
+
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -48,7 +57,8 @@ const SettingContainer = () => {
         setError('채널 아이디는 24자 입니다.')
         return;
       }
-      if(channelInfo.filter(ch => ch.channelId === channelId)){
+
+      if(channelInfo.filter(ch => channelId.indexOf(ch.channelId) >= 0).length>0){
         setError('이미 존재하는 채널 아이디 입니다.')
         dispatch(settingInitial());
         return;
@@ -56,6 +66,7 @@ const SettingContainer = () => {
       dispatch(dbPost({ channelId, name, categoryId }));
       dispatch(settingInitial());
       setOnButton(false);
+      setAlert(false);
     },
     [channelId, name, categoryId, dispatch,channelInfo],
   );
@@ -63,10 +74,12 @@ const SettingContainer = () => {
   useEffect(() => {
     if (dbPostStatus) {
       setAlert(true);
-    }else{
-      setAlert(false);
+      setError(null);
     }
-  }, [dbPostStatus]);
+    return () => {
+      dispatch(dbPostPatchInitial());
+    }
+  }, [dbPostStatus,dispatch]);
 
   return (
     <Setting
@@ -78,8 +91,11 @@ const SettingContainer = () => {
       onSubmit={onSubmit}
       onClick={onClick}
       onCancel={onCancel}
+      onClickQue={onClickQue}
+      offClickQue={offClickQue}
       error={error}
       useAlert={useAlert}
+      useQue={useQue}
     />
   );
 };

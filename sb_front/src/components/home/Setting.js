@@ -1,18 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled,{css} from 'styled-components';
 import Button from '../common/Button.js';
 import FlashMessage from 'react-flash-message';
 
 import { MdCancel } from 'react-icons/md';
 import { BiPlusMedical } from 'react-icons/bi';
+import {BsFillQuestionCircleFill} from 'react-icons/bs';
 
-const SettingBlock = styled.div`
-  svg:hover {
-    color: #ffc200;
-  }
-`;
-
-const Form = styled.form`
+const common = css`
   display: flex;
   border-radius: 1rem;
   flex-direction: column;
@@ -22,6 +17,41 @@ const Form = styled.form`
   width: 310px;
   height: 330px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
+`;
+
+const comAnimation = set =>set ? css`
+  animation: setAnimation 0.3s linear forwards;
+
+@keyframes setAnimation {
+  0% {
+    opacity: 25%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+`: css`
+animation: okAnimation 0.3s linear forwards;
+    @keyframes okAnimation {
+    0% {
+      opacity: 25%;
+      transform:translateY(-20px);
+    }
+    100% {
+      transform:translateY(0);
+      opacity: 100%;
+    }
+  }
+`;
+
+const SettingBlock = styled.div`
+  svg:hover {
+    color: #ffc200;
+  }
+`;
+
+const Form = styled.form`
+  ${common}
 
   button:hover {
     background: #ffc200;
@@ -40,20 +70,16 @@ const Form = styled.form`
     width: 220px;
     height: 30px;
     border-radius: 4px;
-    padding-left: 4px;
-  }
-  input + input {
-    margin-top: 1rem;
   }
   .title {
     color: black;
     margin-bottom: 1rem;
   }
 `;
+
 const OnBlock = styled.div`
   z-index: 30;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -68,20 +94,26 @@ const OnBlock = styled.div`
     display: flex;
     width: 310px;
     justify-content: flex-end;
-    padding-right: 1.8rem;
     margin-bottom: 4px;
   }
 
-  animation: setAnimation 0.3s linear forwards;
+  ${comAnimation('set')}
+`;
 
-  @keyframes setAnimation {
-    0% {
-      opacity: 25%;
-    }
-    100% {
-      opacity: 100%;
-    }
-  }
+const ChannelIdInput = styled.span`
+position:relative;
+  margin-bottom:1rem;
+  width: 220px;
+    height: 30px;
+`
+const InfoIcon = styled.span`
+  position: absolute;
+    color: #ffc200;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
 `;
 
 const OkBlock = styled.div`
@@ -92,17 +124,21 @@ const OkBlock = styled.div`
     border-radius: 1rem;
     width: 756px;
     left:0;
-    animation: okAnimation 0.3s linear forwards;
-    @keyframes okAnimation {
-    0% {
-      opacity: 25%;
-      transform:translateY(-20px);
-    }
-    100% {
-      transform:translateY(0);
-      opacity: 100%;
-    }
-  }
+
+    ${comAnimation()}
+`
+
+const Que = styled.div`
+  ${common}
+span{
+  z-index:1;
+  color:black;
+width:224px;
+}
+`
+const QueBlock = styled.div`
+   ${comAnimation('set')}
+   margin-left:4px;
 `
 
 const Error = styled.div`
@@ -118,9 +154,12 @@ const Setting = ({
   onSubmit,
   onClick,
   onCancel,
+  onClickQue,
+  offClickQue,
   error,
   useOnButton,
-  useAlert
+  useAlert,
+  useQue,
 }) => {
   return (
     <>
@@ -129,18 +168,20 @@ const Setting = ({
         <>
           <BiPlusMedical onClick={onClick} style={{ color: '#ffc200' }} />
           <OnBlock>
+            <div>
             <div className="cancelIcon">
               <MdCancel onClick={onCancel} />
             </div>
             <Form onSubmit={onSubmit}>
               <div className="title">크리에티어 추가</div>
+              <ChannelIdInput>
               <input
                 type="text"
                 name="channelId"
                 value={channelId}
                 onChange={onChange}
                 placeholder="채널 아이디"
-              />
+              /><InfoIcon><BsFillQuestionCircleFill onClick={onClickQue}/></InfoIcon></ChannelIdInput>
               <input
                 type="text"
                 name="name"
@@ -161,6 +202,14 @@ const Setting = ({
               {error && <Error>{error}</Error>}
               <Button>입력</Button>
             </Form>
+            </div>
+            {useQue && <QueBlock>
+            <div className="cancelIcon">
+              <MdCancel onClick={offClickQue} />
+            </div><Que><span>youtube 사이트 각 채널 URL에 명시되어 있는 채널 ID를 말 합니다.
+              <hr/>
+            ex) youtube.com / channel / <span style={{color:'red'}}>channelId</span></span>
+            </Que></QueBlock>}
           </OnBlock>
         </>
       ) : (

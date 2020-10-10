@@ -12,6 +12,7 @@ const [DBPATCH, DBPATCH_SUCCESS, DBPATCH_FAILURE] = createReactSagaType(
 const [DBPOST, DBPOST_SUCCESS, DBPOST_FAILURE] = createReactSagaType(
   'dbs/DBPOST',
 );
+const POSTPATCHINITIAL = 'dbs/POSTPATCHINITIAL';
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
@@ -27,6 +28,7 @@ export const dbPost = createAction(
     categoryId,
   }),
 );
+export const dbPostPatchInitial = createAction(POSTPATCHINITIAL)
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
@@ -75,6 +77,11 @@ const dbs = handleActions(
     [DBPOST_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
+    }),
+    [POSTPATCHINITIAL] : (state) => ({
+      ...state,
+      dbPostStatus:null,
+      dbPatchStatus:null
     })
   },
   initialState,
