@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button.js';
+import palette from '../common/palette.js';
 
 const MoreBlock = styled.div`
   position: absolute;
@@ -27,9 +28,9 @@ const MoreBlock = styled.div`
 `;
 
 const Wrapper = styled.div`
-  background: #f7f2f2;
+  background: ${palette.toneDownWhite};
   width: 320px;
-  background: white;
+  background: ${palette.white};
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
@@ -45,7 +46,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     button:hover {
-      background: #ffc200;
+      background: ${palette.yellow};
     }
   }
 `;

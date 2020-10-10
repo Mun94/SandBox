@@ -7,6 +7,7 @@ import Button from '../common/Button.js';
 import MoreComment from '../watch/MoreComment.js';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/routes.js';
+import palette from '../common/palette.js';
 
 import { AiTwotoneLike, AiTwotoneDislike } from 'react-icons/ai';
 
@@ -19,13 +20,13 @@ const VideoCommentBlock = styled.div`
   }
   button:focus,
   button:hover {
-    background: #ffc200;
+    background: ${palette.yellow};
   }
   .length {
     display: flex;
     justify-content: flex-end;
     margin-right: 1rem;
-    color: #f7f2f2;
+    color: ${palette.toneDownWhite};
     letter-spacing: 2px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -67,7 +68,7 @@ const NamePublishedAt = styled.div`
 `;
 
 const Text = styled.div`
-  color: #f7f2f2;
+  color: ${palette.toneDownWhite};
   margin-bottom: 0.2rem;
 `;
 
@@ -89,7 +90,7 @@ const SearchBlock = styled.div`
   margin-bottom: 1rem;
   select {
     margin-right: 20px;
-    background: #f7f2f2;
+    background: ${palette.toneDownWhite};
     border-radius: 3px;
 
     &:focus {
@@ -151,7 +152,7 @@ const ViewLikeCount = styled.div`
 `;
 
 const Div = styled.div`
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid ${palette.gray};
   margin: 1rem 0;
 `;
 
@@ -160,7 +161,7 @@ const ProfileBlock = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   div:nth-child(1):hover {
-    background: #ffc200;
+    background: ${palette.yellow};
     border-radius: 4px;
   }
   a {
@@ -177,24 +178,7 @@ const ProfileImg = styled.img`
 
 const DescriptionTags = styled.div``;
 
-const Watch = ({
-  query,
-  videoDetail,
-  channelInfo,
-  commentDetail,
-  keyword,
-  onChange,
-  useSearch,
-  onClick,
-  onMore,
-  useSortBy,
-  useMore,
-  onMoreCancle,
-  useVideoDescription,
-  onMoreVideoDescription,
-  onMoreCancleVideoDescription,
-  error,
-}) => {
+const nameLikeDateSort = ({commentDetail,useSortBy}) =>{
   if (useSortBy === 'likeCount') {
     commentDetail.sort((a, b) => {
       if (parseInt(a.likeCount) > parseInt(b.likeCount)) return -1;
@@ -214,6 +198,29 @@ const Watch = ({
       else return 0;
     });
   }
+}
+
+const Watch = ({
+  query,
+  videoDetail,
+  channelInfo,
+  commentDetail,
+  keyword,
+  onChange,
+  useSearch,
+  onClick,
+  onMore,
+  useSortBy,
+  useMore,
+  onMoreCancle,
+  useVideoDescription,
+  onMoreVideoDescription,
+  onMoreCancleVideoDescription,
+  error,
+}) => {
+  
+  nameLikeDateSort({commentDetail,useSortBy})
+
   if (keyword) {
     commentDetail = commentDetail.filter(
       (com) => com[useSearch].indexOf(keyword) >= 0,
@@ -246,7 +253,7 @@ const Watch = ({
                     0,
                     comment.textOriginal.indexOf(keyword),
                   )}
-                  <span style={{ color: '#ffc200' }}>
+                  <span style={{ color: `${palette.yellow}` }}>
                     {comment.textOriginal.slice(
                       comment.textOriginal.indexOf(keyword),
                       comment.textOriginal.indexOf(keyword) + keyword.length,
@@ -275,7 +282,7 @@ const Watch = ({
   return (
     <>
       {error ? (
-        <div style={{ color: '#f7f2f2', 'text-align': 'center' }}>
+        <div style={{ color: `${palette.toneDownWhite}`, 'text-align': 'center' }}>
           에러 발생
         </div>
       ) : (

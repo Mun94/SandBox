@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button.js';
+import palette from '../common/palette.js';
 
 const CategoryBlock = styled.div`
   display: flex;
@@ -10,15 +11,15 @@ const CategoryBlock = styled.div`
 
 const CategoryButton = styled(Button)`
   background: none;
-  color: white;
+  color: ${palette.white};
   height: 2rem;
   &:focus {
-    background: #ffc200;
+    background: ${palette.yellow};
     color: black;
-    border-bottom: 3px solid #ffc200;
+    border-bottom: 3px solid ${palette.yellow};
   }
   &:hover {
-    border-bottom: 3px solid #ffc200;
+    border-bottom: 3px solid ${palette.yellow};
   }
 `;
 

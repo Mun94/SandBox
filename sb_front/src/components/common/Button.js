@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import palette from './palette.js';
 
 const ButtonStyle = css`
   border: none;
@@ -10,7 +11,7 @@ const ButtonStyle = css`
   font-size: 0.8rem;
   border-radius: 4px;
   padding: 0.25rem 1rem;
-  background: #f0f0f0;
+  background: ${palette.button};
 `;
 
 const StyledButton = styled.button`

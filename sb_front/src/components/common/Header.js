@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive.js';
 import routes from '../../routes/routes.js';
+import palette from './palette.js';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -17,7 +18,7 @@ const Wrapper = styled(Responsive)`
   a {
     padding-left: 1rem;
     text-decoration: none;
-    color: white;
+    color: ${palette.white};
     font-weight: bold;
     letter-spacing: 1px;
     font-size: 1.2rem;

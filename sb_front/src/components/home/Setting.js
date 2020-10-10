@@ -2,6 +2,7 @@ import React from 'react';
 import styled,{css} from 'styled-components';
 import Button from '../common/Button.js';
 import FlashMessage from 'react-flash-message';
+import palette from '../common/palette.js';
 
 import { MdCancel } from 'react-icons/md';
 import { BiPlusMedical } from 'react-icons/bi';
@@ -13,7 +14,7 @@ const common = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #f7f2f2;
+  background: ${palette.toneDownWhite};
   width: 310px;
   height: 330px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
@@ -46,7 +47,7 @@ animation: okAnimation 0.3s linear forwards;
 
 const SettingBlock = styled.div`
   svg:hover {
-    color: #ffc200;
+    color: ${palette.yellow};
   }
 `;
 
@@ -54,7 +55,7 @@ const Form = styled.form`
   ${common}
 
   button:hover {
-    background: #ffc200;
+    background: ${palette.yellow};
   }
   select {
     border: none;
@@ -72,7 +73,7 @@ const Form = styled.form`
     border-radius: 4px;
   }
   .title {
-    color: black;
+    color: ${palette.black};
     margin-bottom: 1rem;
   }
 `;
@@ -108,7 +109,7 @@ position:relative;
 `
 const InfoIcon = styled.span`
   position: absolute;
-    color: #ffc200;
+    color: ${palette.yellow};
     top: 0px;
     right: 0px;
     bottom: 0px;
@@ -118,7 +119,7 @@ const InfoIcon = styled.span`
 
 const OkBlock = styled.div`
   position: absolute;
-    background: #ffc200;
+    background: ${palette.yellow};
     height: 20px;
     text-align: center;
     border-radius: 1rem;
@@ -132,7 +133,7 @@ const Que = styled.div`
   ${common}
 span{
   z-index:1;
-  color:black;
+  color:${palette.black};
 width:224px;
 }
 `
@@ -142,7 +143,7 @@ const QueBlock = styled.div`
 `
 
 const Error = styled.div`
-  color: #d03251;
+  color: ${palette.red};
   margin-bottom: 4px;
 `;
 
@@ -166,7 +167,7 @@ const Setting = ({
     <SettingBlock>
       { useOnButton ? (
         <>
-          <BiPlusMedical onClick={onClick} style={{ color: '#ffc200' }} />
+          <BiPlusMedical onClick={onClick} style={{ color: `${palette.yellow}` }} />
           <OnBlock>
             <div>
             <div className="cancelIcon">
@@ -208,7 +209,7 @@ const Setting = ({
               <MdCancel onClick={offClickQue} />
             </div><Que><span>youtube 사이트 각 채널 URL에 명시되어 있는 채널 ID를 말 합니다.
               <hr/>
-            ex) youtube.com / channel / <span style={{color:'red'}}>channelId</span></span>
+            ex) youtube.com / channel / <span style={{color:`${palette.red}`}}>channelId</span></span>
             </Que></QueBlock>}
           </OnBlock>
         </>

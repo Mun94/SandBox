@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive.js';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/routes.js';
+import palette from '../common/palette.js';
 
 const VideoBlock = styled(Responsive)`
   display: flex;
@@ -19,23 +20,21 @@ const VideoBlock = styled(Responsive)`
     justify-content: center;
   }
 `;
-
 const Wrapper = styled(Link)`
   width: 320px;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 `;
-
 const Title = styled.span`
-  color: #f7f2f2;
+  color: ${palette.toneDownWhite};
 `;
 const Img = styled.img`
   position: relative;
 `;
 const Duration = styled.span`
   position: absolute;
-  color: white;
+  color: ${palette.white};
   transform: translateY(159px);
   background: rgba(0, 0, 0, 0.7);
   letter-spacing: 0.5px;
@@ -58,7 +57,7 @@ const PublishedAt = styled.span`
   ${(props) =>
     props.toYes &&
     css`
-      color: #ffc200;
+      color: ${palette.yellow};
       animation: blink 0.8s ease-in-out infinite alternate;
       @keyframes blink {
         0% {
@@ -109,7 +108,6 @@ const Videos = ({ videoDetail, error }) => {
   const date = setDate < 10 ? '0' + setDate : setDate;
 
   const yesMonth = getYesMonth({ month, date });
-
   const yesDate = getYesDate({ month, date });
 
   const yesYear = date === '01' && month === '01' ? year - 1 : year;
@@ -121,7 +119,7 @@ const Videos = ({ videoDetail, error }) => {
   return (
     <>
       {error ? (
-        <div style={{ color: '#f7f2f2', 'text-align': 'center' }}>
+        <div style={{ color: `${palette.toneDownWhite}`, 'text-align': 'center' }}>
           에러 발생
         </div>
       ) : (

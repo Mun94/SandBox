@@ -391,3 +391,4 @@
 [1010/105237.017:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7ffc82d1f978 of 48 bytes failed: ReadProcessMemory 또는 WriteProcessMemory의 일부 작업만을 마쳤습니다. (0x12B)
 [1010/105237.017:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7ffc82d253c0 of 64 bytes failed: ReadProcessMemory 또는 WriteProcessMemory의 일부 작업만을 마쳤습니다. (0x12B)
 [1010/105237.367:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 기존 프로세스에 액세스하려고 했습니다. (0xc000010a)
+[1011/015329.318:ERROR:directory_reader_win.cc(43)] FindFirstFile: 지정된 경로를 찾을 수 없습니다. (0x3)

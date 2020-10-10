@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
+import palette from '../common/palette.js';
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -28,7 +29,7 @@ const Fullscreen = styled.div`
 
 const RandomDrawBlock = styled.div`
   width: 320px;
-  background: #f7f2f2;
+  background: ${palette.toneDownWhite};
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
@@ -63,7 +64,7 @@ const StyledButton = styled(Button)`
   }
   &:hover,
   &:focus {
-    background: #ffc200;
+    background: ${palette.yellow};
   }
 `;
 

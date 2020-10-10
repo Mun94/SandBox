@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import palette from './palette.js';
 
 const Cube = styled.div`
   animation: LoadingSub-rotate 7000ms linear infinite;
@@ -28,32 +29,32 @@ const Cube = styled.div`
   }
 
   .front {
-    background: #ffc200;
+    background: ${palette.yellow};
     transform: translateZ(50px);
   }
 
   .back {
-    background: #ffc200;
+    background: ${palette.yellow};
     transform: translateZ(-50px);
   }
 
   .left {
-    background: #d03251;
+    background: ${palette.red};
     transform: translateX(-50px) rotateY(90deg);
   }
 
   .right {
-    background: #d03251;
+    background: ${palette.red};
     transform: translateX(50px) rotateY(90deg);
   }
 
   .top {
-    background: blue;
+    background: ${palette.loadingScreenBlue};
     transform: translateY(-50px) rotateX(90deg);
   }
 
   .bottom {
-    background: blue;
+    background: ${palette.loadingScreenBlue};
     transform: translateY(50px) rotateX(90deg);
   }
 `;

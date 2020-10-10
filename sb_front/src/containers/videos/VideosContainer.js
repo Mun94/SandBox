@@ -17,7 +17,7 @@ import { dbPatch } from '../../modules/dbs.js';
 const VideosContainer = ({ match }) => {
   const { channelId } = match.params;
 
-  const [useVideoId, setVideoId] = useState([]);
+  const [useVideoId] = useState([]);
   const [useVideoDetail] = useState([]);
   const [error, setError] = useState(false);
 
@@ -55,10 +55,9 @@ const VideosContainer = ({ match }) => {
           useVideoId.push(contentDetails.upload.videoId);
         }
       }
-      setVideoId(useVideoId);
-    }
-    if (videoId !== null) {
-      dispatch(videosDatas(videoId.join()));
+      if (videoId !== null) {
+        dispatch(videosDatas(videoId.join()));
+      }
     }
   }, [activities, useVideoId, dispatch, videoId]);
 

@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { List } from 'react-virtualized';
 import SearchChannelsContainer from '../../containers/home/SearchChannelsContainer.js';
 import CategoryContainer from '../../containers/home/CategoryContainer.js';
 import SettingContainer from '../../containers/home/SettingContainer.js';
 import Button from '../common/Button.js';
 import routes from '../../routes/routes.js';
+import palette from '../common/palette.js';
 
 import { RiPlayMiniFill, RiChatSmile3Fill } from 'react-icons/ri';
 import { BsQuestion } from 'react-icons/bs';
@@ -15,26 +16,30 @@ import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
 import { MdMovieCreation } from 'react-icons/md';
 import { IoIosBook } from 'react-icons/io';
 
+const justifyContentcenter = css`
+  display: flex;
+  justify-content: center;
+`
+
 const InfoBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 1rem;
-  background: white;
+  background: ${palette.white};
 
   &:nth-child(even) {
-    background: #f7f2f2;
+    background: ${palette.toneDownWhite};
   }
 `;
 
 const SearchSelectBlock = styled.div`
-  display: flex;
-  justify-content: center;
+  ${justifyContentcenter}
   margin-bottom: 0.7rem;
 
   select {
     margin-right: 20px;
-    background: #f7f2f2;
+    background: ${palette.toneDownWhite};
     border-radius: 3px;
 
     &:focus {
@@ -44,21 +49,19 @@ const SearchSelectBlock = styled.div`
 `;
 
 const ListBlock = styled.div`
-  display: flex;
+  ${justifyContentcenter}
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
   .settingCreatorNum {
     width: 756px;
     position: relative;
-    color: #f7f2f2;
+    color: ${palette.toneDownWhite};
     letter-spacing: 2px;
     font-size: 0.8rem;
     font-weight: bold;
-    justify-content: center;
-    display: flex;
+    ${justifyContentcenter}
     padding-bottom: 0.5rem;
     height: 20px;
     svg {
@@ -97,10 +100,9 @@ const Block = styled.div`
 `;
 
 const Icon = styled.div`
+${justifyContentcenter}
   margin-right: 1rem;
-  display: flex;
   align-items: center;
-  justify-content: center;
   opacity: 65%;
 
   Button + a,
@@ -110,11 +112,11 @@ const Icon = styled.div`
   }
   svg {
     display: flex;
+  justify-content: center;
     align-items: center;
-    justify-content: center;
   }
   svg:hover {
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid ${palette.gray};
   }
 `;
 
@@ -125,7 +127,7 @@ const ImgIcon = styled.div`
     position: absolute;
     top: 0;
     left: 77px;
-    border: 0.5px solid #ffc200;
+    border: 0.5px solid ${palette.yellow};
     border-radius: 5px;
   }
 `;
@@ -134,6 +136,7 @@ const New = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   animation: blink 0.8s ease-in-out infinite alternate;
 
   @keyframes blink {
@@ -146,15 +149,27 @@ const New = styled.div`
   }
 `;
 
-const Channels = ({
-  channelInfo,
-  error,
-  sortBy,
-  onChange,
-  keyword,
-  dbChannel,
-  category,
-}) => {
+const categoryIcon = {
+  코미디: <FaSmile />,
+  게임: <RiGamepadFill />,
+  영화: <MdMovieCreation />,
+  교육: <IoIosBook />,
+  일상: <FaTelegramPlane />,
+  '일상,게임': (
+    <>
+      <FaTelegramPlane />
+      <RiGamepadFill />
+    </>
+  ),
+  '교육,게임': (
+    <>
+      <IoIosBook />
+      <RiGamepadFill />
+    </>
+  ),
+};
+
+const nameSubSort = ({sortBy, channelInfo}) => {
   if (sortBy === 'subs') {
     channelInfo.sort((a, b) => {
       if (parseInt(a.subs) > parseInt(b.subs)) return -1;
@@ -172,38 +187,32 @@ const Channels = ({
       return Math.random() - Math.random(); // 랜덤 정렬
     });
   }
+}
+
+const Channels = ({
+  channelInfo,
+  error,
+  sortBy,
+  onChange,
+  keyword,
+  dbChannel,
+  category,
+}) => {
+ 
+  nameSubSort({sortBy, channelInfo})
+
   if (keyword) {
     channelInfo = channelInfo.filter(
-      (channel) => channel.name.indexOf(keyword) >= 0,
-    );
-  }
+       (channel) => channel.name.indexOf(keyword) >= 0,
+     );
+   }
 
   if (category) {
     channelInfo = channelInfo.filter(
-      (channel) => channel.category.indexOf(category) >= 0,
-    );
-  }
-
-  const categoryIcon = {
-    코미디: <FaSmile />,
-    게임: <RiGamepadFill />,
-    영화: <MdMovieCreation />,
-    교육: <IoIosBook />,
-    일상: <FaTelegramPlane />,
-    '일상,게임': (
-      <>
-        <FaTelegramPlane />
-        <RiGamepadFill />
-      </>
-    ),
-    '교육,게임': (
-      <>
-        <IoIosBook />
-        <RiGamepadFill />
-      </>
-    ),
-  };
-
+       (channel) => channel.category.indexOf(category) >= 0,
+     );
+   }
+   
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const info = channelInfo[index];
@@ -268,13 +277,13 @@ const Channels = ({
         </InfoBlock>
       );
     },
-    [channelInfo, dbChannel, categoryIcon],
+    [channelInfo, dbChannel],
   );
 
   return (
     <>
       {error ? (
-        <div style={{ color: '#f7f2f2', textAlign: 'center' }}>에러 발생</div>
+        <div style={{ color: `${palette.toneDownWhite}`, textAlign: 'center' }}>에러 발생</div>
       ) : (
         <>
           <SearchSelectBlock>

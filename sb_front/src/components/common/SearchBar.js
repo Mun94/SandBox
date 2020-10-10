@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import palette from './palette.js';
 
 const Wrapper = styled.div`
   position: relative;
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
     position: absolute;
     bottom: 10px;
     left: 0;
-    color: gray;
+    color: ${palette.gray};
     pointer-events: none;
     transition: all 0.5s ease;
   }

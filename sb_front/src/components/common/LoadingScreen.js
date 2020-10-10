@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import palette from './palette.js';
 
 const ScreenLoader = styled.div`
   position: absolute;
@@ -18,17 +19,17 @@ const ScreenLoader = styled.div`
   span:nth-child(1) {
     bottom: 0;
     right: 0;
-    background: #f7e707; /*노랑*/
+    background: ${palette.yellow}
   }
   span:nth-child(2) {
     top: 0;
     right: 0;
-    background: #38ade8; /*파랑*/
+    background: ${palette.loadingScreenBlue}; /*파랑*/
   }
   span:nth-child(3) {
     bottom: 0;
     left: 0;
-    background: #e31010; /*빨강*/
+    background:${palette.red};
   }
 
   @keyframes LoadingScreen-animate {

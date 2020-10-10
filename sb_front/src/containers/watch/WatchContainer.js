@@ -106,7 +106,7 @@ const WatchContainer = ({ location }) => {
 
   return (
     <>
-      {commentDetail.length < 1 && videoDetail < 1 ? (
+      {commentDetail.length < 1 && videoDetail.length < 1 ? (
         <LoadingSub />
       ) : (
         <Watch
