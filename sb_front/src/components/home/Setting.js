@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button.js';
+import FlashMessage from 'react-flash-message';
 
 import { MdCancel } from 'react-icons/md';
 import { BiPlusMedical } from 'react-icons/bi';
+
+const SettingBlock = styled.div`
+  svg:hover {
+    color: #ffc200;
+  }
+`;
 
 const Form = styled.form`
   display: flex;
@@ -43,7 +50,7 @@ const Form = styled.form`
     margin-bottom: 1rem;
   }
 `;
-const SettingBlock = styled.div`
+const OnBlock = styled.div`
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -63,9 +70,6 @@ const SettingBlock = styled.div`
     justify-content: flex-end;
     padding-right: 1.8rem;
     margin-bottom: 4px;
-    svg:hover {
-      color: #ffc200;
-    }
   }
 
   animation: setAnimation 0.3s linear forwards;
@@ -80,6 +84,11 @@ const SettingBlock = styled.div`
   }
 `;
 
+const Error = styled.div`
+  color: #d03251;
+  margin-bottom: 4px;
+`;
+
 const Setting = ({
   channelId,
   name,
@@ -90,13 +99,21 @@ const Setting = ({
   onCancel,
   error,
   useOnButton,
+  useAlert,
 }) => {
   return (
-    <>
-      {useOnButton ? (
+    <SettingBlock>
+      {useAlert ? (
+        <>
+          <FlashMessage duration={4000} persistOnHover={true}>
+            <p>Message</p>
+          </FlashMessage>
+          <BiPlusMedical onClick={onClick} />
+        </>
+      ) : useOnButton ? (
         <>
           <BiPlusMedical onClick={onClick} style={{ color: '#ffc200' }} />
-          <SettingBlock>
+          <OnBlock>
             <div className="cancelIcon">
               <MdCancel onClick={onCancel} />
             </div>
@@ -126,15 +143,15 @@ const Setting = ({
                 <option value="일상,게임">일상,게임</option>
                 <option value="교육,게임">교육,게임</option>
               </select>
-              {error && <>{error}</>}
+              {error && <Error>{error}</Error>}
               <Button>입력</Button>
             </Form>
-          </SettingBlock>
+          </OnBlock>
         </>
       ) : (
         <BiPlusMedical onClick={onClick} />
       )}
-    </>
+    </SettingBlock>
   );
 };
 

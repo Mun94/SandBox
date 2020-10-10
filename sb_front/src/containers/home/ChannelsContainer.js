@@ -14,7 +14,7 @@ const ChannelsContainer = () => {
   const [useChannelInfo] = useState([]);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState('');
-  const [useChannelsId] = useState([]);
+  const [useChannelsId, setChannelsId] = useState([]);
 
   const dispatch = useDispatch();
   const {
@@ -50,6 +50,7 @@ const ChannelsContainer = () => {
         useChannelsId.push(dbChannel[i].channelId);
       }
       dispatch(channelsDatas(useChannelsId.join()));
+      useChannelsId.splice(0,dbChannel.length)
     }
     return () => {
       dispatch(initialstateChannels());

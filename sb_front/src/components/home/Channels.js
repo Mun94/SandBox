@@ -58,7 +58,6 @@ const ListBlock = styled.div`
     font-size: 0.8rem;
     font-weight: bold;
     justify-content: center;
-    align-items: center;
     display: flex;
     padding-bottom: 0.5rem;
     height: 20px;
