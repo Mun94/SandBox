@@ -51,14 +51,13 @@ const ListBlock = styled.div`
   width: 100%;
   height: 100%;
   .settingCreatorNum {
-    width: 760px;
+    width: 756px;
     position: relative;
     color: #f7f2f2;
     letter-spacing: 2px;
     font-size: 0.8rem;
     font-weight: bold;
     justify-content: center;
-    align-items: center;
     display: flex;
     padding-bottom: 0.5rem;
     height: 20px;

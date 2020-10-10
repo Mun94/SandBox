@@ -1,19 +1,23 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
-import { settingChannel } from '../../modules/setting.js';
+import { settingChannel, settingInitial } from '../../modules/setting.js';
 import { dbPost } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
+  const [useAlert, setAlert] = useState(false);
   const [useOnButton, setOnButton] = useState(false);
 
   const dispatch = useDispatch();
-  const { channelId, name, categoryId } = useSelector(({ setting }) => ({
-    channelId: setting.channelId,
-    name: setting.name,
-    categoryId: setting.categoryId,
-  }));
+  const { channelId, name, categoryId, dbPostStatus } = useSelector(
+    ({ setting, dbs }) => ({
+      channelId: setting.channelId,
+      name: setting.name,
+      categoryId: setting.categoryId,
+      dbPostStatus: dbs.dbPostStatus,
+    }),
+  );
 
   const onChange = useCallback(
     (e) => {
@@ -29,6 +33,7 @@ const SettingContainer = () => {
   };
   const onCancel = () => {
     setOnButton(false);
+    setError(null);
   };
   const onSubmit = useCallback(
     (e) => {
@@ -38,10 +43,19 @@ const SettingContainer = () => {
         return;
       }
       dispatch(dbPost({ channelId, name, categoryId }));
+      dispatch(settingInitial());
       setOnButton(false);
     },
     [channelId, name, categoryId, dispatch],
   );
+
+  useEffect(() => {
+    if (dbPostStatus) {
+      setAlert(true);
+    }else{
+      setAlert(false);
+    }
+  }, [dbPostStatus]);
 
   return (
     <Setting
@@ -54,6 +68,7 @@ const SettingContainer = () => {
       onClick={onClick}
       onCancel={onCancel}
       error={error}
+      useAlert={useAlert}
     />
   );
 };

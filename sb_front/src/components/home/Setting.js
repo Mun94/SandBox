@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button.js';
+import FlashMessage from 'react-flash-message';
 
 import { MdCancel } from 'react-icons/md';
 import { BiPlusMedical } from 'react-icons/bi';
+
+const SettingBlock = styled.div`
+  svg:hover {
+    color: #ffc200;
+  }
+`;
 
 const Form = styled.form`
   display: flex;
@@ -43,7 +50,7 @@ const Form = styled.form`
     margin-bottom: 1rem;
   }
 `;
-const SettingBlock = styled.div`
+const OnBlock = styled.div`
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -63,9 +70,6 @@ const SettingBlock = styled.div`
     justify-content: flex-end;
     padding-right: 1.8rem;
     margin-bottom: 4px;
-    svg:hover {
-      color: #ffc200;
-    }
   }
 
   animation: setAnimation 0.3s linear forwards;
@@ -80,6 +84,32 @@ const SettingBlock = styled.div`
   }
 `;
 
+const OkBlock = styled.div`
+  position: absolute;
+    background: #ffc200;
+    height: 20px;
+    text-align: center;
+    border-radius: 1rem;
+    width: 756px;
+    left:0;
+    animation: okAnimation 0.3s linear forwards;
+    @keyframes okAnimation {
+    0% {
+      opacity: 25%;
+      transform:translateY(-20px);
+    }
+    100% {
+      transform:translateY(0);
+      opacity: 100%;
+    }
+  }
+`
+
+const Error = styled.div`
+  color: #d03251;
+  margin-bottom: 4px;
+`;
+
 const Setting = ({
   channelId,
   name,
@@ -90,13 +120,15 @@ const Setting = ({
   onCancel,
   error,
   useOnButton,
+  useAlert
 }) => {
   return (
     <>
-      {useOnButton ? (
+    <SettingBlock>
+      { useOnButton ? (
         <>
           <BiPlusMedical onClick={onClick} style={{ color: '#ffc200' }} />
-          <SettingBlock>
+          <OnBlock>
             <div className="cancelIcon">
               <MdCancel onClick={onCancel} />
             </div>
@@ -126,14 +158,19 @@ const Setting = ({
                 <option value="일상,게임">일상,게임</option>
                 <option value="교육,게임">교육,게임</option>
               </select>
-              {error && <>{error}</>}
+              {error && <Error>{error}</Error>}
               <Button>입력</Button>
             </Form>
-          </SettingBlock>
+          </OnBlock>
         </>
       ) : (
         <BiPlusMedical onClick={onClick} />
       )}
+    </SettingBlock>
+    {useAlert && (
+    <FlashMessage duration={3500} persistOnHover={true}><OkBlock>
+  성공!! 새로고침 후 적용됩니다.</OkBlock></FlashMessage>
+)}
     </>
   );
 };

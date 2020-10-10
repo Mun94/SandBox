@@ -12,6 +12,7 @@ const [DBPATCH, DBPATCH_SUCCESS, DBPATCH_FAILURE] = createReactSagaType(
 const [DBPOST, DBPOST_SUCCESS, DBPOST_FAILURE] = createReactSagaType(
   'dbs/DBPOST',
 );
+const DBINITIALSTATE = 'dbs/DBINITIALSTATE';
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
@@ -27,6 +28,7 @@ export const dbPost = createAction(
     categoryId,
   }),
 );
+export const dbInitialState = createAction(DBINITIALSTATE);
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
@@ -40,7 +42,8 @@ export function* sagaDb() {
 
 const initialState = {
   dbChannel: null,
-  dbPostPatch: null,
+  dbPostStatus: null,
+  dbPatchStatus: null,
   dbError: null,
 };
 
@@ -49,8 +52,9 @@ const dbs = handleActions(
     [DBGET_SUCCESS]: (state, action) => ({
       ...state,
       dbChannel: action.payload,
+      dbPostStatus: null,
+      dbPatchStatus: null,
       dbError: null,
-      dbPutPatch: null,
     }),
     [DBGET_FAILURE]: (state, action) => ({
       ...state,
@@ -58,7 +62,7 @@ const dbs = handleActions(
     }),
     [DBPATCH_SUCCESS]: (state, action) => ({
       ...state,
-      dbPutPatch: action.payload,
+      dbPatchStatus: action.payload,
       dbError: null,
     }),
     [DBPATCH_FAILURE]: (state, action) => ({
@@ -67,13 +71,14 @@ const dbs = handleActions(
     }),
     [DBPOST_SUCCESS]: (state, action) => ({
       ...state,
-      dbPostPatch: action.payload,
+      dbPostStatus: action.payload,
       dbError: null,
     }),
     [DBPOST_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
     }),
+    [DBINITIALSTATE]: () => initialState,
   },
   initialState,
 );

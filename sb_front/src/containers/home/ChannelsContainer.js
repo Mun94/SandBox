@@ -50,6 +50,7 @@ const ChannelsContainer = () => {
         useChannelsId.push(dbChannel[i].channelId);
       }
       dispatch(channelsDatas(useChannelsId.join()));
+      useChannelsId.splice(0,dbChannel.length)
     }
     return () => {
       dispatch(initialstateChannels());
