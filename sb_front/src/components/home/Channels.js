@@ -13,13 +13,13 @@ import { BsQuestion } from 'react-icons/bs';
 import { AiFillGift } from 'react-icons/ai';
 import { RiGamepadFill } from 'react-icons/ri';
 import { FaSmile, FaTelegramPlane } from 'react-icons/fa';
-import { MdMovieCreation } from 'react-icons/md';
+import { MdMovieCreation, MdDelete } from 'react-icons/md';
 import { IoIosBook } from 'react-icons/io';
 
 const justifyContentcenter = css`
   display: flex;
   justify-content: center;
-`
+`;
 
 const InfoBlock = styled.div`
   display: flex;
@@ -122,6 +122,7 @@ ${justifyContentcenter}
 
 const ImgIcon = styled.div`
   position: relative;
+  display: flex;
   span {
     display: flex;
     position: absolute;
@@ -197,6 +198,7 @@ const Channels = ({
   keyword,
   dbChannel,
   category,
+  removeButtonState
 }) => {
  
   nameSubSort({sortBy, channelInfo})
@@ -234,6 +236,7 @@ const Channels = ({
               <span>{info.name}</span>
               <span>{info.subs / 10000}만명</span>
             </NameSubs>
+            {removeButtonState && <MdDelete size='20'/>}
           </Block>
           <Icon>
             <Button to={routes.videos(info.channelId)}>
@@ -277,7 +280,7 @@ const Channels = ({
         </InfoBlock>
       );
     },
-    [channelInfo, dbChannel],
+    [channelInfo, dbChannel,removeButtonState],
   );
 
   return (

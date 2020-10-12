@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 const SETTING = 'setting/SETTING';
 const SETTINGINITIAL = 'setting/SETTINGINITIAL';
+const REMOVEBUTTON = 'setting/REMOVEBUTTON';
 
 export const settingChannel = createAction(SETTING, ({ key, value }) => ({
   key,
@@ -9,12 +10,14 @@ export const settingChannel = createAction(SETTING, ({ key, value }) => ({
   videoCount: '0',
 }));
 export const settingInitial = createAction(SETTINGINITIAL);
+export const settingRemoveButton = createAction(REMOVEBUTTON, (removeButtonState) => (removeButtonState));
 
 const initialState = {
   channelId: '',
   name: '',
   categoryId: '',
   videoCount: '',
+  removeButtonState:null
 };
 
 const setting = handleActions(
@@ -23,6 +26,10 @@ const setting = handleActions(
       ...state,
       [key]: value,
       videoCount,
+    }),
+    [REMOVEBUTTON]:(state, {payload:{removeButtonState}}) => ({
+      ...state,
+      removeButtonState
     }),
     [SETTINGINITIAL]: () => initialState,
   },

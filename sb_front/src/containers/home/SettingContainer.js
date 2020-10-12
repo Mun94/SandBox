@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
-import { settingChannel, settingInitial } from '../../modules/setting.js';
+import { settingChannel, settingInitial, settingRemoveButton } from '../../modules/setting.js';
 import { dbPost,dbPostPatchInitial } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
@@ -9,6 +9,7 @@ const SettingContainer = () => {
   const [useAlert, setAlert] = useState(false);
   const [useQue, setQue] = useState(false);
   const [useOnButton, setOnButton] = useState(false);
+  const [useOnRemove, setOnRemove] = useState(false);
 
   const dispatch = useDispatch();
   const { channelId, name, categoryId, dbPostStatus, channelInfo } = useSelector(
@@ -45,7 +46,14 @@ const SettingContainer = () => {
     setError(null);
     dispatch(settingInitial());
   };
-
+  const onRemove = () => {
+    setOnRemove(true);
+    dispatch(settingRemoveButton({removeButtonState:true}));
+  }
+  const onRemoveCancel = () => {
+    setOnRemove(false);
+    dispatch(settingRemoveButton({removeButtonState:false}));
+  }
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -93,9 +101,12 @@ const SettingContainer = () => {
       onCancel={onCancel}
       onClickQue={onClickQue}
       offClickQue={offClickQue}
+      onRemove={onRemove}
+      onRemoveCancel={onRemoveCancel}
       error={error}
       useAlert={useAlert}
       useQue={useQue}
+      useOnRemove={useOnRemove}
     />
   );
 };

@@ -26,7 +26,8 @@ const ChannelsContainer = () => {
     dbChannel,
     category,
     dbsLoading,
-  } = useSelector(({ youtube, homeChannels, dbs, Loading }) => ({
+    removeButtonState
+  } = useSelector(({ youtube, homeChannels, dbs, Loading, setting }) => ({
     channels: youtube.channels,
     apiError: youtube.apiError,
     loading: Loading['youtube/CHANNELS'],
@@ -35,6 +36,7 @@ const ChannelsContainer = () => {
     keyword: homeChannels.keyword,
     dbChannel: dbs.dbChannel,
     category: homeChannels.category,
+    removeButtonState: setting.removeButtonState
   }));
 
   useEffect(() => {
@@ -121,6 +123,7 @@ const ChannelsContainer = () => {
           onChange={onChange}
           keyword={keyword}
           category={category}
+          removeButtonState={removeButtonState}
         />
       ) : (
         <LoadingScreen />

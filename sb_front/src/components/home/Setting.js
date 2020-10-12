@@ -7,6 +7,7 @@ import palette from '../common/palette.js';
 import { MdCancel } from 'react-icons/md';
 import { BiPlusMedical } from 'react-icons/bi';
 import {BsFillQuestionCircleFill} from 'react-icons/bs';
+import {ImMinus} from 'react-icons/im';
 
 const common = css`
   display: flex;
@@ -161,6 +162,9 @@ const Setting = ({
   useOnButton,
   useAlert,
   useQue,
+  onRemove,
+  onRemoveCancel,
+  useOnRemove
 }) => {
   return (
     <>
@@ -213,9 +217,13 @@ const Setting = ({
             </Que></QueBlock>}
           </OnBlock>
         </>
-      ) : (
+      ) : ( 
+        <>
         <BiPlusMedical onClick={onClick} />
-      )}
+        {useOnRemove ? < MdCancel onClick={onRemoveCancel} style={{color:`${palette.yellow}`}}/> :      
+        <ImMinus onClick={onRemove}/>}
+        </>)
+    }
     </SettingBlock>
     {useAlert && (
     <FlashMessage duration={3500} persistOnHover={true}><OkBlock>
