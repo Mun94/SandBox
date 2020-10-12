@@ -1,9 +1,9 @@
 import React from 'react';
 import styled,{css} from 'styled-components';
-import Button from '../common/Button.js';
 import palette from '../common/palette.js';
 
 import { MdCancel } from 'react-icons/md';
+import {FaTrash} from 'react-icons/fa';
 
 const common = css`
   display: flex;
@@ -42,7 +42,7 @@ animation: okAnimation 0.3s linear forwards;
   }
 `;
 
-const Form = styled.form`
+const DeleteBlock = styled.div`
   ${common}
 
   button:hover {
@@ -97,15 +97,20 @@ const Error = styled.div`
   margin-bottom: 4px;
 `;
 
+const ListBlock = styled.div`
+margin-top:1rem;
+    display:flex;
+    color:${palette.black};
+`;
 
-const SettingChannelDelete = ({ onCancel,error, removeName, onChangeRemoveName,onSubmitRemoveName}) => {
+const SettingChannelDelete = ({ onCancel,error, removeName, onChangeRemoveName, useRemoveList,onDeleteClick}) => {
     return (
         <OnBlock>
           <div>
           <div className="cancelIcon">
             <MdCancel onClick={onCancel} />
           </div>
-          <Form onSubmit={onSubmitRemoveName}>
+          <DeleteBlock>
             <div className="title">크리에티어 제거</div>
             <input
               type="text"
@@ -114,9 +119,9 @@ const SettingChannelDelete = ({ onCancel,error, removeName, onChangeRemoveName,o
               onChange={onChangeRemoveName}
               placeholder="채널 이름"
             />
+            {useRemoveList.map(list => <ListBlock key={list.id}>{list.name}<FaTrash onClick={() =>onDeleteClick(list.channelId)}/></ListBlock>)}
             {error && <Error>{error}</Error>}
-            <Button>입력</Button>
-          </Form>
+          </DeleteBlock>
           </div>
         </OnBlock>
     )

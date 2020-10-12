@@ -70,7 +70,9 @@ const Setting = ({
   useOnRemove,
   removeName,
   onChangeRemoveName,
-  onSubmitRemoveName
+  onSubmitRemoveName,
+  useRemoveList,
+  onDeleteClick
 }) => {
   return (
     <>
@@ -78,7 +80,7 @@ const Setting = ({
       { useOnButton && (
        <SettingChannelAdd channelId={channelId} name={name} categoryId={categoryId} onChange={onChange} onSubmit={onSubmit} onCancel={onCancel} onClickQue={onClickQue} offClickQue={offClickQue} error={error} useQue={useQue} />
        )}
-       {useOnRemove && (<SettingChannelDelete onCancel={onCancel} error={error} onSubmitRemoveName={onSubmitRemoveName} onChangeRemoveName={onChangeRemoveName} removeName={removeName}/>
+       {useOnRemove && (<SettingChannelDelete onCancel={onCancel} error={error} onSubmitRemoveName={onSubmitRemoveName} onChangeRemoveName={onChangeRemoveName} removeName={removeName} useRemoveList={useRemoveList} onDeleteClick={onDeleteClick}/>
        )}
        <BiPlusMedical onClick={onClick}/>
         <ImMinus onClick={onRemove}/>

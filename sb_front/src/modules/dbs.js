@@ -12,6 +12,7 @@ const [DBPATCH, DBPATCH_SUCCESS, DBPATCH_FAILURE] = createReactSagaType(
 const [DBPOST, DBPOST_SUCCESS, DBPOST_FAILURE] = createReactSagaType(
   'dbs/DBPOST',
 );
+const [DBDELETE, DBDELETE_SUCCESS, DBDELETE_FAILURE] = createReactSagaType('dbs/DBDELETE');
 const POSTPATCHINITIAL = 'dbs/POSTPATCHINITIAL';
 
 export const dbGet = createAction(DBGET);
@@ -28,22 +29,25 @@ export const dbPost = createAction(
     categoryId,
   }),
 );
+export const dbDelete = createAction(DBDELETE, channelId => channelId)
 export const dbPostPatchInitial = createAction(POSTPATCHINITIAL)
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
 const dbPostSaga = createReactSaga(DBPOST, db.dbPost);
-
+const dbDeleteSaga = createReactSaga(DBDELETE, db.dbDelete);
 export function* sagaDb() {
   yield takeLatest(DBGET, dbGetSaga);
   yield takeLatest(DBPATCH, dbPatchSaga);
   yield takeLatest(DBPOST, dbPostSaga);
+  yield takeLatest(DBDELETE, dbDeleteSaga);
 }
 
 const initialState = {
   dbChannel: null,
   dbPostStatus: null,
   dbPatchStatus: null,
+  dbDeleteStatue:null,
   dbError: null,
 };
 
@@ -77,6 +81,15 @@ const dbs = handleActions(
     [DBPOST_FAILURE]: (state, action) => ({
       ...state,
       dbError: action.payload,
+    }),
+    [DBDELETE_SUCCESS] : (state, action) => ({
+      ...state,
+      dbDeleteStatue:action.payload,
+      dbError:null
+    }),
+    [DBDELETE_FAILURE] : (state, action) => ({
+      ...state,
+      dbError:action.payload
     }),
     [POSTPATCHINITIAL] : (state) => ({
       ...state,

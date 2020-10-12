@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel, settingInitial, settingRemoveName } from '../../modules/setting.js';
-import { dbPost,dbPostPatchInitial } from '../../modules/dbs.js';
+import { dbPost,dbPostPatchInitial,dbDelete } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
@@ -10,6 +10,7 @@ const SettingContainer = () => {
   const [useQue, setQue] = useState(false);
   const [useOnButton, setOnButton] = useState(false);
   const [useOnRemove, setOnRemove] = useState(false);
+  const [useRemoveList, setRemoveList] = useState([])
 
   const dispatch = useDispatch();
   const { channelId, name, categoryId, dbPostStatus, channelInfo, removeName } = useSelector(
@@ -81,23 +82,35 @@ const SettingContainer = () => {
     },
     [channelId, name, categoryId, dispatch,channelInfo],
   );
-  const onSubmitRemoveName = useCallback(e => {
+const onSubmitRemoveName = useCallback(e => {
     e.preventDefault();
     if(removeName.includes('')){
       setError('빈 칸을 입력하세요');
       return;
-    }
-  },[removeName]);
+    }    
+},[removeName]);
 
-  useEffect(() => {
+useEffect(() => {
+  if(removeName){
+  setRemoveList(channelInfo.filter(Info => Info.name.indexOf(removeName) >=0))}
+  return() => {
+    setRemoveList([])
+  }
+},[channelInfo, removeName])
+
+const onDeleteClick = (id) => {
+  dispatch(dbDelete({channelId : id}))
+}
+
+useEffect(() => {
     if (dbPostStatus) {
       setAlert(true);
       setError(null);
     }
     return () => {
       dispatch(dbPostPatchInitial());
-    }
-  }, [dbPostStatus,dispatch]);
+  }
+}, [dbPostStatus,dispatch]);
 
   return (
     <Setting
@@ -119,6 +132,8 @@ const SettingContainer = () => {
       removeName={removeName}
       onChangeRemoveName={onChangeRemoveName}
       onSubmitRemoveName={onSubmitRemoveName}
+      useRemoveList={useRemoveList}
+      onDeleteClick={onDeleteClick}
     />
   );
 };

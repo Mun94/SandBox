@@ -7,3 +7,5 @@ export const dbPatch = ({ videoCount, channelId }) =>
 
 export const dbPost = ({ channelId, name, videoCount, categoryId }) =>
   db.post(`/api/users`, { channelId, name, videoCount, categoryId });
+
+export const dbDelete = ({channelId}) => db.delete(`/api/users/${channelId}`)
