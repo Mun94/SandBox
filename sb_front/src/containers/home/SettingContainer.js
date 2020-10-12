@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
-import { settingChannel, settingInitial, settingRemoveButton } from '../../modules/setting.js';
+import { settingChannel, settingInitial, settingRemoveName } from '../../modules/setting.js';
 import { dbPost,dbPostPatchInitial } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
@@ -12,13 +12,14 @@ const SettingContainer = () => {
   const [useOnRemove, setOnRemove] = useState(false);
 
   const dispatch = useDispatch();
-  const { channelId, name, categoryId, dbPostStatus, channelInfo } = useSelector(
+  const { channelId, name, categoryId, dbPostStatus, channelInfo, removeName } = useSelector(
     ({ setting, dbs, homeChannels }) => ({
       channelId: setting.channelId,
       name: setting.name,
       categoryId: setting.categoryId,
       dbPostStatus: dbs.dbPostStatus,
-      channelInfo: homeChannels.channelInfo
+      channelInfo: homeChannels.channelInfo,
+      removeName: setting.removeName
     }),
   );
 
@@ -37,22 +38,24 @@ const SettingContainer = () => {
     },
     [dispatch],
   );
+  const onChangeRemoveName = useCallback(e => {
+    dispatch(settingRemoveName({removeName: e.target.value}))
+  },[dispatch]);
+
   const onClick = () => {
     setOnButton(true);
+    setOnRemove(false);
   };
   const onCancel = () => {
     setOnButton(false);
+    setOnRemove(false);
     setQue(false);
     setError(null);
     dispatch(settingInitial());
   };
   const onRemove = () => {
+    setOnButton(false)
     setOnRemove(true);
-    dispatch(settingRemoveButton({removeButtonState:true}));
-  }
-  const onRemoveCancel = () => {
-    setOnRemove(false);
-    dispatch(settingRemoveButton({removeButtonState:false}));
   }
   const onSubmit = useCallback(
     (e) => {
@@ -78,6 +81,13 @@ const SettingContainer = () => {
     },
     [channelId, name, categoryId, dispatch,channelInfo],
   );
+  const onSubmitRemoveName = useCallback(e => {
+    e.preventDefault();
+    if(removeName.includes('')){
+      setError('빈 칸을 입력하세요');
+      return;
+    }
+  },[removeName]);
 
   useEffect(() => {
     if (dbPostStatus) {
@@ -102,11 +112,13 @@ const SettingContainer = () => {
       onClickQue={onClickQue}
       offClickQue={offClickQue}
       onRemove={onRemove}
-      onRemoveCancel={onRemoveCancel}
       error={error}
       useAlert={useAlert}
       useQue={useQue}
       useOnRemove={useOnRemove}
+      removeName={removeName}
+      onChangeRemoveName={onChangeRemoveName}
+      onSubmitRemoveName={onSubmitRemoveName}
     />
   );
 };
