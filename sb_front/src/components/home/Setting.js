@@ -1,5 +1,5 @@
 import React from 'react';
-import styled,{css} from 'styled-components';
+import styled from 'styled-components';
 
 import FlashMessage from 'react-flash-message';
 import palette from '../common/palette.js';
@@ -11,6 +11,9 @@ import SettingChannelDelete from './settingChildren/SettingChannelDelete.js';
 const SettingBlock = styled.div`
   svg:hover{
     color: ${palette.yellow};
+ }
+ svg{
+   
  }
 `;
 
@@ -61,13 +64,18 @@ const Setting = ({
   return (
     <>
     <SettingBlock>
-      { useOnButton && (
+      { useOnButton ? (
+        <>
        <SettingChannelAdd channelId={channelId} name={name} categoryId={categoryId} onChange={onChange} onSubmit={onSubmit} onCancel={onCancel} onClickQue={onClickQue} offClickQue={offClickQue} error={error} useQue={useQue} />
-       )}
-       {useOnRemove && (<SettingChannelDelete onCancel={onCancel} onSubmitRemoveName={onSubmitRemoveName} onChangeRemoveName={onChangeRemoveName} removeName={removeName} useRemoveList={useRemoveList} onDeleteClick={onDeleteClick}/>
-       )}
-       <BiPlusMedical onClick={onClick}/>
+       <BiPlusMedical onClick={onClick} style={{color:`${palette.yellow}`}}/>
        <ImMinus onClick={onRemove}/>
+       </>
+       ) : useOnRemove ? (<><SettingChannelDelete onCancel={onCancel} onSubmitRemoveName={onSubmitRemoveName} onChangeRemoveName={onChangeRemoveName} removeName={removeName} useRemoveList={useRemoveList} onDeleteClick={onDeleteClick}/>
+        <BiPlusMedical onClick={onClick}/>
+       <ImMinus onClick={onRemove} style={{color:`${palette.yellow}`}}/>
+       </>) : 
+       (<><BiPlusMedical onClick={onClick}/>
+       <ImMinus onClick={onRemove}/></>)}
     </SettingBlock>
     {useAlert && (
     <FlashMessage duration={3500} persistOnHover={true}><OkBlock>
