@@ -6,7 +6,6 @@ import routes from '../../routes/routes.js';
 import palette from './palette.js';
 
 const HeaderBlock = styled.div`
-  position: fixed;
   width: 100%;
   z-index: 1;
 `;
@@ -25,10 +24,6 @@ const Wrapper = styled(Responsive)`
   }
 `;
 
-const Spacer = styled.div`
-  height: 4.5rem;
-`;
-
 const Header = () => {
   return (
     <>
@@ -37,7 +32,6 @@ const Header = () => {
           <Link to={routes.home}>SANDBOX</Link>
         </Wrapper>
       </HeaderBlock>
-      <Spacer />
     </>
   );
 };
