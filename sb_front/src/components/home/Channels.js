@@ -306,7 +306,7 @@ const Channels = ({
             </span>
             <List
               width={760}
-              height={550}
+              height={540}
               rowCount={channelInfo.length}
               rowHeight={110}
               rowRenderer={rowRenderer}

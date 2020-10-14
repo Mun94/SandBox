@@ -15,6 +15,7 @@ const VideoCommentBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
   button + button {
     margin-left: 0.3rem;
   }
@@ -26,7 +27,7 @@ const VideoCommentBlock = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-right: 1rem;
-    color: ${palette.toneDownWhite};
+    color: ${palette.black};
     letter-spacing: 2px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -37,10 +38,16 @@ const VideoCommentBlock = styled.div`
 const Video = styled.div`
   display: flex;
   flex-direction: column;
+  margin:0 auto;
 `;
 
 const ComBlock = styled.div`
   display: flex;
+  border-radius: 1rem;
+  align-items:center;
+  &:nth-child(2n-1) {
+    background: ${palette.white};
+  }
 `;
 
 const Img = styled.img`
@@ -68,7 +75,7 @@ const NamePublishedAt = styled.div`
 `;
 
 const Text = styled.div`
-  color: ${palette.toneDownWhite};
+  color: ${palette.black};
   margin-bottom: 0.2rem;
 `;
 
@@ -81,13 +88,19 @@ const LikeCount = styled.div`
   }
 `;
 const SearchList = styled.div`
-  margin-left: 2rem;
+ display:flex;
+ width:550px;
+ justify-content:center;
+ flex-direction:column;
+ background:${palette.toneDownWhite};
+ border-radius:6px;
+ padding:1rem 1rem;
 `;
 
 const SearchBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom:1rem;
   select {
     margin-right: 20px;
     background: ${palette.toneDownWhite};
@@ -97,26 +110,33 @@ const SearchBlock = styled.div`
       outline: none;
     }
   }
+  input{
+    color:${palette.black};
+  }
 `;
 
 const ButtonBlock = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-bottom: 1rem;
+  margin-bottom: 4px;
 `;
 
 const ListBlock = styled.div`
   position: relative;
+  margin:0 auto;
 `;
 
 const VideoBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 480px;
-  margin-right: 2rem;
+  display:flex;
+ flex-direction:column;
+  width: 550px;
+  margin-right:2rem;
+  padding:1rem 1rem;
+ background:${palette.toneDownWhite};
+ border-radius:6px;
   @media (max-width: 1104px) {
-    margin: 2rem;
-    margin-right: 0;
+    margin-bottom:2rem;
+    margin-right:0;
   }
 `;
 
@@ -130,7 +150,7 @@ const Title = styled.div`
   div:nth-child(2) {
     font-size: 0.8rem;
     opacity: 70%;
-    margin: 0 0.3rem;
+    margin-top:1rem;
   }
 `;
 
@@ -176,7 +196,10 @@ const ProfileImg = styled.img`
   margin: 0 1rem;
 `;
 
-const DescriptionTags = styled.div``;
+const DescriptionTags = styled.div`
+  max-height: 150px;
+  overflow: scroll;
+`;
 
 const nameLikeDateSort = ({commentDetail,useSortBy}) =>{
   if (useSortBy === 'likeCount') {
@@ -291,7 +314,7 @@ const Watch = ({
             <Video>
               <iframe
                 title="youtube"
-                width="480"
+                width="500"
                 height="270"
                 src={`//www.youtube.com/embed/${query.video}`}
                 frameBorder="0"
@@ -302,7 +325,7 @@ const Watch = ({
             <Title>
               <div>{videoDetail.title}</div>
               <div>
-                {videoDetail.tags.map((tag, index) => (
+                {videoDetail.tags && videoDetail.tags.map((tag, index) => (
                   <span key={index}>
                     {tag}
                     {', '}
@@ -379,8 +402,8 @@ const Watch = ({
             <span className="length">{commentDetail.length + '/100'}</span>
             <ListBlock>
               <List
-                width={600}
-                height={600}
+                width={550}
+                height={520}
                 rowCount={commentDetail.length}
                 rowHeight={100}
                 rowRenderer={rowComment}

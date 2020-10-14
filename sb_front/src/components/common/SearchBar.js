@@ -5,6 +5,7 @@ import palette from './palette.js';
 const Wrapper = styled.div`
   position: relative;
   width: 30rem;
+  height:25px;
   label {
     position: absolute;
     bottom: 10px;
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
   input:valid ~ label {
     transform: translateY(-10px);
     font-size: 13px;
-    color: #f7f2f2;
+    color: ${palette.yellow}
   }
 
   .underline {
@@ -32,7 +33,7 @@ const Wrapper = styled.div`
     content: '';
     height: 100%;
     width: 100%;
-    background: #ffc200;
+    background: ${palette.yellow};
     transform: scaleX(0);
     transition: transform 0.3s linear;
   }
@@ -46,7 +47,7 @@ const SearchBarBlock = styled.input`
   width: 99%;
   background: none;
   border: none;
-  color: white;
+  color: ${palette.toneDownWhite};
   border-bottom: 2px solid silver;
   &:focus {
     outline: none;

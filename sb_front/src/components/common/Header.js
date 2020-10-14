@@ -14,8 +14,8 @@ const Wrapper = styled(Responsive)`
   height: 4.5rem;
   display: flex;
   align-items: center;
+  justify-content:center;
   a {
-    padding-left: 1rem;
     text-decoration: none;
     color: ${palette.white};
     font-weight: bold;
