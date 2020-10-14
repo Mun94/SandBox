@@ -8,9 +8,10 @@ import palette from '../common/palette.js';
 const VideoBlock = styled(Responsive)`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  div:last-child {
-    flex: none;
+  justify-content: center;
+  a{
+    margin:0 auto;
+    margin-bottom:20px;
   }
   @media (max-width: 630px) {
     width: 600px;
@@ -25,9 +26,12 @@ const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  background:${palette.toneDownWhite};
+  border-radius:6px;
 `;
 const Title = styled.span`
-  color: ${palette.toneDownWhite};
+  color: ${palette.black};
+  margin-top:6px;
 `;
 const Img = styled.img`
   position: relative;
@@ -35,17 +39,18 @@ const Img = styled.img`
 const Duration = styled.span`
   position: absolute;
   color: ${palette.white};
-  transform: translateY(159px);
+  transform: translateY(158px);
   background: rgba(0, 0, 0, 0.7);
   letter-spacing: 0.5px;
 `;
 const Sub = styled.span`
-  margin-top: 0.3rem;
-  padding: 0 0.5rem;
+margin:10px 10px;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
   div {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.2rem;
   }
 `;
 const View = styled.span`
@@ -147,7 +152,7 @@ const Videos = ({ videoDetail, error }) => {
                     )}
                     <View>{Info.viewCount} view</View>
                   </div>
-                  <Title>{Info.title}</Title>
+                  <Title>{Info.title.length > 41 ? `${Info.title.slice(0,41)}...` : Info.title}</Title>
                 </Sub>
               </Wrapper>
             ))}
