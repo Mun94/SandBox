@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as api from './api.js';
 
 export const db = axios.create({
-  baseURL: 'http://ec2-13-125-32-104.ap-northeast-2.compute.amazonaws.com:4000/',
+  baseURL: 'http://localhost:4000/',
   headers: {
     'Content-Type': 'application/json',
   },

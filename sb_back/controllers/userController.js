@@ -29,6 +29,17 @@ export const creatorRegister = async (req, res) => {
   }
 };
 
+export const creatorDelete = async (req, res) => {
+  const {params: { id }} = req;
+try{
+  await User.deleteOne({channelId: id});
+  res.sendStatus(200);
+ }catch(e){
+   console.error(e);
+   res.throw(500,e);
+ }
+};
+
 export const videoCountPatch = async (req, res) => {
   const {
     params: { id },

@@ -57,7 +57,6 @@ const Setting = ({
   useOnRemove,
   removeName,
   onChangeRemoveName,
-  onSubmitRemoveName,
   useRemoveList,
   onDeleteClick
 }) => {
@@ -70,7 +69,7 @@ const Setting = ({
        <BiPlusMedical onClick={onClick} style={{color:`${palette.yellow}`}}/>
        <ImMinus onClick={onRemove}/>
        </>
-       ) : useOnRemove ? (<><SettingChannelDelete onCancel={onCancel} onSubmitRemoveName={onSubmitRemoveName} onChangeRemoveName={onChangeRemoveName} removeName={removeName} useRemoveList={useRemoveList} onDeleteClick={onDeleteClick}/>
+       ) : useOnRemove ? (<><SettingChannelDelete onCancel={onCancel} onChangeRemoveName={onChangeRemoveName} removeName={removeName} useRemoveList={useRemoveList} onDeleteClick={onDeleteClick}/>
         <BiPlusMedical onClick={onClick}/>
        <ImMinus onClick={onRemove} style={{color:`${palette.yellow}`}}/>
        </>) : 

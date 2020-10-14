@@ -13,7 +13,7 @@ const [DBPOST, DBPOST_SUCCESS, DBPOST_FAILURE] = createReactSagaType(
   'dbs/DBPOST',
 );
 const [DBDELETE, DBDELETE_SUCCESS, DBDELETE_FAILURE] = createReactSagaType('dbs/DBDELETE');
-const POSTPATCHINITIAL = 'dbs/POSTPATCHINITIAL';
+const POSTPATCHDELETEINITIAL = 'dbs/POSTPATCHINITIAL';
 
 export const dbGet = createAction(DBGET);
 export const dbPatch = createAction(DBPATCH, ({ channelId, videoCount }) => ({
@@ -30,7 +30,7 @@ export const dbPost = createAction(
   }),
 );
 export const dbDelete = createAction(DBDELETE, channelId => channelId)
-export const dbPostPatchInitial = createAction(POSTPATCHINITIAL)
+export const dbPostPatchDeleteInitial = createAction(POSTPATCHDELETEINITIAL)
 
 const dbGetSaga = createReactSaga(DBGET, db.dbGet);
 const dbPatchSaga = createReactSaga(DBPATCH, db.dbPatch);
@@ -47,7 +47,7 @@ const initialState = {
   dbChannel: null,
   dbPostStatus: null,
   dbPatchStatus: null,
-  dbDeleteStatue:null,
+  dbDeleteStatus:null,
   dbError: null,
 };
 
@@ -58,6 +58,7 @@ const dbs = handleActions(
       dbChannel: action.payload,
       dbPostStatus: null,
       dbPatchStatus: null,
+      dbDeleteStatus:null,
       dbError: null,
     }),
     [DBGET_FAILURE]: (state, action) => ({
@@ -84,17 +85,18 @@ const dbs = handleActions(
     }),
     [DBDELETE_SUCCESS] : (state, action) => ({
       ...state,
-      dbDeleteStatue:action.payload,
+      dbDeleteStatus:action.payload,
       dbError:null
     }),
     [DBDELETE_FAILURE] : (state, action) => ({
       ...state,
       dbError:action.payload
     }),
-    [POSTPATCHINITIAL] : (state) => ({
+    [POSTPATCHDELETEINITIAL] : (state) => ({
       ...state,
       dbPostStatus:null,
-      dbPatchStatus:null
+      dbPatchStatus:null,
+      dbDeleteStatus:null
     })
   },
   initialState,

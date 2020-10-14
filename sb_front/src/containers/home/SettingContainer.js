@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Setting from '../../components/home/Setting.js';
 import { settingChannel, settingInitial, settingRemoveName } from '../../modules/setting.js';
-import { dbPost,dbPostPatchInitial,dbDelete } from '../../modules/dbs.js';
+import { dbPost,dbPostPatchDeleteInitial,dbDelete } from '../../modules/dbs.js';
 
 const SettingContainer = () => {
   const [error, setError] = useState(null);
@@ -13,12 +13,13 @@ const SettingContainer = () => {
   const [useRemoveList, setRemoveList] = useState([])
 
   const dispatch = useDispatch();
-  const { channelId, name, categoryId, dbPostStatus, channelInfo, removeName } = useSelector(
+  const { channelId, name, categoryId, dbPostStatus, dbDeleteStatus, channelInfo, removeName } = useSelector(
     ({ setting, dbs, homeChannels }) => ({
       channelId: setting.channelId,
       name: setting.name,
       categoryId: setting.categoryId,
       dbPostStatus: dbs.dbPostStatus,
+      dbDeleteStatus:dbs.dbDeleteStatus,
       channelInfo: homeChannels.channelInfo,
       removeName: setting.removeName
     }),
@@ -76,19 +77,10 @@ const SettingContainer = () => {
         return;
       }
       dispatch(dbPost({ channelId, name, categoryId }));
-      dispatch(settingInitial());
-      setOnButton(false);
       setAlert(false);
     },
     [channelId, name, categoryId, dispatch,channelInfo],
   );
-const onSubmitRemoveName = useCallback(e => {
-    e.preventDefault();
-    if(removeName.includes('')){
-      setError('빈 칸을 입력하세요');
-      return;
-    }    
-},[removeName]);
 
 useEffect(() => {
   if(removeName){
@@ -99,18 +91,28 @@ useEffect(() => {
 },[channelInfo, removeName])
 
 const onDeleteClick = (id) => {
-  dispatch(dbDelete({channelId : id}))
+  dispatch(dbDelete({channelId : id}));
+  setAlert(false);
 }
 
 useEffect(() => {
     if (dbPostStatus) {
       setAlert(true);
+      dispatch(settingInitial());
+      setError(null);
+      setOnButton(false);
+    }
+    if(dbDeleteStatus){
+      setOnRemove(false);
+      dispatch(settingInitial());
+      setAlert(true);
       setError(null);
     }
     return () => {
-      dispatch(dbPostPatchInitial());
+      dispatch(dbPostPatchDeleteInitial());
+      
   }
-}, [dbPostStatus,dispatch]);
+}, [dbPostStatus,dbDeleteStatus,dispatch,useAlert]);
 
   return (
     <Setting
@@ -131,7 +133,6 @@ useEffect(() => {
       useOnRemove={useOnRemove}
       removeName={removeName}
       onChangeRemoveName={onChangeRemoveName}
-      onSubmitRemoveName={onSubmitRemoveName}
       useRemoveList={useRemoveList}
       onDeleteClick={onDeleteClick}
     />
