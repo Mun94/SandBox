@@ -5,7 +5,7 @@ import createReactSaga, {
 } from '../lib/createReactSaga.js';
 import * as YouTube from '../lib/api/Youtube.js';
 
-const INITIALSTATE = 'homeChannels/INITIALSTATE';
+const INITIALSTATE = 'youtube/INITIALSTATE';
 
 const [CHANNELS, CHANNELS_SUCCESS, CHANNELS_FAILURE] = createReactSagaType(
   'youtube/CHANNELS',
