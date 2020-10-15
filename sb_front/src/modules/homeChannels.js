@@ -39,7 +39,11 @@ const homeChannels = handleActions(
       ...state,
       category,
     }),
-    [INITIALSTATE]: () => initialState
+    [INITIALSTATE]: (state) => ({
+      ...state,
+      keyword:'',
+      category:''
+    })
   },
   initialState,
 );

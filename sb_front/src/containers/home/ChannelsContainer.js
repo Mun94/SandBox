@@ -39,13 +39,13 @@ const ChannelsContainer = () => {
     removeButtonState: setting.removeButtonState
   }));
 
+  
   useEffect(() => {
     dispatch(dbGet());
-    setChannelsId([]);
     return () => {
       dispatch(initialstateVideoDetails());
     };
-  }, [dispatch]);
+  }, [dispatch,useChannelInfo]);
 
   useEffect(() => {
     if (dbChannel !== null) {
@@ -53,9 +53,10 @@ const ChannelsContainer = () => {
         useChannelsId.push(dbChannel[i].channelId);
       }
       dispatch(channelsDatas(useChannelsId.join()));
-      useChannelsId.splice(0,dbChannel.length)
     }
+    dispatch(uploadChannels({channelInfo:[]}))
     return () => {
+      useChannelInfo.splice(0, useChannelInfo.length);
       dispatch(initialstateChannels());
     };
   }, [dbChannel, useChannelsId, dispatch]);
