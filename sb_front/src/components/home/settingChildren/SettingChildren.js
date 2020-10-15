@@ -26,7 +26,7 @@ const OnBlock = styled.div`
   top: 100%;
   width: 756px;
   border-radius: 1rem;
-  height: 550px;
+  height: 540px;
   background: rgba(0, 0, 0, 0.25);
 
   .cancelIcon {

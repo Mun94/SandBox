@@ -12,9 +12,6 @@ const SettingBlock = styled.div`
   svg:hover{
     color: ${palette.yellow};
  }
- svg{
-   
- }
 `;
 
 const OkBlock = styled.div`

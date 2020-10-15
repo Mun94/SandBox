@@ -49,6 +49,7 @@ const SearchBarBlock = styled.input`
   border: none;
   color: ${palette.toneDownWhite};
   border-bottom: 2px solid silver;
+  height: 19px;
   &:focus {
     outline: none;
   }
