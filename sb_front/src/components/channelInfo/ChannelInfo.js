@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import Response from '../common/Responsive.js';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/routes.js';
+import palette from '../common/palette.js';
 
 const ChannelInfoBlock = styled(Response)`
   display: flex;
   flex-direction: column;
-  color: #f7f2f2;
-  align-items: center;
+  margin-top:1rem;
+  align-items:center;
+  color: ${palette.toneDownWhite};
   img {
     border-radius: 60%;
     width: 8rem;
@@ -19,13 +21,13 @@ const ChannelInfoBlock = styled(Response)`
 
 const Div = styled.div`
   width: 70%;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid ${palette.gray};
   margin: 1rem 0;
 `;
 
 const SubInfo = styled(Response)`
   width: 70%;
-  color: #f7f2f2;
+  color: ${palette.toneDownWhite};
   display: flex;
   justify-content: space-around;
 `;
@@ -50,7 +52,7 @@ const NameSubs = styled.div`
     background: rgba(255, 255, 255, 0.05);
   }
   div:nth-child(1):hover {
-    color: #ffc200;
+    color: ${palette.yellow};
   }
   div:nth-child(2) {
     text-align: center;
@@ -62,10 +64,9 @@ const NameSubs = styled.div`
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(to right, blue, pink);
-    /*line 생성*/
+    background: linear-gradient(to right, ${palette.red}, ${palette.yellow});
 
-    animation: animate1 1.5s linear infinite; /* 에니메이션 */
+    animation: animate1 1.5s linear infinite;
   }
 
   @keyframes animate1 {
@@ -75,7 +76,7 @@ const NameSubs = styled.div`
     100% {
       transform: translateX(100%);
     }
-  } /*에니메이션 조건*/
+  }
 
   a span:nth-child(2) {
     position: absolute;
@@ -83,7 +84,7 @@ const NameSubs = styled.div`
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(to bottom, blue, pink);
+    background: linear-gradient(to bottom, ${palette.red}, ${palette.yellow});
 
     animation: animate2 1.5s linear infinite;
     animation-delay: 0.8s;
@@ -104,7 +105,7 @@ const NameSubs = styled.div`
     right: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(to left, blue, pink);
+    background: linear-gradient(to left, ${palette.red}, ${palette.yellow});
 
     animation: animate3 1.5s linear infinite;
   }
@@ -124,7 +125,7 @@ const NameSubs = styled.div`
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(to top, blue, pink);
+    background: linear-gradient(to top, ${palette.red}, ${palette.yellow});
 
     animation: animate4 1.5s linear infinite;
     animation-delay: 0.8s;
