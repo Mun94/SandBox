@@ -39,7 +39,6 @@ const ChannelsContainer = () => {
     removeButtonState: setting.removeButtonState
   }));
 
-  
   useEffect(() => {
     dispatch(dbGet());
     return () => {
@@ -54,9 +53,8 @@ const ChannelsContainer = () => {
       }
       dispatch(channelsDatas(useChannelsId.join()));
     }
-    dispatch(uploadChannels({channelInfo:[]}))
+    useChannelInfo.splice(0, useChannelInfo.length);
     return () => {
-      useChannelInfo.splice(0, useChannelInfo.length);
       dispatch(initialstateChannels());
     };
   }, [dbChannel, useChannelsId, dispatch, useChannelInfo]);
