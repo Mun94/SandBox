@@ -6,7 +6,7 @@ export const creatorUpload = async (req, res) => {
     res.json(users);
   } catch (e) {
     console.error(e);
-    res.throw(500, e);
+    next(e);
   }
 };
 
@@ -25,7 +25,7 @@ export const creatorRegister = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
-    res.throw(500, e);
+    next(e);
   }
 };
 
@@ -57,6 +57,6 @@ export const videoCountPatch = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
-    res.throw(500, e);
+    next(e);
   }
 };
