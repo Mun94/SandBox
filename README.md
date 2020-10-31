@@ -4,7 +4,7 @@
 
 ---
 
-<img src='SandBox.PNG' alt=''/>
+<img src='sandbox.PNG' alt=''/>
 
 ## Version별 <a href="https://hidden-earth-27978.herokuapp.com/">영상확인</a>
 
